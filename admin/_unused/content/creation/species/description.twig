@@ -1,0 +1,39 @@
+{# empty Twig template #}
+<style>
+    #MainWindowPopups .popup form img {
+        float: left;
+        width: 44%;
+        margin: 0px 2.5%;
+        border: 2px solid red;
+    }
+    #MainWindowPopups .popup form img.approved {
+        border:2px solid lime;
+    }
+    
+</style>
+<h1>Description</h1>
+<sub>Editing Description for <b>{{ SPECIES }}</b> form <b>{{ FORM }}</b>.</sub>
+{% if SCRIPT_OUTPUT|length > 0 %}
+    <center>
+        <img width="256" src="{{ IMGPATH|raw }}"/><br/>
+        {{ SCRIPT_OUTPUT }}
+    </center>
+{% else %}
+    <form onsubmit="return MENU._popupReloadFileForm($(this));">
+        {% if SCRIPT_ERROR|length > 0 %}
+            <div class='error'>{{ SCRIPT_ERROR|raw }}</div>
+        {% endif %}
+        <input type="hidden" name="token" value="{{ TOKEN }}"/>
+        <input type="hidden" name="species" value="{{ SPECIES }}"/>
+        <input type="hidden" name="form" value="{{ FORM }}"/>
+        <img class="approved" src="img/drawnimals/{{ SPECIES }}.png"/>
+        <img src="{{ IMGPATH }}"/>
+        <label class="admin">Approve Image <input type="checkbox" name="approved"/></label>
+        <label>( Left:Approved;  Right:Pending; ) <input name="image" type="file"/></label>
+        <label>Region <select name="region">{{ YOURREGIONLIST|raw }}</select></label>
+        <label>Short Description <input name="shortdescription" type="text" value="{{ DESCRIPTIONSHORT }}"/></label>
+        <label>Description<textarea name="description">{{ DESCRIPTION }}</textarea></label>
+        <input type="submit" value="Save"/>
+        <label><div class="progressbar"><div class="bar"></div><div class="percent"></div></div></label>
+    </form>
+{% endif %}

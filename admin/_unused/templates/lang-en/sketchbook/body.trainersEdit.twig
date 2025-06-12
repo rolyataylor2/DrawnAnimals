@@ -1,0 +1,106 @@
+<table class='entitytable'>
+    <thead>
+        <tr>
+            <td style='width:300px;'>Trainer Editor</td>
+            <td>
+                Created By ______<br/><br/>
+                <div class='selected'>Team</div>
+            </td>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+                <table class='datatable'>
+                    <thead><tr><td>Class</td></tr></thead>
+                    <tbody><tr><td><input type='text' value='{{ TRAINER.class }}'/></td></tr></tbody>
+                </table>
+                <table class='datatable'>
+                    <thead><tr><td>Name</td></tr></thead>
+                    <tbody><tr><td><input type='text' value='{{ TRAINER.name }}'/></td></tr></tbody>
+                </table>
+                <table class='datatable'>
+                    <thead><tr><td>Difficulty</td></tr></thead>
+                    <tbody><tr><td><input type='text' value='{{ TRAINER.difficulty }}'/></td></tr></tbody>
+                </table>
+                <table class='datatable'>
+                    <thead><tr><td>Type of Battle</td></tr></thead>
+                    <tbody><tr><td><select><option>Double Battle</option></select></td></tr></tbody>
+                </table>
+                <table class='datatable'>
+                    <thead><tr><td>Variations (difficulty)</td></tr></thead>
+                    <tbody>
+                        <tr>
+                            <td>{{ TRAINER.name }} ({{ TRAINER.difficulty }})</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </td>
+            <td>
+                <div class='container'>
+                    <table class='datatable'>
+                        <thead>
+                            <tr>
+                                <td style="width:64px;">
+                                    Image
+                                </td>
+                                <td>
+                                    Drawnimal
+                                </td>
+                                <td style="width:64px;">
+                                    Level
+                                </td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for i in TEAM %}
+                            <tr>
+                                <td>
+                                    <img width="64" src="{{ i.image }}"/>
+                                </td>
+                                <td>
+                                    <input name="team[]" type="text" value="{{ i.species }}"/> 
+                                </td>
+                                <td>
+                                    <input name="teamlevels[]" type="text" value="{{ i.level }}"/>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                            
+                        </tbody>
+                    </table>
+                    <sub>
+                        Teams can have a max of 6 Drawnimals in them.
+                    </sub>
+                </div>
+            </td>
+        </tr>
+    </tbody>
+</table>
+<script>
+    var drawnimals = [
+        {% for i in DRAWNIMALS %}
+            { 
+                'value': '<img src="{{ i.image }}"/><b>{{ i.name|title }}</b><sub>Type: {{ i.typeprimary }}/{{ i.typesecondary }} </sub>', 
+                'data': {'name':'{{ i.name }}','image':'{{ i.image }}'} 
+            },
+        {% endfor %}
+            { 'value': '', 'data': {'image':'http://img.drawnimals.com/d/blank.png','name':'blank'} }
+    ];
+    $('input[name="team[]"]').autocomplete({ 
+        lookup:drawnimals, 
+        minChars:3,
+        lookupLimit:4,
+        onSelect:function(suggestion) {
+            $(this).val(suggestion.data.name);
+            $(this).parent().parent().children('td:first-of-type').children('img').attr('src',suggestion.data.image);
+        }
+    }).blur(function() {
+        var val = $(this).val();
+        for(var n in drawnimals) 
+            if (val === drawnimals[n].data.name) 
+                return;
+        $(this).val("");
+        $(this).parent().parent().children('td:first-of-type').children('img').attr('src','http://img.drawnimals.com/d/blank.png');
+    }).on("remove",function() { $(this).autocomplete().dispose();});
+</script>

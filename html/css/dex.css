@@ -1,0 +1,93 @@
+/*
+Copyright (c) 2014 User.
+All rights reserved. This program and the accompanying materials
+are made available under the terms of the Eclipse Public License v1.0
+which accompanies this distribution, and is available at
+http://www.eclipse.org/legal/epl-v10.html
+
+Contributors:
+   User - initial API and implementation and/or initial documentation
+*/
+/* 
+    Created on : Aug 4, 2014, 12:39:58 PM
+    Author     : User
+*/
+@font-face {
+    font-family: bitty;
+    src: url(http://PokeWorlds.com/css/8bit.ttf);
+}
+
+    .monster {
+        display: inline-block;
+        width: 16%;
+        margin: 16px 0px;
+        background-color: white;
+        position: relative;
+    
+        border-radius: 37px;
+        box-shadow: 3px 3px 10px black;
+}
+    .monster img {
+        width: 90%;
+        margin: -25px 0px;
+    
+        margin-bottom: 16px;
+}
+    header {
+        font-family: bitty;
+        width:100%;
+        height:80px;
+        font-size:50px;
+        line-height: 80px;
+        background-color: rgb(219, 7, 7);
+    
+        color: white;
+}
+    body {
+        text-align: center;
+        background-color: rgb(133, 28, 28);
+        border:1px solid silver
+    ;
+        width: 800px;
+        box-shadow: 3px 3px 10px black;
+        border-radius: 3px;
+        margin: 40px auto;
+}
+    html {
+        background: -moz-linear-gradient(left,  rgba(0,0,0,0.65) 0%, rgba(0,0,0,0) 50%, rgba(0,0,0,0.89) 100%); /* FF3.6+ */
+        background: -webkit-gradient(linear, left top, right top, color-stop(0%,rgba(0,0,0,0.65)), color-stop(50%,rgba(0,0,0,0)), color-stop(100%,rgba(0,0,0,0.89))); /* Chrome,Safari4+ */
+        background: -webkit-linear-gradient(left,  rgba(0,0,0,0.65) 0%,rgba(0,0,0,0) 50%,rgba(0,0,0,0.89) 100%); /* Chrome10+,Safari5.1+ */
+        background: -o-linear-gradient(left,  rgba(0,0,0,0.65) 0%,rgba(0,0,0,0) 50%,rgba(0,0,0,0.89) 100%); /* Opera 11.10+ */
+        background: -ms-linear-gradient(left,  rgba(0,0,0,0.65) 0%,rgba(0,0,0,0) 50%,rgba(0,0,0,0.89) 100%); /* IE10+ */
+        background: linear-gradient(to right,  rgba(0,0,0,0.65) 0%,rgba(0,0,0,0) 50%,rgba(0,0,0,0.89) 100%); /* W3C */
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#a6000000', endColorstr='#e3000000',GradientType=1 ); /* IE6-9 */
+        background-color:darkgreen; 
+
+    }
+    .monster .name {
+    background-color: red;
+    position: absolute;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+    color: white;
+    border: 2px solid darkred;
+}
+.monster .number {
+    position: absolute;
+    bottom: 20px;
+    right: 5px;
+}
+footer {
+    position: fixed;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+    background-color: black;
+    font-family: bitty;
+    font-size: 12px;
+    padding: 3px 0px;
+}
+footer a {
+    color: white;
+}

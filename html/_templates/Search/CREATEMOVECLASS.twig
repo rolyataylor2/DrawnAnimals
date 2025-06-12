@@ -1,0 +1,6 @@
+{# empty Twig template #}
+<a class="searchitem move" href="?g=Moves&p=view&id={{ data['id'] }}">
+    <img src="http://PokeWorlds.com/img/type{{data.type}}.png"/>
+    <div class="name">{{ data['name']|title }} {% if data['script_raw']|length == 0 %}*{% endif %}</div>
+    <div class='description'>{{ data['description'] }}</div>
+</a>

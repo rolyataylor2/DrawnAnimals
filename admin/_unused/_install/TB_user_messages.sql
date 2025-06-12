@@ -1,0 +1,11 @@
+CREATE TABLE IF NOT EXISTS user_messages (
+	uid BIGINT UNSIGNED,
+	id BIGINT UNSIGNED AUTO_INCREMENT,
+	sender TINYBLOB,
+	subject BLOB,
+	body BLOB,
+	theme TINYBLOB,
+	unread TINYINT UNSIGNED,
+	datetime INT UNSIGNED,
+        PRIMARY KEY (uid,id)
+)

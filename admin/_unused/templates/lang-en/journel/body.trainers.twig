@@ -1,0 +1,13 @@
+<sub>
+    Other trainers just seem to be wanting to battle everywhere. In here you keep a list of all the trainers you have encountered on your 
+    adventures. Each trainer you defeat gives you a simple star token that contains their team information. These
+    star tokens are kept track of by the Drawnimals coallition which has been known to award trainers based on amount of tokens they have.
+</sub>
+{% for trainer in TRAINERS %}
+    <div style="margin:10px; border:1px solid black">
+    {{ trainer.image }} - {{ trainer.name }} - {{ trainer.difficulty }}<br/>
+    {{ trainer.location }}<br/>
+    {{ trainer.total }} Pokemon<br/>
+    Lv.{{ trainer.level }}<br/>
+    </div>
+{% endfor %}

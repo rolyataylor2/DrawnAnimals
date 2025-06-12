@@ -1,0 +1,113 @@
+{# empty Twig template #}
+<style>
+    #ContainerMain { overflow:hidden; }
+    .titleMain {
+        position: absolute;
+        top: 15%;
+        left: 50%;
+        width: 800px;
+        margin-left: -400px;
+        z-index: 2;
+        -webkit-animation-name: Floatingx;
+        -webkit-animation-duration: 3s;
+        -webkit-animation-iteration-count: infinite;
+        -webkit-animation-timing-function: ease-in-out;
+        -moz-animation-name: Floating;
+        -moz-animation-duration: 3s;
+        -moz-animation-iteration-count: infinite;
+        -moz-animation-timing-function: ease-in-out;
+    }
+
+    @-webkit-keyframes Floatingx{
+        from {-webkit-transform:translate(0, 0px);}
+        65% {-webkit-transform:translate(0, 20px);}
+        to {-webkit-transform: translate(0, -0px);    }    
+    }
+
+    @-moz-keyframes Floating{
+        from {-moz-transform:translate(0, 0px);}
+        65% {-moz-transform:translate(0, 20px);}
+        to {-moz-transform: translate(0, -0px);}    
+    }
+    .pressStart {
+        position: absolute;
+        top: 60%;
+        margin-top: 50px;
+        width: 100%;
+        text-align: center;
+        
+        font-size: 30px;
+        font-family:'gorditas';
+        
+        color: white;
+        text-shadow:
+            -1px -1px 0 #000,  
+             1px -1px 0 #000,
+             -1px 1px 0 #000,
+              1px 1px 0 #000;
+        z-index:2;
+        -moz-transition: all 0.75s ease-in-out;
+        -ms-transition: all 0.75s ease-in-out;
+        -o-transition: all 0.75s ease-in-out;
+        -webkit-transition: all 0.75s ease-in-out;
+        transition: all 0.75s ease-in-out;
+    }
+    .pressStart:hover { 
+        color:lightblue; 
+        transform:scale(1.2,1.2);
+        -ms-transform:scale(1.2,1.2); /* IE 9 */
+        -webkit-transform:scale(1.2,1.2); /* Opera, Chrome, and Safari */
+    }
+    .step { position:absolute; display:none; width:100px; height:100px;}
+</style>
+<img class='titleMain' src="http://img.drawnimals.com/icons/sitelogomain.png"/>
+<a href="javascript:MENU.Game.Login();" class="pressStart">Press Start</a>
+
+<script>
+    $('#SiteWrapper').addClass('blackOut');
+    function calcArc (time, start, control, end) {
+        var pos = {};
+        pos.x = (1 - time) * (1 - time) * start.x + 2 * (1 - time) * time * control.x + time * time * end.x;
+        pos.y = (1 - time) * (1 - time) * start.y + 2 * (1 - time) * time * control.y + time * time * end.y;
+        return pos;
+    }
+    function calcAngle (start, end) {
+        var deltaY = end.y - start.y;
+        var deltaX = end.x -start.x;
+        return Math.atan2(deltaY, deltaX) * 180 / Math.PI;
+    }
+    setTimeout(function () {
+        $('#ContainerMain .step').remove();
+        if (MENU.content.url !== "ajax/game/titlescreen.php?") return;
+        var start = {}, end = {};
+        
+        start.x = Math.random()*100; end.x = Math.random()*100;
+        while(Math.abs(start.x-end.x) < 40) {
+            start.x = Math.random()*100; end.x = Math.random()*100;
+        }
+        start.y = Math.random()*100; end.y = Math.random()*100;
+        while(Math.abs(start.y-end.y) < 40) {
+            start.y = Math.random()*100; end.y = Math.random()*100;
+        }
+        var mid = {};
+        mid.x = ((start.x + end.x) / 2) + ((Math.random()*50)-25); mid.y = ((start.y + end.y) / 2) + ((Math.random()*50)-25);
+        
+        for (var i = 0; i < 10; i += 1) {
+            var img = "http://img.drawnimals.com/icons/sitelogomain-paws.png";
+            
+            if ((i%2) === 0) {
+                img = "http://img.drawnimals.com/icons/sitelogomain-paws2.png";
+            } 
+            var pos = calcArc(i/10, start, mid, end);
+            var deg = calcAngle(calcArc((i/10)-0.1, start, mid, end),pos);
+            var elem = $('<img class="step" style="left:' + pos.x + '%; top:' + pos.y + '%; transform:rotate('+deg+'deg);-ms-transform:rotate('+deg+'deg); -webkit-transform:rotate('+deg+'deg);" src="' + img + '"/>');
+            elem.appendTo($('#ContainerMain'));
+            elem.delay((i*190))
+                    .fadeIn(25)
+                    .delay(70*(i*5))
+                    .fadeOut(1000);
+        } 
+        setTimeout(arguments.callee ,6500);
+    }, 1000);
+    
+</script>

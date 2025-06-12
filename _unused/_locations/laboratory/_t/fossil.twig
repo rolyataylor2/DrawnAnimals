@@ -1,0 +1,17 @@
+{# empty Twig template #}
+<div class='page location'>
+    <h1>Fossil Machine</h1>
+    <article>
+        <center><img src='http://www.drawnimals.com/img/_locations/images/fossil.png'/></center>
+        <sub>Crazy invention that Prof Oak is borrowing. Supposedly it can turn fossil's into pokemon using DNA extracted from the fossil.
+            It doesn't seem like it will work... Select a fossil from below to try it out.</sub>
+        <form method='post'>
+            <input type="hidden" name='token' value='{{ TOKEN }}'/>
+            
+            <center><br/>
+                You have no fossils...<br/><br/>
+                <input type='submit' value='Insert Fossil and Turn it on!'/>
+            </center>
+        </form>
+    </article>
+</div>

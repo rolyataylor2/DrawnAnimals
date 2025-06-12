@@ -1,0 +1,104 @@
+<form action='' method='post' enctype="multipart/form-data">
+    <input type='hidden' name='token' value='{{ TOKEN }}'/>
+    <input type='hidden' name='id' value='{{ LOCATION.id }}'/>
+    <div class="page monsterEdit">
+        <h1>Map Editor: {{ LOCATION.name|title }} <a href="http://PokeWorlds.com/location.php?g=testmap&id={{ LOCATION.id }}">Test Map</a><input style='float:right;' type='submit' value='Save'/> </h1>
+        <article>
+            <sub>
+                Before you start here please consider the following when makeing maps!
+                <ul>
+                    <li>Maps are created using the <a target="_new" href="http://www.mapeditor.org/">Tiled Map Making Software</a></li>
+                    <li>To get the JSON file to upload open your map in tiled, Select File->Export As...->Choose Save As Type [Json files]->Save</li>
+                    <li>Upload all the tilesets that were used in your map.</li>
+                    <li style="color:red;">Tilesets used must have original names! No forest/tileset.png and mountain/tileset.png! This will mess up the processing of the map</li>
+                    <li style="color:red;">Only use tile layers, Objects will be added later during runtime.</li>
+                    <li style="color:red;">Normal Tile Size is 32x32, if you have different sized tiles then the map may look funky.</li>
+                </ul>
+            </sub>
+            <label class="styleSection">
+                Name<input name="name" type="text" value="{{ LOCATION.name }}"/>
+                <sub>The name of the map that appears when you goto the map.</sub>
+            </label>
+            <label class="styleSection">
+                Reference<input name="ref_id" type="text" value="{{ LOCATION.ref_id }}"/>
+                <sub>Reference used for warping to this map.</sub>
+            </label>
+            <label class="styleSection">
+                Region
+                <select id='region' name='region'>
+                    <option value='0'>-</option>
+                    {% for i in REGIONS %}<option value='{{ i.id }}' {% if LOCATION.region ==i.id%}selected{% endif %}>{{ i.name }}</option>{% endfor %}
+                </select>
+                <sub>Current Region this is assigned to.</sub>
+                <label>X:<input type="text" name="region_x" value="{{ LOCATION.region_x }}"/></label>
+                <label>Y:<input type="text" name="region_y" value="{{ LOCATION.region_y }}"/></label>
+                <sub>Maps location on the region map. This should be edited using the region editor tho...</sub>
+            </label>
+            
+            <label class="styleSection">
+                Start Here?<input name="start" type="text" value="{{ LOCATION.start }}"/>
+                <sub>Is this the entry point for the Region.</sub>
+            </label>
+            <label class="styleSection">
+                Icon
+                <input name="minimap_icon" type="text" value="{{ LOCATION.minimap_icon }}"/>
+                <sub>Icon used for minimap.</sub>
+                <label>X:<input type="text" name="minimap_x" value="{{ LOCATION.minimap_x }}"/></label>
+                <label>Y:<input type="text" name="minimap_y" value="{{ LOCATION.minimap_y }}"/></label>
+                <sub>Minimap Location.</sub>
+            </label>
+            <label class="styleSection full">
+                Description<textarea name="description">{{ LOCATION.description }}</textarea>
+            </label>
+            <div style='clear:both;'></div>
+        </article>
+        <h2>Wild Pokemon</h2>
+        <article>
+            {{ WILDPOKEMONLIST|raw }}
+            <sub>
+                Pokemon entered on here will appear in the grass/water/fishing or wherever in this location.
+                In addition to the species you can set what levels these pokemon will appear. 
+                Factors influencing the frequency of encounters is determined by the species, not the location.
+            </sub>
+        </article>
+        <h2>Environment</h2>
+        <article>
+            <label><b>Chance(%) for Percipitation</b>
+                <input type="text" name="rain" value="0"/>
+            </label>
+            <label><b>Chance(%) for Storm</b>
+                <input type="text" name="rain" value="0"/>
+            </label>
+            <label><b>Chance(%) for Percipitation</b>
+                <input type="text" name="rain" value="0"/>
+            </label>
+            <label>
+                <b>Background Music</b>
+                <select>
+                    <option>Upload Mp3</option>
+                </select>
+            </label>
+            <div style="clear:both"></div>
+        </article>
+        <h2>Edit Current Tilemap</h2>
+        <article>
+            <ul class="styleSection" style="list-style:none; width:47%; padding:1%; margin:1%; display:inline-block; -moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box;">
+                <li>Select Player Layer </li>
+                {% for i in LAYERS %}<li><input type="radio" name="playerlayer" value="{{ loop.index0 }}" {% if loop.index0 == PLAYERLAYER %}checked="checked"{% endif %}/>{{ i['name'] }}</li>{% endfor %}
+                <li style=" font-size:11px; color:#999;"><sub>(player will appear equal depth to the selected layer but below the next layer, equal to means the layer is treated like a object layer. This works for like sign posts and such.)</sub></li>
+                <li style="margin-top:10px;">Upload A New Tiled .JSON file</li>
+                <li><input type="file" name="jsonfile" style="width:100%; clear:both;"/></li>
+                <li style="margin-top:10px;">Upload Tilesets</li>
+                <li>
+                    <input type="file" name="tilesets[]"  style="width:100%; clear:both;"/>
+                    <sub><a href="javascript:" onclick="$('<input type=\'file\' name=\'tilesets[]\'  style=\'width:100%; clear:both;\'/>').insertBefore($(this).parent());">Add Another</a></sub>
+                </li>
+            </ul>
+            <label class="styleSection">
+                <img style="max-width:300px; max-height:500px;" src="http://PokeWorlds.com/img/location/previews/{{ LOCATION.id }}.png"/>
+                <img style="max-width:300px; max-height:200px;" src="http://PokeWorlds.com/img/location/tileset/{{ LOCATION.id }}.png"/>
+            </label>
+            <div style="clear:both"></div>
+        </article>
+    </div>
+</form>

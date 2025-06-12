@@ -1,0 +1,200 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Drawnimals&trade; Virtual Pet Site!</title>
+        <meta name="description" content="Explore a huge role playing game filled with cute virtual animals similar to popular franchises like Pokemon, or Monster Hunter.
+                                          Create your own animals and share with friends. Build up your animals stats and battle them against other users and
+                                          the leaders of the world to earn collectables.
+                                          Will your Drawnimal&trade; be the most famous animal, or will it become the most infamous! Find out at Drawnimals.com">
+        <meta name="keywords" content="nintendo, fangame, create, explore, worlds, pets, pet, games, game, chat, fun, prizes, play, kids, pokemon, fakemon, mmo, rpg, virtual pet, pet, cute">
+        <meta http-equiv="cleartype" content="on">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+        
+        <style>{% include 'html/core.min.css' %}</style>
+        <link rel="stylesheet" type="text/css" media="only screen and (max-width: 800px)" href="mobile.css.min.css"/>
+        
+        {#<script src="js/stats.min.js"></script>#}
+        <script src="js/chart.min.js"></script>
+        <script src="js/jquery.min.js"></script>
+        <script src="js/jquery.keypress.min.js"></script>
+        <script src="js/jquery.autocomplete.min.js"></script>
+        {#<script src="js/hammer.min.js"></script>#}
+        <script src="js/socket.io.min.js"></script>
+        <script src="js/pixi.min.js"></script>
+        <script src="js/game.min.js"></script>
+        {#<script src="js/game.space.min.js"></script>#}
+        {#<script src="js/game.rpg.min.js"></script>#}
+        {#<script src="js/game.dungeon.min.js"></script>#}
+        <script src="js/battleScript.min.js" async></script>
+        <script src="js/helper.min.js"></script>
+        <script>
+            window.addEventListener('load', function() {
+                game = new gameSystem();
+                {% if USERNAME|length > 0 %}
+                    {% if NETWORKKEY|length > 0 %}
+                            game.network._connect('{{ USERNAME|lower }}', '{{ NETWORKKEY }}');
+                            game.network.Recieve('C', OnlineRecieveChat);
+                            game.network.NewPlayerCallback(OnlineUserJoined);
+                            game.network.LeavePlayerCallback(OnlineUserLeft);
+                            game.network.UpdatePlayerCallback(OnlineUserUpdate);
+                    {% endif %}
+                    if (gameInitFunction !== void 0) gameInitFunction();
+                {% endif %}
+
+                // Close menu
+                $(document).click(function() { $('.open').removeClass('open'); });
+                
+                // Fade in updates
+                var timeout=1000;
+                $('aside#B>section>.update').each(function(index,element) {
+                    var hold = (Math.random()*5000)+8000;
+                    if (index !== 10)
+                        $(element).delay(timeout).fadeIn(1000).delay(hold).fadeOut(1000);
+                    else
+                        $(element).delay(timeout).fadeIn(1000).delay(hold).fadeOut(1000,function() {
+                            console.log('load more updates!');
+                        });
+                    timeout += hold+2500;
+                });
+                
+                $(document).scroll(function() {
+                    var yPos = -($(document).scrollTop() / 3)-200; 
+
+                    // Put together our final background position
+                    var coords = '50% '+ yPos + 'px';
+
+                    // Move the background
+                    $('html').css('background-position', coords );
+                }); 
+                $(document).scroll();
+               
+                //new Hammer($(document)[0]).on("dragright",SwipeRight).on('dragleft',SwipeLeft);
+                
+                //Extras
+                {{ ONLOAD|raw }}
+            });
+            (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+            })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+            ga('create', 'UA-6651935-2', 'drawnimals.com');
+            ga('require', 'displayfeatures');
+            ga('send', 'pageview');
+            
+            function SwipeLeft(event) {
+                if (!$('#D').hasClass('open')) $('#B').addClass('open');
+                else $('#D').removeClass('open');
+            };
+            function SwipeRight(event) {
+                if (!$('#B').hasClass('open')) $('#D').addClass('open');
+                else $('#B').removeClass('open');
+            };
+          </script>
+    </head>
+    <body>
+        <div id="fb-root"></div>
+        <script>window.fbAsyncInit = function() {
+            FB.init({
+              appId      : '1490534561177998',
+              xfbml      : true,
+              version    : 'v2.0'
+            });
+          };(function(d, s, id){
+             var js, fjs = d.getElementsByTagName(s)[0];
+             if (d.getElementById(id)) {return;}
+             js = d.createElement(s); js.id = id;
+             js.src = "//connect.facebook.net/en_US/sdk.js";
+             js.async=1;
+             fjs.parentNode.insertBefore(js, fjs);
+           }(document, 'script', 'facebook-jssdk'));</script>
+        <div id="M">
+            
+            <section id="N"><img src="img/notify.png"/><header></header><article></article></section>
+            <div id="inlinePopupContainer" onclick="inlinePopupClose();"></div>
+            <div id="inlinePopup"></div>
+
+            <div id="A">
+                {{ BODY|raw }}
+            </div>
+            <aside id="D">
+                <a href="http://PokeWorlds.com"><img style="width:120%; margin:5px 10px;" src='http://PokeWorlds.com/img/siteTitleLogo.png'/></a>
+                <section>
+                    <h2>Game Content</h2>
+                    <a href="http://PokeWorlds.com/play.php?g=Moves&by=all">Moves</a>
+                    <a href="http://PokeWorlds.com/play.php?g=Trainers&by=all">Trainers</a>
+                    <a href="http://PokeWorlds.com/play.php?g=Items&by=all">Items</a>
+                    <a href="http://PokeWorlds.com/play.php?g=Abilities&by=all">Abilities</a>
+                    <a href="http://PokeWorlds.com/play.php?g=Monsters&by=all">Monsters</a>
+                    <a href="http://PokeWorlds.com/play.php?g=Regions&by=all">Regions</a>
+                </section>
+            </aside>
+            <aside id="B">
+                {% if USERNAME|length > 0 %}
+                    <section>
+                        <h2><a href='http://PokeWorlds.com/user.php?id={{ USERNAME }}'>{{ USERNAME }}</a><a href="http://PokeWorlds.com/logout.php" style="font-size:10px; float:right; margin:4px;">Logoff</a></h2>
+                        <div class='menu'>
+                            <a href="http://PokeWorlds.com/inventory.php">Inventory</a>
+                            <a href="http://PokeWorlds.com/messages.php">Messages</a>
+                            <a href="http://PokeWorlds.com/user.php?id={{ USERNAME }}&friends">Friends</a>
+                        </div>
+                        <div class="team">
+                            {% for i in MYTEAM %}
+                                <a href="http://PokeWorlds.com/mon.php?id={{ i.id }}" >
+                                    <img src="http://PokeWorlds.com/img/_games/Monster Dex/uploads/{{ i.sid }}.g_3.c_.png" {% if i.hp == 0 %}class="dead"{% endif %}/>
+                                </a>
+                            {% endfor %}<br/>
+                            <a href='http://PokeWorlds.com/team.php'>More Drawnimals</a>
+                        </div>
+                        <a>Coins: {{ notifyCoins }} - Cash: {{ notifyCash }}</a>
+                        {% if notifyMessageCount != 0 %}
+                        <a style="padding:5px 0px;" href="http://PokeWorlds.com/messages.php"><img style="vertical-align: middle;" src="img/notifyMessages.png"/> {{ notifyMessageCount }} New Message(s)!</a>
+                        {% endif %}
+                        {% if notifyFriendRequestCount != 0 %}
+                        <a style="padding:5px 0px;" href="http://PokeWorlds.com/messages.php"><img style="vertical-align: middle;" src="img/notifyFriend.png"/> {{ notifyFriendRequestCount }} Friend Request(s)!</a>
+                        {% endif %}
+                        {% if notifyChallangeCount != 0 %}
+                        <a style="padding:5px 0px;" href="http://PokeWorlds.com/messages.php"><img style="vertical-align: middle;" src="img/notifyBattle.png"/> {{ notifyChallangeCount }} Challanges!</a>
+                        {% endif %}
+                        {% if notifyMessageCount == 0 and notifyFriendRequestCount == 0 and notifyChallangeCount == 0%}
+                        <a style="padding:5px 0px;">No notifications</a>
+                        {% endif %}
+                        
+                    </section>
+                {% else %}
+                    <section>
+                        <h2>Join Now!</h2>
+                        <a href="http://PokeWorlds.com/register.php"><img src="img/ads/300rect.png" style="margin: 0px auto; width:275px; display:block;"/></a>
+                        <h2>Login</h2>
+                        <form action="http://PokeWorlds.com" method="post">
+                            <label style="display:block; clear:both;">Username:</br><input type="text" name="username"/></label>
+                            <label style="display:block; clear:both;">Password:</br><input type="password" name="pass"/></label>
+                            <input type="submit" value="Login"/><button type="button" onclick="window.location.href ='http://PokeWorlds.com/register.php';">Register</button>
+                        </form>
+                        <center>--or--</center>
+                        <div class="fb-login-button" data-max-rows="1" data-size="small" data-show-faces="false" data-auto-logout-link="false"></div>
+                    </section>
+                {% endif %}
+                
+                {% if USERNAME|length > 0 %}
+                    <section>
+                        <h2>Chat</h2>
+                        <section id='C'>
+                            <ul id="chat-"></ul>
+                            <input type="text" onkeydown="OnlineSendChat(event);"/>
+                            <select id="rooms"><option>--Global Chat--</option></select>
+                        </section>
+
+                        <section>
+                            <div id="onlineNowList"></div>
+                        </section>
+                    </section>
+                {% endif %}
+                
+                <section style="clear:both; min-height:64px; margin-top:5px; overflow:hidden;">{% for i in SIDEBARUPDATES %}<article class="update">{{ i|raw }}</article>{% endfor %}</section>
+                
+            </aside>
+
+        </div>
+
+    </body>
+</html>

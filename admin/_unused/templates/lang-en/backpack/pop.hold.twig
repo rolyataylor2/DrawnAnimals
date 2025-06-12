@@ -1,0 +1,34 @@
+<style>
+    .Drawnimal,
+    .Drawnimal > tbody > tr,
+    .Drawnimal > tbody > tr > td {
+        height:48px;
+    }
+</style>
+<div class="items">
+    {% if SCRIPT_ERROR|length > 0 %}
+        <div class="error">{{ SCRIPT_ERROR|raw }}</div>
+    {% elseif SCRIPT_OUTPUT|length > 0 %}
+        {{ SCRIPT_OUTPUT }}
+        <script>MENU.content.reload();</script>
+    {% else %}
+    <div class="name">{{ NAME|title }}</div>
+    <div class="options">
+        <div onclick="MENU.Backpack.View('id={{ ID }}');">Back</div>
+    </div>
+    <img class="itemimage" src="http://img.drawnimals.com/items/{{ NAME }}.png"/>
+    <div class="description">{{ DESCRIPTION|raw }}</div>
+    <div class="selection">
+
+            Click on a member of your party to give them this item to hold onto.<br/>
+            This Item will sometimes give your Drawnimal abilities they did not have before.<br/>
+            If they are holding an item it will be returned to your inventory.<br/>
+            {% for pet in DRAWNIMALS %}
+                <div style="float:left; width:50%; margin:10px 0;">{{ pet|raw }}</div>
+            {% endfor %}
+        
+        <div style="clear:both"></div>
+    </div>
+    {% endif %}
+    <div style="clear:both"></div>
+</div>

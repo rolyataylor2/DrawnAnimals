@@ -1,0 +1,60 @@
+{# empty Twig template #}
+<div class="PlyrExperianceLarge">
+    <canvas id="Plyr{{ PLYR }}ExperianceLarge" width="400" height="400"></canvas>
+    <div id="Plyr{{ PLYR }}ExperianceLarge-TypeName"></div>
+    <script>
+        setTimeout(function() {
+            var ctx = $('#Plyr{{ PLYR }}ExperianceLarge')[0].getContext('2d');
+            var types = { 
+                            {% for i in range(0,16,1) %} 
+                                {{ TypeName[i] }}:'{{ TypeColor[i] }}',
+                            {% endfor %}
+                            {{ TypeName[17] }}:'{{ TypeColor[17] }}'
+                        }
+
+            $('#Plyr{{ PLYR }}ExperianceLarge').mousemove( function(e) {
+                var mouseX, mouseY;
+                if(e.offsetX) { 
+                    mouseX = e.offsetX; mouseY = e.offsetY;
+                } else if(e.layerX) {
+                    mouseX = e.layerX; mouseY = e.layerY;
+                }
+                var c = ctx.getImageData(mouseX, mouseY, 1, 1).data;
+                c = RGB2Color(c[0],c[1],c[2]);
+                if (c === '#000000' || c === '#FFFFFF') {
+                    $('#Plyr{{ PLYR }}ExperianceLarge-TypeName').hide(100);
+                    return;
+                }
+
+                var typename=null;
+                for (var name in types) {
+                    if (types[name] === c.toLowerCase()) {
+                        typename = name;
+                        break;
+                    }
+                }
+                if (typename===null) return;
+                $('#Plyr{{ PLYR }}ExperianceLarge-TypeName').html(typename).show(100).css('left',mouseX).css('top',mouseY);
+            });
+           var data = [
+                {% for i in range(0,16,1) %} 
+                    { value:{{ Type[i] }}, color:'{{ TypeColor[i] }}'},
+                {% endfor %}
+                { value:{{ Type[17] }},
+                color:'{{ TypeColor[17] }}'}
+           ];
+
+           new Chart(ctx).PolarArea(data,{ 
+                animateScale : true, 
+                animateRotate : false,	
+                animationEasing : "easeOutQuart",
+                scaleShowLabels : false,
+                segmentShowStroke : false,
+                scaleOverride : true,
+                scaleSteps : 3,
+                scaleStepWidth : 1000,
+                scaleStartValue : 0
+           });
+        },100);
+    </script>
+</div>

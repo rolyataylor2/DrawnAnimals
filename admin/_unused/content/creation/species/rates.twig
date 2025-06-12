@@ -1,0 +1,27 @@
+{# empty Twig template #}
+<h1>Base Stats</h1>
+<sub>Editing Rates for <b>{{ SPECIES }}</b>. All values should be between 0-255.</sub>
+{% if SCRIPT_OUTPUT|length > 0 %}
+    <center>
+        <img width="256" src="{{ IMGPATH|raw }}"/><br/>
+        {{ SCRIPT_OUTPUT }}
+    </center>
+{% else %}
+    <form onsubmit="return MENU._popupReloadFileForm($(this));">
+        {% if SCRIPT_ERROR|length > 0 %}
+            <div class='error'>{{ SCRIPT_ERROR|raw }}</div>
+        {% endif %}
+        <input type="hidden" name="species" value="{{ SPECIES }}"/>
+        <input type="hidden" name="form" value="{{ FORM }}"/>
+        <input type="hidden" name="token" value="{{ TOKEN }}"/>
+        <label>Gender Rate (0=female, 255= male, 256=none)<input name="rate_gender" type='text' value="{{ RATE_GENDER }}"/></label>
+        <label>Hatch Rate (0=Quick, 255=slow)<input name="rate_hatch" type='text' value="{{ RATE_HATCH }}"/></label>
+        <label>Catch Rate (0=impossible, 255=easy)<input name="rate_catch" type='text' value="{{ RATE_CATCH }}"/></label>
+        <label>Level Rate (0=Slow, 255=fast)<input name="rate_level" type='text' value="{{ RATE_LEVEL }}"/></label>
+        <label>Mood Rates</label>
+        <label>Hunger Rate (0=Slow, 255=fast)<input name="rate_hunger" type='text' value="{{ RATE_HUNGER }}"/></label>
+        <label>Energy Rate (0=Slow, 255=fast)<input name="rate_energy" type='text' value="{{ RATE_ENERGY }}"/></label>
+        <label>Friendship Rate (0=Slow, 255=fast)<input name="rate_friendship" type='text' value="{{ RATE_FRIENDSHIP }}"/></label>
+        <input type="submit" value="Save"/>
+    </form>
+{% endif %}

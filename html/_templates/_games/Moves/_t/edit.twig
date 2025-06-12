@@ -1,0 +1,28 @@
+<form action='' method='post'>
+    <input type='hidden' name='token' value='{{ TOKEN }}'/>
+    <input type='hidden' name='id' value='{{ MOVE.id }}'/>
+    <div class="page monsterEdit">
+        <h1>Move Editor: {{ MOVE.name|title }} <input style='float:right;' type='submit' value='Save'/> </h1>
+        <article>
+            <label class="styleSection">Name<input name="name" type="text" value="{{ MOVE.name }}"/></label>
+            <label class="styleSection">Power<input name="power" type="text" value="{{ MOVE.power }}"/></label>
+            <label class="styleSection">PP<input name="pp" type="text" value="{{ MOVE.pp }}"/></label>
+            <label class="styleSection">Speed<input name="speed" type="text" value="{{ MOVE.speed }}"/></label>
+            <label class="styleSection">Accuracy<input name="accuracy" type="text" value="{{ MOVE.accuracy }}"/></label>
+            <label class="styleSection">Target<input name="target" type="text" value="{{ MOVE.target }}"/></label>
+            <label class="styleSection">DamageType<input name="damagetype" type="text" value="{{ MOVE.damage_type }}"/></label>
+            <label class="styleSection">Type<select name="type">{% for i in TYPES %}<option value="{{ loop.index0 }}" {% if loop.index0==MOVE.type %}selected{% endif %}>{{ i|title }}</option>{% endfor %}</select></label>
+            
+            <label class="styleSection">Description<textarea name="description">{{ MOVE.description }}</textarea></label>
+            
+            <div style='clear:both;'></div>
+        </article>
+        <h2>Code Editor</h2>
+        <article>
+            {{ CODETABLE|raw }}
+        </article>
+        <article>
+            {{ MOVE.script }}
+        </article>
+    </div>
+</form>

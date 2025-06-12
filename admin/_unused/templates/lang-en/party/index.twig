@@ -1,0 +1,29 @@
+<div class="body">
+    <sub>
+        Here are the members of your team. Click on one of your Drawnimals to view more information about it. Any other Drawnimals you have
+        caught will be in the Daycare. You can change the members of your team by visiting the daycare.
+    </sub>
+    <div style='float:left; width:100%; height:10px;'></div>
+    {% for pet in DRAWNIMALS %}
+        <div style='float:left; height:120px; width:50%; margin:0; padding:0;'>
+            {{ pet|raw }}
+        </div>
+    {% endfor %}
+    <div style="clear:both;"></div>
+</div>
+<script>
+    var html = '<div class="button" class="back" onclick="MENU.Game.Play();">&lt; To Game</div><div class="title">Party Members</div><ul onclick="$(this).toggleClass(\'open\');">';
+        html +='<li class="title">Drawnimals</li>';
+        html +='<li class="selected" onclick="MENU.Party.Team();">My Team</li>';
+        html +='<li onclick="MENU.Party.Daycare();">In The Daycare</li>';
+        html +='<li class="title">Players</li>';
+        html +='<li onclick="MENU.Party.Friends();">Friends</li>';
+        html +='<li onclick="MENU.Party.Passersby();">Passersby</li>';
+        html +='<li onclick="MENU.Party.Rivals();">Rivals</li>';
+        html +='</ul>';
+        $('#settingsMenu').html(html);
+        $('li:not(.title)').attr('onclick',function() {
+            return $(this).attr('onclick')+" $(this).addClass('selected').siblings().removeClass('selected');";
+        });
+
+</script>

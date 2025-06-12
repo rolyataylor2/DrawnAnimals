@@ -1,0 +1,28 @@
+<table class="datatable">
+    <thead>
+        <tr>
+            <td>Trainer</td>
+            <td style='width:48px;'>Team Members</td>
+            <td style='width:48px;'></td>
+            <td style='width:48px;'></td>
+            <td style='width:48px;'></td>
+            <td style='width:48px;'></td>
+            <td style='width:48px;'></td>
+        </tr>
+    </thead>
+    <tbody>
+        {% for i in TRAINERS %}
+            <tr>
+                <td>
+                    <a href="#" onclick="MENU.Sketchbook.TrainersEdit('id={{ i.id }}');">{{ i.name|title }}</a>
+                </td>
+                {% for ii in i.TEAM %}
+                <td><img width='48' src='{{ ii.imageURL }}'/>Lv. {{ ii.level }}</td>
+                {% endfor %}
+                {% for ii in (i.TEAM|length)..5 %}
+                <td>None</td>
+                {% endfor %}
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>

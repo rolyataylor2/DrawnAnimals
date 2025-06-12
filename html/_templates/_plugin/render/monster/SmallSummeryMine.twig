@@ -1,0 +1,15 @@
+{# NAME,LEVEL,GENDER,CAUGHT,HPGUAGE|RAW
+    create a div for each passed argument, if argument == '' then dont add the div.
+ #}
+<div class='DrawnimalSmallSummeryMine' onclick="{{ ONCLICK|raw }}">
+    <div class='name'>
+        {{ NAME }}
+        <img src='res/img/icons/gender{{ GENDER }}.png'/>
+    </div>
+    <div class='level'>
+        Lv. {{ LEVEL }}
+    </div>
+    <img class="image" src="{{ IMAGEURL }}"/>
+
+    {{ HPGUAGE | raw }}
+</div>

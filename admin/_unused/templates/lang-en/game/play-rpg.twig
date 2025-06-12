@@ -1,0 +1,20 @@
+<div id="RPGContainer"></div>
+
+<script>
+    var html = '<div class="button" onclick="MENU.Party.Index();">Party</div>'+
+            '<div class="button" onclick="MENU.Backpack.Index();">Bag</div>'+
+            '<div class="button" onclick="MENU.Messages.Index();">Letters</div>'+
+            '<div class="button" onclick="MENU.Journel.Index();">Journal</div>'+
+            '<div class="button" onclick="MENU.Sketchbook.Index();">Sketchbook</div>';
+    $('#settingsMenu').html(html);
+    
+    if (typeof PLYR === 'undefined') {
+        //GAME.Objects.Add(new GAMEOBJECT());
+        PLYR = new playerObject();
+        
+        GAME.Objects.add(PLYR);
+        GAME.Camera.followObject(PLYR.Sprite);
+    }
+    $('#SiteWrapper').removeClass('blackOut');
+    GAME.Camera.bindToElement($('#RPGContainer'));
+</script>

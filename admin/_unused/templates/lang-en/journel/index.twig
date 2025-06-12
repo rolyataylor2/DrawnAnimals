@@ -1,0 +1,21 @@
+
+<div class="body">
+    {% include 'journel/body.quests.twig' %}
+</div>
+
+<script>
+    var html = '<div class="button" class="back" onclick="MENU.Game.Play();">&lt; To Game</div><div class="title">Journel</div><ul onclick="$(this).toggleClass(\'open\');">';
+    html +='<li class="title">Bookmarks</li>';
+    html +='<li class="selected" onclick="MENU.Journel.Quests();">Quests</li>';
+    html +='<li onclick="MENU.Journel.Drawnimals();">Drawnimals</li>';
+    html +='<li onclick="MENU.Journel.Trainers();">Trainers</li>';
+    html +='<li onclick="MENU.Journel.RegionLeaders();">Region Leaders</li>';
+    html +='<li onclick="MENU.Journel.ItemCatalog();">Item Catalog</li>';
+    html +='<li onclick="MENU.Journel.BattleRank();">Battle Rank</li>';
+    html +='<li onclick="MENU.Journel.Stats();">Experiance</li>';
+    html +='</ul>';
+    $('#settingsMenu').html(html);
+    $('li:not(.title)').attr('onclick',function() {
+        return $(this).attr('onclick')+" $(this).addClass('selected').siblings().removeClass('selected');";
+    });
+</script>

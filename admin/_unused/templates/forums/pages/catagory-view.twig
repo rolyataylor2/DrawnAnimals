@@ -1,0 +1,50 @@
+<table class="table100">
+    <tr class="row-title"><td class="cell100">{{ CATAGORY.title }}</td></tr>
+    <tr class="row-footnote">
+        <td>
+            <table class="table80">
+                <tr><td>This Forum Activity</td><td><a href='?p=nt&pid={{ CATAGORY.id }}'>New Topic</a></td></tr>
+                <tr><td>{{ CATAGORY.description }}</td><td></td></tr>
+            </table>
+
+        </td>
+    </tr>
+</table>
+<table class='table100'>
+        <tr class="row-details">
+            <td></td>
+            <td>Topic</td>
+            <td>Created</td>
+            <td>Last Post</td>
+            <td>Views</td>
+            <td>Replys</td>
+        </tr>
+        {% for top in TOPICS %}
+            <tr class="row-topic">
+                <td></td>
+                <td><a href="?p=t&id={{ top.id }}">{{ top.title }}</a><br/>{{ top.tagline }}</td>
+                <td>{{ top.created_date }}</td>
+                <td>{{ top.lastest_date }}</td>
+                <td>{{ top.count_views }}</td>
+                <td>{{ top.count_replies }}</td>
+            </tr>
+        {% endfor %}
+            <tr>
+                <td>
+                    Page {{ TOPIC_OFFSET/20 }};
+                </td>
+                <td>
+                    {% if TOPIC_OFFSET > 0 %}
+                        <a href='?p=c&pid={{ CATAGORY.id }}&page={{ TOPIC_OFFSET-20 }}'>Previous Page</a>
+                    {% endif %}
+                </td>
+                <td>
+                    {% if COUNT_TOPICS > 19 %}
+                        <a href='?p=c&pid={{ CATAGORY.id }}&page={{ TOPIC_OFFSET-20 }}'>Next Page</a>
+                    {% endif %}
+                </td>
+                <td></td>
+                <td></td>
+                <td><a href='?p=nt&pid={{ CATAGORY.id }}'>New Topic</a></td>
+            </tr>
+</table>

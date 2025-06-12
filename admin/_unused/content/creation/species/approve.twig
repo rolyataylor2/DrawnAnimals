@@ -1,0 +1,8 @@
+{# empty Twig template #}
+<h1>Approve this Drawnimal</h1>
+<sub><b>{{ SPECIES }}</b> - By approving this drawnimal you are sure that all data relevant to this drawnimal is accurate and follows the site rules.</sub>
+<form>
+    <input type="hidden" name="id" value="{{ ID }}"/>
+    <label>Approved<input name="approve" type='checkbox' value="{{ APPROVED }}"/></label>
+    <input type="submit" value="Save"/>
+</form>

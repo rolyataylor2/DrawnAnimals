@@ -1,0 +1,29 @@
+<HTML>
+    <head>
+        <link rel="stylesheet" href="css/default.css">
+    </head>
+    <body>
+        <div class="topBar">
+            <img width="100" class="topLogo">
+            {{ MYBADGE }}
+        </div>
+        <table class="welcomeBar">
+            <tr>
+                <td class="cell100">Welcome {{ USERNAME|raw }}, {{ GREETING|raw }}</td>
+                <td class="cellblock">Search:<input type="text" name="search"/></td>
+            </tr>
+        </table>
+        <table class='navBar'>
+            <tr>
+                <td class='cell100'>
+
+                </td>
+                <td class='cell33'>
+
+                </td>
+            </tr>
+        </table>
+        <div class="contentbar">{{ PAGECONTENTS|raw }}</div>
+        <div class="bottomBar">{{ COPYRIGHT|raw }}</div>
+    </body>
+</HTML>

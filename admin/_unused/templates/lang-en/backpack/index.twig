@@ -1,0 +1,59 @@
+<style>
+    .cashnote {
+width: 95%;
+margin: 10px auto;
+background-color: #727272;
+border-radius: 5px;
+padding: 5px 10px;
+border: 1px solid black;
+color: white;
+    }
+    .cashnote > img {
+height: 100%;
+margin: 0px 10px;
+    }
+</style>
+<div class="body bag">
+    <div class="cashnote">
+        <img src="http://img.drawnimals.com/icons/dollar.png"/>
+        Remember if you need items right away you can always browse the Cash Mall. This shop allows for you to get vital items
+        such as Pokeballs and Revives at any time, even mid battle!
+    </div>
+    {% for item in ITEMS %}
+    <div class="Item cat{{ item.catagory }} cash{{ item.cash }}" onclick="MENU.Backpack.View('id={{ item.id }}');">
+            {% if item.cash == 1 %}
+        <img class="cash" src="http://img.drawnimals.com/icons/dollar.png"/>
+            {% endif %}
+        <img class="icon" src="http://img.drawnimals.com/items/{{ item.name }}.png"/>
+        <div class="name">{{ item.name|title }}</div>
+        <div class="quantity">{{ item.quantity }}</div>
+    </div>
+    {% endfor %}
+    <div style='clear:both;'></div>
+</div>
+<script>
+    function FilterItems(cat) {
+        if (cat > 0) {
+            cat -= 1;
+            $('.Item:not(.cat'+cat+')').hide();
+            $('.Item.cat'+cat+'').fadeIn(100);
+        } else {
+            $('.Item').fadeIn(100);
+        }
+        $(this).addClass('selected').siblings().removeClass('selected');
+    }
+    var html = '<div class="button" class="back" onclick="MENU.Game.Play();">&lt; To Game</div><div class="title">Backpack</div><ul onclick="$(this).toggleClass(\'open\');">';
+    html +='<li class="title">Pocket</li>';
+    html +='<li class="selected" onclick="FilterItems(-1);">All</li>';
+    html +='<li onclick="FilterItems(1);">Medicine</li>';
+    html +='<li onclick="FilterItems(2);">Orbs</li>';
+    html +='<li onclick="FilterItems(3);">Stamps</li>';
+    html +='<li onclick="FilterItems(4);">Food</li>';
+    html +='<li onclick="FilterItems(5);">Key Items</li>';
+    html +='<li onclick="FilterItems(6);">DDollar</li>';
+    html +='</ul>';
+    $('#settingsMenu').html(html);
+    $('li:not(.title)').attr('onclick',function() {
+        return $(this).attr('onclick')+" $(this).addClass('selected').siblings().removeClass('selected');";
+    });
+</script>

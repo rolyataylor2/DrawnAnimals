@@ -1,0 +1,19 @@
+<div class='page'>
+    <h1><img style="height:64px; margin:-22px -10px;" src="http://PokeWorlds.com/img/type{{ MOVE.type }}large.png"/>
+        {{ MOVE.name|title }} (Move)
+        {% if EDIT %}
+            <a href='?g=Moves&p=delete&id={{ MOVE.id }}'>Delete</a>
+            <a href='?g=Moves&p=edit&id={{ MOVE.id }}'>Edit</a>
+        {% endif %}
+    </h1>
+    <article>
+        <label class="styleSection full">{{ MOVE.description }}</label>
+        <label class="styleSection"><b>Power:</b> {{ MOVE.power }}</label>
+        <label class="styleSection"><b>PP:</b> {{ MOVE.pp }}</label>
+        <label class="styleSection"><b>Speed:</b> {{ MOVE.speed }}</label>
+        <label class="styleSection"><b>Accuracy:</b> {{ MOVE.accuracy }}%</label>
+        <label class="styleSection"><b>Target:</b> {{ MOVE.target }}</label>
+        <label class="styleSection"><b>Damage Type:</b> {{ MOVE.damage_type }}</label>
+        <div style='clear:both; text-align:center; font-size:10px; color:red;'>{% if MOVE.script_raw|length == 0 %}This Move isn't fully implemented{% endif %}</div>
+    </article>
+</div>

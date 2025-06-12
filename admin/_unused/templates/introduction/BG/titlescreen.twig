@@ -1,0 +1,34 @@
+{# empty Twig template #}
+<style>
+    .backgroundStartBackground {position:absolute; top:0px; left:0px; right:0px; bottom:0px; 
+        background: rgb(18,39,99); /* Old browsers */
+        background: -moz-linear-gradient(top,  rgba(18,39,99,1) 13%, rgba(32,50,170,1) 58%); /* FF3.6+ */
+        background: -webkit-gradient(linear, left top, left bottom, color-stop(13%,rgba(18,39,99,1)), color-stop(58%,rgba(32,50,170,1))); /* Chrome,Safari4+ */
+        background: -webkit-linear-gradient(top,  rgba(18,39,99,1) 13%,rgba(32,50,170,1) 58%); /* Chrome10+,Safari5.1+ */
+        background: -o-linear-gradient(top,  rgba(18,39,99,1) 13%,rgba(32,50,170,1) 58%); /* Opera 11.10+ */
+        background: -ms-linear-gradient(top,  rgba(18,39,99,1) 13%,rgba(32,50,170,1) 58%); /* IE10+ */
+        background: linear-gradient(to bottom,  rgba(18,39,99,1) 13%,rgba(32,50,170,1) 58%); /* W3C */
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#122763', endColorstr='#2032aa',GradientType=0 ); /* IE6-9 */
+
+    }
+    .backgroundStartClouds0 { position:absolute; top:0px; left:0px; right:0px; bottom:0px;
+              background-repeat:repeat-x; background-position: 0 100%; opacity:0.75;
+              background-size:300%;
+             background-image:url(img/background/titlescreen/cloud0.png);}
+    .backgroundStartClouds1 { position:absolute; top:0px; left:0px; right:0px; bottom:0px; 
+               background-repeat:repeat-x; background-position: 0 100%; opacity:0.75;
+              background-image:url(img/background/titlescreen/cloud1.png);
+    }
+</style>
+<div class="backgroundStartBackground"></div>
+<div class="backgroundStartClouds0"></div>
+<div class="backgroundStartClouds1"></div>
+<script>
+    function bgcloudanimate() {
+        if ($('.backgroundStartClouds0').length > 0) {
+            $('.backgroundStartClouds0').animate({'background-position':'+=30px 100%'},1000,'linear',bgcloudanimate);
+            $('.backgroundStartClouds1').animate({'background-position':'+=50px 100%'},1000,'linear');
+        }
+    };
+    bgcloudanimate();
+</script>

@@ -1,0 +1,17 @@
+{# empty Twig template #}
+<div class="page">
+    <div id="game" tabindex="0">
+
+    </div>
+    <article>
+
+    </article>
+</div>
+<script>
+    $(window).on('load',InitGameObjects);
+    $(window).on('load',function() {
+        map = new mapObject({{ MAPID }},{{ MAPX }},{{ MAPY }},{{ MAPWIDTH }}, {{ MAPHEIGHT }}); 
+        setTimeout(map.load.bind(map),1000);
+        $('#game').focus();
+    });
+</script>

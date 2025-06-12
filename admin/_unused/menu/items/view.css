@@ -1,0 +1,27 @@
+/** For use with template menu/item/view.html */
+#MenuItemsView
+    {height:100%;text-shadow:1px 1px 3px #000;width:100%}
+#MenuItemsView .description
+    {background:#f8ffab;border:1px dashed #000;border-radius:20px 10px;font-style:italic;margin:10px 2.5%;padding:1%;width:93%}
+#MenuItemsView .description .info
+    {float:left;width:80%}
+#MenuItemsView .description img
+    {float:left;margin:10px 2.5%;width:10%}
+#MenuItemsView .title
+    {border-bottom:2px solid #AAA;font-size:130%;padding:20px 2% 1%;text-align:center;text-shadow:1px 1px 3px #000;width:96%}
+#MenuItemsView .uses
+    {margin:10px 2.5%;padding:10px 0;width:95%}
+#MenuItemsView .uses a
+    {background:#FFF;border-radius:20px;box-shadow:inset 0 0 0 4px #fff,inset 0 0 4px 4px #000,0 0 4px #000;color:#000;float:left;height:64px;line-height:64px;margin:5px 5%;overflow:hidden;width:40%}
+#MenuItemsView .uses a img
+    {float:left;height:54px;margin:5px}
+    
+/** Mobile Version */
+.mobile #MenuItemsView .description .info
+    {text-align:center;width:100%}
+.mobile #MenuItemsView .description img
+    {clear:both;display:block;float:none;margin:10px auto;max-width:150px;width:90%}
+.mobile #MenuItemsView .uses a
+    {float:left;height:auto;line-height:normal;margin:0 5%;padding:10px 0;width:90%}
+.mobile #MenuItemsView .uses a img
+    {float:left;height:24px;margin:0 10px}

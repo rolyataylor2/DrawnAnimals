@@ -1,0 +1,21 @@
+<article style="text-align:center;">
+    {% if USER.me == true %}
+        <article class="update">
+            <textarea id="post"></textarea>
+            <button type="button" onclick="SubmitPost();">Post</button>
+        </article>
+        <script>
+            function SubmitPost() {
+                var text = $('#post').val();
+                if (text.length < 2) return;
+                $('#post').val('');
+                inlineLoad(function(data) {
+                    $('<article class="update">'+data+'</div>').insertAfter('.update:first-of-type');
+                },'postToTimeline',text);
+            }
+        </script>
+    {% endif %}
+    {% for i in UPDATES %}
+        <article class="update">{{ i|raw }}</article>
+    {% endfor %}
+</article>

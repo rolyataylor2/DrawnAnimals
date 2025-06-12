@@ -1,0 +1,15 @@
+<div class='page location'>
+    <h1>{{ LOCATION.name }}</h1>
+    <article>
+        {% include 'html/_templates/_locations/_plugin/dialog.twig' %}
+        <sub>Which Drawnimal do you want to leave in the daycare?</sub>
+        <form>
+            <label class="styleSection full">
+                <b>Drawnimal:</b>
+                <select><option>First one</option></select>
+            </label> 
+            <input type="submit" value="Leave this drawnimal"/>
+        </form>
+        <div style="clear:both"></div>
+    </article>
+</div>

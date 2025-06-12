@@ -1,0 +1,117 @@
+<form id="mapEditorForm" action='' method='post'>
+    <input type="hidden" name="id" value='{{ MAP.id }}'/>
+    <input type="hidden" name="token" value='{{ TOKEN }}'/>
+    <div class='page'>
+        <h1>{{ MAP.name|title }} (Map Collisions) <input style='float:right;' type='submit' value='Save'/></h1>
+        <article>
+            <label id="mapEditor" class="styleSection full" style="position:relative; height:{{ MAP.height/2 }}px;">
+                <img style="position:absolute; top:0px; left:50%; margin-left:-{{ MAP.width/4 }}px; z-index:0;" 
+                     src="http://PokeWorlds.com/img/location/previews/{{ MAP.id }}.png"/>
+                <canvas width="{{ MAP.width/2 }}" 
+                        height="{{ MAP.height/2 }}" 
+                        style="position:absolute; top:0px; left:50%; margin-left:-{{ MAP.width/4 }}px; z-index:1; opacity:0.5;"></canvas>
+            </label>
+            <label id="toolbar" class="styleSection full pallete">
+                <b>Pallate</b><br/>
+                <a href="javascript:" data-tool="0">Nothing</a>
+                <a href="javascript:" data-tool="1">Solid</a>
+                
+                <a href="javascript:" data-tool="2">Water/Encounter (Set 0)</a>
+                <a href="javascript:" data-tool="3">Water/Encounter (Set 1)</a>
+                
+                <a href="javascript:" data-tool="4">Encounter (Set 0)</a>
+                <a href="javascript:" data-tool="5">Encounter (Set 1)</a>
+                <a href="javascript:" data-tool="6">Encounter (Set 2)</a>
+                <a href="javascript:" data-tool="7">Encounter x2 (Set 0)</a>
+                <a href="javascript:" data-tool="8">Encounter x2 (Set 1)</a>
+                <a href="javascript:" data-tool="9">Encounter x2 (Set 2)</a>
+                
+                <a href="javascript:" data-tool="10">Ledge \/</a>
+                <a href="javascript:" data-tool="11">Ledge &gt;&gt;</a>
+                <a href="javascript:" data-tool="12">Ledge &lt;&lt;</a>
+                
+                <a href="javascript:" data-tool="13">Treadmill /\</a>
+                <a href="javascript:" data-tool="14">Treadmill \/</a>
+                <a href="javascript:" data-tool="15">Treadmill &lt;&lt;</a>
+                <a href="javascript:" data-tool="16">Treadmill &gt;&gt;</a>
+                
+                <a href="javascript:" data-tool="17">Ice</a>
+            </label>
+            <sub>If the map doesnt fit on your screen try pressing CTRL+Minus to shrink it down, then press CTRL+Plus to bring the site back to normal</sub>
+            <div style="clear:both;"></div>
+        </article>
+            <style>
+                .pallete a {
+                    width:250px; height:38px; display:inline-block; margin:5px; text-align:center; border-radius:10px; background-color:#333;
+                }
+                .pallete a img {clear:both;}
+                .pallete a.selected {
+                    background-color:lightgreen;
+                }
+            </style>
+    </div>
+</form>
+<script>
+    $(window).on('load',function() {
+        dataImages = [];
+        $('.pallete a').click(function() {
+            $(this).addClass('selected').siblings().removeClass('selected');
+            dataCurrentTool = $(this).data('tool');
+        }).each(function(index,element) {
+            var image = new Image();
+            image.src = "img/location/collision/"+($(element).data('tool')-1)+".png";
+            dataImages.push(image);
+            $(element).append('<br/>');
+            $(image).appendTo(element);
+        });
+        
+        $('#mapEditor>canvas').mousedown(function(e) {
+            var offset = $(this).offset();
+            var relX = e.pageX - offset.left;
+            var relY = e.pageY - offset.top;
+            relY = Math.floor(relY/16);
+            relY *= dataWidth;
+            relY += Math.floor(relX/16);;
+            data[relY] = dataCurrentTool;
+            mapEditorRender();
+            dataCurrentToolDown = true;
+        })
+                              .mousemove(function(e) {
+            if (dataCurrentToolDown) {
+                var offset = $(this).offset();
+                var relX = e.pageX - offset.left;
+                var relY = e.pageY - offset.top;
+                relY = Math.floor(relY/16);
+                relY *= dataWidth;
+                relY += Math.floor(relX/16);;
+                data[relY] = dataCurrentTool;
+                mapEditorRender();
+            }
+        }).mouseleave(function() {dataCurrentToolDown = false;}).mouseup(function() {dataCurrentToolDown = false;});
+        
+        dataCurrentTool = 0;
+        dataCurrentToolDown = false;
+        dataWidth = {{ MAP.width/32 }};
+        dataHeight = {{ MAP.height/32 }};
+        data = {{ MAP.collisions|raw }};
+        function mapEditorRender() {
+            var ctx = $('#mapEditor>canvas')[0].getContext('2d');
+            ctx.clearRect(0,0,dataWidth*16,dataHeight*16);
+            for(var i=0;i<dataWidth;i++) {
+                for(var ii=0;ii<dataHeight;ii++) {
+                    var index = i+(ii*dataWidth);
+                    if (data[index] === void 0 || data[index] === 0 || data[index] === null) continue;
+                    ctx.drawImage(dataImages[data[index]],i*16,ii*16);
+                }
+            }
+        };
+        setTimeout(mapEditorRender,100);
+        function mapEditorSubmit() {
+            var collisionData = JSON.stringify(data);
+            $('#mapEditorForm').append('<input type="hidden" name="collisiondata" value="'+collisionData+'"/>');
+        };
+        $('#mapEditorForm').submit(mapEditorSubmit);
+    });
+    
+    
+</script>

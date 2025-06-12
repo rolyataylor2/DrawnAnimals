@@ -1,0 +1,21 @@
+<!--{#
+    TWIG TEMPLATE
+    VARIABLES:
+        ITEMS array Contains all the items to be displayed.
+            .NAME string The name of the item
+            .IMG string The image of the item
+            .CAT string The catagory of the item
+            .DESC string The Description of the item
+        ITEM_COUNT integer The number of items to be displayed.
+        ITEM_MAX integer The maximum items that can fit in a users bag
+        
+#}-->
+<!DOCTYPE html>
+<div id="MenuItemsIndex">
+    <ul>
+    {% for ITEM in ITEMS %}
+        <li class="itemCat{{ ITEM.CAT }}">{{ ITEM.NAME }}</li>
+    {% endfor %}
+    <ul>
+    <div>Bag Items {{ ITEM_COUNT }} /{{ ITEM_MAX }}</div>
+</div>

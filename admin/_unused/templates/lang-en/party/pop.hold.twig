@@ -1,0 +1,16 @@
+<h1>Hold Item</h1>
+<sub>Select an item to give your Drawnimal. This Item will sometimes give your Drawnimal abilities they did not have before.</sub>
+{% if SCRIPT_OUTPUT|length > 0 %}
+    <center>{{ SCRIPT_OUTPUT }}</center>
+{% else %}
+    What Item would you like to give {{ PETNAME }}?<br/>
+    <form onsubmit="return MENU.popup.reloadForm($(this));">
+        {% if SCRIPT_ERROR|length > 0 %}
+            <div class='error'>{{ SCRIPT_ERROR|raw }}</div>
+        {% endif %}
+        <input type="hidden" name="token" value="{{ TOKEN }}"/>
+        <input type="hidden" name="pid" value="{{ PID }}"/>
+        <select name="id"><option>Not Implemented</option></select>
+        <input type="submit" value="Give"/>
+    </form>
+{% endif %}

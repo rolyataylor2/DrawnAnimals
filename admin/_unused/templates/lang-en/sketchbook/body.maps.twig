@@ -1,0 +1,11 @@
+<table class="datatable">
+    <thead><tr><td>Location Name</td><td>Description</td></tr></thead>
+    <tbody>
+        {% for i in LOCATIONS %}
+        <tr>
+            <td><a href="#" onclick='MENU.Sketchbook.MapsEdit("id={{ i.id }}");'>{{ i.name|title }}</a></td>
+            <td>{{ i.description }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>

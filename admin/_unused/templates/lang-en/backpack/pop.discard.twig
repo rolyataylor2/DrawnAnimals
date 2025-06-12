@@ -1,0 +1,27 @@
+<div class="items">
+    <div class="name">{{ NAME|title }}</div>
+    <div class="options">
+        <div onclick="MENU.Backpack.View('id={{ ID }}');">Back</div>
+    </div>
+    <img class="itemimage" src="http://img.drawnimals.com/items/{{ NAME }}.png"/>
+    <div class="description">{{ DESCRIPTION|raw }}</div>
+    <div class="selection">
+        {% if SCRIPT_ERROR|length > 0 %}
+            <div class="error">{{ SCRIPT_ERROR|raw }}</div>
+        {% elseif SCRIPT_OUTPUT|length > 0 %}
+            {{ SCRIPT_OUTPUT }}
+            <script>MENU.content.reload();</script>
+        {% else %}
+            <form onsubmit="if (confirm('Are you Sure?')) return MENU.popup.reloadForm($(this)); else return false;">
+                <label>By clicking discard you will drop this item and it will vaporize into a puff of smoke and it will not be recoverable.</label>
+                <label>How Many do you want to discard?<input type="text" name="quantity" value="{{ QUANTITY }}" class="number"/></label>
+                <input type="hidden" name="token" value="{{ TOKEN }}"/>
+                <input type="hidden" name="id" value="{{ ID }}"/>
+                <label><input type="submit" value="Discard"/></label>
+            </form>
+        {% endif %}
+    </div>
+    <div style="clear:both"></div>
+</div>
+
+    

@@ -1,0 +1,64 @@
+<h1>View Message</h1>
+{% if SCRIPT_OUTPUT|length > 0 %}
+    <sub>{{ SCRIPT_OUTPUT|raw }}</sub>
+{% else %}
+    {% if SCRIPT_ERROR|length > 0 %}
+        <div class='error'>{{ SCRIPT_ERROR|raw }}</div>
+    {% endif %}
+    <div class="button" style="float:right; margin:3px 5px;" onclick="$('#reply, #report').hide(); $('#delete').toggle();">Delete</div>
+    <div class="button" style="float:right; margin:3px 5px;" onclick="$('#delete, #report').hide(); $('#reply').toggle();">Reply</div>
+    <div class="button" style="float:left; margin:3px 5px;" onclick="$('#reply, #delete').hide(); $('#report').toggle();">Report</div>
+
+    <div class='letters'>
+        <sub>{{ TIMESTAMP }}</sub>
+        <div class='to'>To {{ RECIPIENT }},</div>
+        <div class='content'>{{ LETTER.body|raw }}</div>
+        <div class='from'>From,<br/>{{ SENDER|title }}</div>
+        {% if ITEMNAME|length > 0 %}
+            <div class='attacheditem'>
+                {%if SCRIPT_OUTPUT|length > 0 %}
+                    {{ SCRIPT_OUTPUT|raw }}
+                {% else %}
+                    <img src='img/items/{{ ITEMNAME }}.png'/><br/>
+                    {{ ITEMNAME|title }}<br/>
+                    <a href='#' onclick='MENU.popup.reload("token={{ TOKEN }}&action=item");'>Move to inventory</a>
+                {% endif %}
+            </div>
+        {% endif %}
+    </div>
+
+    <form id="reply" style="display:none;" onsubmit="return MENU.popup.reloadForm($(this));">
+        <input type="hidden" name="token" value="{{ TOKEN }}"/>
+        <input type="hidden" name="action" value="reply" />
+        <input type="hidden" name="subject" value="RE:{{ LETTER.subject }}" />
+        <label>Reply:<textarea name='body' id="content">{{ CONTENT }}</textarea></label>
+        <label><input type="submit" value="Send Reply"/></label>
+    </form>
+    <form id="delete" style="display:none;" onsubmit="return MENU.popup.reloadForm($(this));">
+        <input type="hidden" name="token" value="{{ TOKEN }}"/>
+        <input type="hidden" name="action" value="delete" />
+        <label>Once deleted a message cannot be restored...<input type="submit" value="Delete Message"/></label>
+    </form>
+    <form id="report" style="display:none;" onsubmit="return MENU.popup.reloadForm($(this));">
+        <input type="hidden" name="token" value="{{ TOKEN }}"/>
+        <input type="hidden" name="action" value="report" />
+        <label>What are you reporting about this letter?
+            <select name="type">
+                <option>Spam</option>
+                <option>Inappropriete (Sex, Swearing, Drugs, Violence)</option>
+                <option>Harrasment (Threats, Bothersome)</option>
+                <option>Scam (Bad Trades, Glitches)</option>
+                <option>Other...</option>
+            </select>
+        </label>
+        <label>Notes:<input type="text" name="note"/></label>
+        <label><input type="submit" value="Report"/></label>
+    </form>
+    <script>
+        $('#content').keyup(function() {
+            $(this).height(0)
+            $(this).height(this.scrollHeight-4);
+        });
+    </script>
+{% endif %}
+    

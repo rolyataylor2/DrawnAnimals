@@ -1,0 +1,86 @@
+<table class='entitytable'>
+    <thead>
+        <tr>
+            <td style='width:300px;'>Editing Npc Data</td>
+            <td>
+                Created By ______<br/><br/>
+                <div data-parent='.activation'>Activation Code</div>
+                <div data-parent='.movement'>Movement Timeline</div>
+                <div data-parent='.appearance' class='selected'>Appearance Code</div>
+            </td>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+                <table class="datatable">
+                    <thead><tr><td>Name</td></tr></thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <input type="text"/>
+                                <sub>Changing the name will group the NPC to similar named NPC's</sub>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <table class="datatable">
+                    <thead><tr><td>Notes</td></tr></thead>
+                    <tbody><tr><td><input type="text"/></td></tr></tbody>
+                </table>
+                <table class="datatable">
+                    <thead><tr><td>Page</td><td>Notes</td></tr></thead>
+                    <tbody>
+                        {% for i in 1..10 %}
+                        <tr><td>{{i}}</td><td>Note</td></tr>
+                        {% endfor %}
+                    </tbody>
+                    <tfoot>
+                        <tr><td></td><td><button type='button'>Add New Page</button></td></tr>
+                    </tfoot>
+                </table>
+            </td>
+            <td>
+                <div class="container appearance">
+                    {{ appearance|raw }}
+                    <sub>
+                        The Npc will attempt to appear on the selected days, 
+                        It will follow the schedule you have layed out. 
+                        If you want to create a different pattern then
+                        create another page for this NPC.
+                    </sub>
+                </div>
+                <div class='container movement'>
+                    {{ timeline|raw }}
+                    <sub>
+                        To use this timeline click on the timeline to change the time of day.
+                        Click add to create a <b>Notch</b> on the timeline. To edit the <b>Notch</b> click on it.
+                        To add events to the <b>Notch</b> click the button to the left. To make the NPC visible 
+                        add the <b>Appear</b> event and select a starting position.
+                        To add some movement add a <b>Move To</b> event. If your NPC is entering a house or cave
+                        then add the <b>Disappear</b> event to remove the NPC from the map.
+                        When this NPC is on the map it will follow these patterns. After a <b>Notch</b> has been performed
+                        the NPC will stand stationary until the next <b>Notch</b>. If no <b>Notch</b>es are defined the NPC will
+                        not appear.
+                    </sub>
+                </div>
+                <div class="container activation">
+                    {{ activation|raw }}
+                    <sub>
+                        This is the code that will happen when the NPC is activated. You can define 
+                        triggers such as <b>Talk To, Touch, Step On, Use Move On, Looked At, Saw Player</b>. This code is
+                        the soul of the NPC. Be sure to include something.
+                    </sub>
+                </div>
+            </td>
+        </tr>
+    </tbody>
+</table>
+<script>
+    $('table.entitytable > thead > tr > td > div').click(function() {
+        $('table.entitytable > thead > tr > td > div').removeClass('selected');
+        $('table.entitytable > tbody > tr > td > .container').hide();
+        $($(this).data('parent')).show();
+        $(this).addClass('selected');
+    });
+    </script>

@@ -1,0 +1,17 @@
+<sub>
+    This is the Log of your journeys! Here is a list of all the quests you are currently on. You can view tips on how to complete an active
+    quest by clicking the Help button on the top right corner of the quest entry. You can also view completed quests by clicking view all.
+</sub>
+{% for quest in QUESTS %}
+    {{ quest.name }} - {{ quest.description }}<br/>
+    {{ quest.task }}<br/>
+    {% for i in 0..quest.stagecount %}
+        {% if i==quest.stage %}
+            <img height="24" src="http://img.drawnimals.com/quests/progress-current.png"/>
+        {% elseif i < quest.stage %}
+            <img height="24" src="http://img.drawnimals.com/quests/progress-done.png"/>
+        {% else %}
+            <img height="24" src="http://img.drawnimals.com/quests/progress-next.png"/>
+        {% endif %}
+    {% endfor %}<br/>
+{% endfor %}

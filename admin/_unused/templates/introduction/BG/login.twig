@@ -1,0 +1,14 @@
+{# empty Twig template #}
+<style>
+    .backgroundLoginBackground { position:absolute; top:0px; left:0px; right:0px; bottom:0px;
+              background-repeat:repeat;
+             background-image:url(img/background/login/login.jpg);}
+</style>
+<div class="backgroundLoginBackground"></div>
+<script>
+    function bgcloudanimate() {
+        if ($('.backgroundLoginBackground').length > 0)
+            $('.backgroundLoginBackground').animate({'background-position':'+=20px +=20px'},1000,'linear',bgcloudanimate);
+    };
+    bgcloudanimate();
+</script>

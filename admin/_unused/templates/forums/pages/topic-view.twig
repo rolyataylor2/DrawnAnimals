@@ -1,0 +1,22 @@
+<table class='table100'>
+        <tr class="row-details">
+            <td></td>
+            <td>ID</td>
+            <td>content</td>
+            <td>likes</td>
+        </tr>
+        {% for post in POSTS %}
+            <tr class="row-topic">
+                <td></td>
+                <td><a href="?p=p&id={{ post.id }}">{{ post.id }}</a></td>
+                <td>{{ post.content }}</td>
+                <td>{{ post.count_likes }}</td>
+            </tr>
+        {% endfor %}
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td><a href='?p=np&pid={{ TOPIC.id }}'>Reply</a></td>
+            </tr>
+</table>

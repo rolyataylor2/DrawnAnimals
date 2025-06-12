@@ -1,0 +1,24 @@
+{% if SCRIPT_ERROR|length > 0 %}
+    <div class='error'>{{ SCRIPT_ERROR }}</div>
+{% elseif SCRIPT_OUTPUT|length > 0 %}
+    {{ SCRIPT_OUTPUT }}
+{% else %}
+    <div class="items">
+        <div class="name">{{ NAME|title }}</div>
+        <div class="options">
+            <div onclick="MENU.Backpack.Discard('id={{ ID }}');">Discard</div>
+            <div onclick="MENU.Backpack.Hold('id={{ ID }}');">Hold Item</div>
+            <div onclick="MENU.Backpack.Give('id={{ ID }}');">Send To</div>
+        </div>
+        <img class="itemimage" src="http://img.drawnimals.com/items/{{ NAME }}.png"/>
+        <div class="description">{{ DESCRIPTION|raw }}</div>
+        <div class="selection">
+            {% if SCRIPT_SELECT|length == 0 %}
+                This Item Cannot Be used Here....
+            {% else %}
+                {{ SCRIPT_SELECT|raw }}
+            {% endif %}
+        </div>
+        <div style="clear:both"></div>
+    </div>
+{% endif %}

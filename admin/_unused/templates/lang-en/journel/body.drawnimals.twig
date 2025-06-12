@@ -1,0 +1,35 @@
+<style>
+    .JournelDrawnimals {
+        width:80%;
+        min-height:45px;
+        margin:10px auto;
+        background-color:black;
+        border-radius:10px;
+        color:white;
+        line-height:45px;
+        text-align:center;
+    }
+    .JournelDrawnimals > img {
+        float:left; 
+        width:64px; height:64px;
+        border:2px solid #444;
+        border-radius:4px;
+        margin:10px;
+        background-color:#222;
+        padding:10px;
+    }
+    .JournelDrawnimals > .seen {
+        opacity:0.5;
+    }
+</style>
+<sub>
+    All of these Drawnimals you have seen and have made notes of. Drawnimals that appear transparent you have not caught therefore
+    data on these ones has not been collected. You can track your progress with the bar below. You can also sort by area's found
+    and by other stats.
+</sub>
+<div class="JournelDrawnimals">
+    {% for i in DRAWNIMALS %}
+        <img class="{{ i.class }}" src="{{ i.image }}" title="{{ i.name|title }} ({{ i.class }})"/>
+    {% endfor %}
+    <div style="clear:both;"></div>
+</div>

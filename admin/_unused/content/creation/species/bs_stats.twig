@@ -1,0 +1,34 @@
+{# empty Twig template #}
+<h1>Base Stats</h1>
+<sub>Editing Base Stats for <b>{{ SPECIES }}</b> in form <b>{{ FORM }}</b>.</sub>
+{% if SCRIPT_OUTPUT|length > 0 %}
+    <center>
+        <img width="256" src="{{ IMGPATH|raw }}"/><br/>
+        {{ SCRIPT_OUTPUT }}
+    </center>
+{% else %}
+    <form onsubmit="return MENU._popupReloadFileForm($(this));">
+        {% if SCRIPT_ERROR|length > 0 %}
+            <div class='error'>{{ SCRIPT_ERROR|raw }}</div>
+        {% endif %}
+        <input type="hidden" name="species" value="{{ SPECIES }}"/>
+        <input type="hidden" name="form" value="{{ FORM }}"/>
+        <input type="hidden" name="token" value="{{ TOKEN }}"/>
+        
+        <label>HP<input name="bs_hp" type='text' value="{{ BS_HP }}"/></label>
+        <label>Attack<input name="bs_atk" type='text' value="{{ BS_ATK }}"/></label>
+        <label>Defense<input name="bs_def" type='text' value="{{ BS_DEF }}"/></label>
+        <label>SpAttack<input name="bs_spatk" type='text' value="{{ BS_SPATK }}"/></label>
+        <label>SpDefense<input name="bs_spdef" type='text' value="{{ BS_SPDEF }}"/></label>
+        <label>Speed<input name="bs_speed" type='text' value="{{ BS_SPEED }}"/></label>
+        
+        <label>HP EV<input name="ev_hp" type='text' value="{{ EV_HP }}"/></label>
+        <label>Attack EV<input name="ev_atk" type='text' value="{{ EV_ATK }}"/></label>
+        <label>Defense EV<input name="ev_def" type='text' value="{{ EV_DEF }}"/></label>
+        <label>SpAttack EV<input name="ev_spatk" type='text' value="{{ EV_SPATK }}"/></label>
+        <label>SpDefense EV<input name="ev_spdef" type='text' value="{{ EV_SPDEF }}"/></label>
+        <label>Speed EV<input name="ev_speed" type='text' value="{{ EV_SPEED }}"/></label>
+
+        <input type="submit" value="Save"/>
+    </form>
+{% endif %}

@@ -1,0 +1,91 @@
+<div class='page'>
+    <h1>Code Portfolio</h1>
+    <img src='img/screenshots/drawnimals.site.001.png'/>
+    <article>
+        <h2>This Site</h2>
+        This site has undergone lots of changes in the past 2 years. What took pages of code before now only takes a few lines. I've been polishing my
+        skills over the past 2 years and not a lot of progress has shown through. But each time I figure out new ways of doing things the better it gets.
+        Project Management and Code Management are the 2 major things I am studying now. Eventually this will be a fully functioning game. BUT it will take
+        a little longer. Every step the usability will improve and the background load will be lightened. I hope to have this site running to its full potential
+        soon. Just be patient!
+    </article>
+    <article class='slideshow'>
+        
+        <div class='slider' data-left="50">
+            <img src='img/screenshots/drawnimals.site.001.png'/>
+            <img src='img/screenshots/drawnimals.site.002.png'/>
+            <img src='img/screenshots/drawnimals.site.001.png'/>
+            <img src='img/screenshots/drawnimals.site.002.png'/>
+            <img src='img/screenshots/drawnimals.site.001.png'/>
+            <img src='img/screenshots/drawnimals.site.002.png'/>
+        </div>
+        <div class="next" onclick="SlideShowNext();">&LT;</div>
+        <div class="prev" onclick="SlideShowPrev();">&GT;</div>
+    </article>
+    <script>
+        function SlideShowNext() {
+            var elm = $('.slider');
+            if (elm.data('left') > 0) return;
+            elm.data('left',elm.data('left')+480);
+            elm.css('left',elm.data('left')+'px');
+        };
+        function SlideShowPrev() {
+            var elm = $('.slider');
+            if (elm.data('left') < -1000) return;
+            elm.data('left',elm.data('left')-480);
+            elm.css('left',elm.data('left')+'px');
+        };
+    </script>
+</div>
+<style>
+    .slideshow {
+    position:relative;
+    background-color: #333 !important;
+    min-height: 120px !important;
+    height: 120px !important;
+    margin-bottom: 100px !important;
+    overflow:hidden;
+}
+.slideshow>.next {
+    position:absolute;
+    top: 50%; 
+    margin-top: -20px;
+    left:0px;
+    padding:10px;
+    font-size:2em;
+    z-index: 0;
+    background-color: #f1f1f1;
+    border: 1px solid silver;
+    cursor: pointer;
+}
+.slideshow>.prev {
+    position:absolute;
+    top: 50%; 
+    margin-top: -20px;
+    right: 0px;
+    padding:10px;
+    font-size:2em;
+    z-index: 0;
+    background-color: #f1f1f1;
+    border: 1px solid silver;
+    cursor: pointer;
+}
+.slideshow>.slider>img:hover {
+    opacity: 1;
+}
+.slideshow>.slider>img {
+    height: 120px;
+    margin: 4px;
+    border: 1px solid black;
+    opacity: 0.7;
+    transition: all 0.3s linear;
+    cursor: pointer;
+}
+.slideshow>.slider {
+    position:absolute; 
+    left: 50px;
+    height: 120px; 
+    width: 4000px;
+    transition: all 0.5s ease-in-out;
+}
+</style>

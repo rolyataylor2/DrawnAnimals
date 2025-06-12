@@ -1,0 +1,8 @@
+<sub>
+    All the letters you have recieved from others. You can read messages by clicking them, you can discard messages by clicking and holding
+    then selecting discard.
+</sub>
+{% for letter in LETTERS %}
+    {{ letter|raw }}
+{% endfor %}
+<div style='clear:both;'></div>

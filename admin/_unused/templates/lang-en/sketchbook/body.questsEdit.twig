@@ -1,0 +1,103 @@
+<table class='entitytable'>
+    <thead>
+        <tr>
+            <td style='width:300px;'>Quest Editor</td>
+            <td>
+                Created By ______<br/><br/>
+                <div class='selected'>Stages</div>
+            </td>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td style="width:300px;">
+                <img width="150" style="display:block; margin:10px auto;" src='http://img.drawnimals.com/d/blank.png'/>
+                <table class='datatable'>
+                    <thead><tr><td>Quest Name</td></tr></thead>
+                    <tbody><tr><td><input type='text' value="{{ QUEST.name }}"/></td></tr></tbody>
+                </table>
+                <table class='datatable'>
+                    <thead><tr><td>Description</td></tr></thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <textarea style='min-height:150px;'>{{ QUEST.description }}</textarea>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <table class='datatable'>
+                    <thead><tr><td>Region</td></tr></thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <select><option>Kanto</option></select>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </td>
+            <td>
+                <div class='container'>
+                    <sub>
+                        This is a list of stages that are in this quest. Use NPC's to change the players
+                        current stage number for this quest. If the quest only has one stage then the
+                        quest will be completed when it is started. This will act as a achievment.
+                    </sub>
+                    <table class='datatable'>
+                        <thead>
+                            <tr>
+                                <td style='width:30px;'>#</td>
+                                <td>Stage Hint</td>
+                                <td style='width:100px;'></td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for stage in STAGES %}
+                                <tr>
+                                    <td>{{stage.number}}</td>
+                                    <td><input type='text' value='{{stage.description}}'/></td>
+                                    <td>
+                                        {% if loop.index0 != 0 %}<button class='removeButton'>Remove</button>{% endif %}
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td></td>
+                                <td><button type='button' id='addbutton'>Add New Stage</button></td>
+                                <td></td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<script>
+    $('.removeButton').click(function() {
+            $(this).parent().parent().siblings().each(function(index,element) {
+                
+                $(element).children('td:first-of-type').html(index);
+            });
+            $(this).parent().parent().remove();
+            
+        });
+    $('#addbutton').click(function() {
+        var count = $(this).parent().parent().parent().parent().children("tbody").children("tr").length;
+        var removeButton = $('<button type="button">Remove</button>').click(function() {
+            $(this).parent().parent().siblings().each(function(index,element) {
+                
+                $(element).children('td:first-of-type').html(index);
+            });
+            $(this).parent().parent().remove();
+            
+        });
+        var newRow = $('<tr><td>'+count+'<input type="hidden"/></td><td><input type="text"/></td><td></td></tr>');
+        removeButton.appendTo(newRow.children('td:nth-of-type(3)'));
+        $(this).parent().parent().parent().parent().children("tbody").append(newRow);
+    });
+</script>

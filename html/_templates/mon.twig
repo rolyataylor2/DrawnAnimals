@@ -1,0 +1,87 @@
+{# empty Twig template #}
+<div class="page">
+    {% if ADMIN %}
+        <h1 style='background-color:#000; color:white; margin-bottom:10px;'>
+            Admin Tools:
+            <a href='javascript:' onclick="inlinePopup('adminAddMonster',{{ MONSTER.id }});">Get Details</a>
+            <a href='javascript:' onclick="inlinePopup('adminMonsterRestore',{{ MONSTER.id }});">Restore</a>
+            <a href='javascript:' onclick="inlinePopup('adminAddMonster',{{ MONSTER.id }});">Held Item</a>
+            <a href='javascript:' onclick="inlinePopup('adminAddMonster',{{ MONSTER.id }});">Transfer Owner</a>
+            <a href='javascript:' onclick="inlinePopup('adminAddMonster',{{ MONSTER.id }});">Learn Move</a>
+            <a href='javascript:' onclick="inlinePopup('adminAddMonster',{{ MONSTER.id }});">Delete</a>
+        </h1>
+    {% endif %}
+    <article class="MonsterLookup" style="{{ BACKGROUND|raw }}">
+        <section>
+            <section class="">
+                <img class='gender' src='http://PokeWorlds.com/img/gender{{ MONSTER.info_gender }}.png'/>
+                <div class="owner"><a href="http://PokeWorlds.com/user.php?id={{ MONSTER.uid }}">{{ MONSTER.username|title }}</a>'s</div>
+                <b id='Nickname' class="nickname {{ EDIT }}">{{ MONSTER.name|title }} </b> 
+                <div class="level">LV. {{ MONSTER.st_level }}</div>
+                <div class="species">the {{ MONSTER.paint }} <a href="http://PokeWorlds.com/play.php?g=Monsters&p=view&id={{ MONSTER.sid }}">{{ MONSTER.species }}</a></div>
+                <img class="image" src="{{ MONSTER.imageurl }}"/>
+                <img class="type1" src="http://PokeWorlds.com/img/type{{ MONSTER.type_0 }}.png"/>
+                <img class="type2" src="http://PokeWorlds.com/img/type{{ MONSTER.type_1 }}.png"/>
+            </section>
+            <section class="">
+                    {{ MONSTER.HPGUAGE|raw }}
+                    {{ MONSTER.STATTABLE|raw }}
+                    {{ MONSTER.EXPGUAGE|raw }}
+            </section>
+        </section>
+        <section>
+            <section class="">
+                {{ STATS_CHART|raw }}
+                {{ STATS_FULL|raw }}
+                <table class='moveTable'>
+                    <tr>
+                        <td>{% if MONSTER.MOVE[0].id is not empty %}<a href='http://PokeWorlds.com/play.php?g=Moves&p=view&id={{ MONSTER.MOVE[0].id }}'>{{ MONSTER.MOVE[0].name|title }}</a><img src="http://PokeWorlds.com/img/type{{ MONSTER.MOVE[0].type }}.png"/>{% endif %}</td>
+                        <td>{% if MONSTER.MOVE[1].id is not empty %}<a href='http://PokeWorlds.com/play.php?g=Moves&p=view&id={{ MONSTER.MOVE[1].id }}'>{{ MONSTER.MOVE[1].name|title }}</a><img src="http://PokeWorlds.com/img/type{{ MONSTER.MOVE[1].type }}.png"/>{% endif %}</td>
+                    </tr>
+                    <tr>
+                        <td>{% if MONSTER.MOVE[2].id is not empty %}<a href='http://PokeWorlds.com/play.php?g=Moves&p=view&id={{ MONSTER.MOVE[2].id }}'>{{ MONSTER.MOVE[2].name|title }}</a><img src="http://PokeWorlds.com/img/type{{ MONSTER.MOVE[2].type }}.png"/>{% endif %}</td>
+                        <td>{% if MONSTER.MOVE[3].id is not empty %}<a href='http://PokeWorlds.com/play.php?g=Moves&p=view&id={{ MONSTER.MOVE[3].id }}'>{{ MONSTER.MOVE[3].name|title }}</a><img src="http://PokeWorlds.com/img/type{{ MONSTER.MOVE[3].type }}.png"/>{% endif %}</td>
+                    </tr>
+                </table>
+            </section>
+            <section class="">
+                <b>About Me:</b>
+                <div id='AboutMe' class='aboutMe {{ EDIT }}'>
+                    {{ MONSTER.info_aboutme|raw }}
+                </div>
+                <div class="moodSection">
+                    <div class="happiness"><img style="left:{{ (MONSTER.st_friendship/64000)*100 }}%" src="http://PokeWorlds.com/img/friendship.png"/></div>
+                    <div class="hunger"><div style="width:{{ (MONSTER.st_hunger/64000)*100 }}%"></div><b>Hunger</b></div>
+                    <div class="energy"><div style="width:{{ (MONSTER.st_energy/64000)*100 }}%"></div><b>Energy</b></div>
+                    {{ MOOD|raw }}
+                </div>
+            </section>
+            <section class="">
+                <table class='stats colorful'>
+                    {% if INPARTY %}
+                        <tr>
+                            <td>In Party</td>
+                            <td name='FollowMe' class='{{ EDIT }}'>{% if FOLLOWING %}Following Trainer{% else %}In Backpack{% endif %}</td>
+                        </tr>
+                    {% endif %}
+                    <tr><td>Original Trainer</td><td>{{ ORIGIN_TRAINER|raw }}</td></tr>
+                    <tr><td>BirthDay</td><td>{{ ORIGIN_CAUGHT }}</td></tr>
+                    <tr><td>Evolved From</td><td>{{ ORIGIN_SPECIES }}</td></tr>
+                    <tr><td>Caught @</td><td>{{ ORIGIN_LOCATION }}</td></tr>
+                    <tr><td>Natural Talent</td><td>{{ AILMENTS }}</td></tr>
+
+                </table>
+            </section>
+        </section>
+        <div style="clear:both;"></div>
+    </article>
+</div>
+
+
+<script>
+    $(document).ready(function() {
+        $('.edit').click(function() {
+            inlinePopup('editMon'+$(this).attr('name'),{{ MONSTER.id }});
+        });
+    });
+</script>

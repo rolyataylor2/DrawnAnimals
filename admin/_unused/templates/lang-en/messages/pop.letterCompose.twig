@@ -1,0 +1,26 @@
+{% if SCRIPT_OUTPUT|length > 0 %}
+    <h1>Sent Letter</h1>
+    {{ SCRIPT_OUTPUT|raw }}
+{% else %}
+    <h1>Composing New Letter</h1>
+    {% if SCRIPT_ERROR|length > 0 %}
+        <div class='error'>{{ SCRIPT_ERROR|raw }}</div>
+    {% endif %}
+    <form onsubmit="return MENU.popup.reloadForm($(this));" class="letters">
+        <input type='hidden' name='itemid' value='{{ ITEMID }}'/>
+        <input type='hidden' name='token' value='{{ TOKEN }}'/>
+        <input type='hidden' name='paper' value='0'/>
+        
+        <label>To <input name='uid' type='text' value='{{ USERNAME }}'/></label>
+        <label>Subject<input name='subject' type='text' value='{{ SUBJECT }}'/></label>
+        <label>Content<textarea id="content" name='body'>{{ CONTENT }}</textarea></label>
+        
+        <label>{{ ITEM }}<input type='submit' value='Send Letter'/></label>
+    </form>
+{% endif %}
+<script>
+    $('#content').keyup(function() {
+        $(this).height(0)
+        $(this).height(this.scrollHeight-4);
+    });
+</script>

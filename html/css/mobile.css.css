@@ -1,0 +1,1118 @@
+/*
+Copyright (c) 2014 User.
+All rights reserved. This program and the accompanying materials
+are made available under the terms of the Eclipse Public License v1.0
+which accompanies this distribution, and is available at
+http://www.eclipse.org/legal/epl-v10.html
+
+Contributors:
+   User - initial API and implementation and/or initial documentation
+*/
+/* 
+    Created on : Jul 6, 2014, 3:32:11 PM
+    Author     : User
+*/
+body {
+    margin: 0px;
+    font-family: arial;
+    font-size: 16px;
+    overflow: auto;
+    background-color: #333;
+}
+#M {
+    overflow: hidden;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    width: 100%;
+    min-height: 100%;
+    position: absolute;
+}
+#inlinePopup {
+    background-color: #f1f1f1;
+    border: 1px solid silver;
+    border-radius: 3px;
+    position: fixed;
+    top: 50px;
+    left: 3%;
+    width: 90%;
+    bottom: 0px;
+    padding: 2%;
+    bottom: 4px;
+    z-index: 5;
+    overflow: auto;
+    text-align: center;
+    display: none;
+    margin:0px;
+}
+
+#N {
+    position: fixed;
+    top: 10px;
+    left: 10%;
+    width: 80%;
+    background-color: blue;
+    display: none;
+}
+#A {
+    text-align: center;
+    clear: both;
+    background: url('http://PokeWorlds.com/img/sidebarBackground2.png');
+}
+#D {
+    position: fixed;
+    top: 0px;
+    left: -100px;
+    width: 100px;
+    background-color: #333;
+    transition: all 0.25s linear;
+    overflow-y: scroll;
+    overflow-x:hidden;
+    height: 100%;
+    z-index: 3;
+}
+img#logo {
+    width: 80%;
+    margin: 0 auto;
+    display: block;
+}
+#M>aside {
+    background: url('http://PokeWorlds.com/img/sidebarBackground2.png');
+}
+#D h2 {
+    font-size: 13px;
+}
+#D a {
+    width: 100%;
+    height: 32px;
+    overflow: hidden;
+    display: block;
+    margin: 8px auto;
+    font-size: 12px;
+    color: inherit;
+}
+#D a img {
+    width: 32px;
+    vertical-align: middle;
+    margin: 0 3px;
+}
+#D.open {
+    left: 0px;
+}
+#B {
+    position: fixed;
+    top: 0px;
+    right: -300px;
+    width: 260px;
+    background-color: #333;
+    transition: all 0.25s linear;
+    overflow-y: scroll;
+    overflow-x:hidden;
+    height: 100%;
+    z-index: 3;
+}
+#B.open {
+    right: 0px;
+    box-shadow: 0 0 10px black;
+}
+#B .team img {
+    width: 15%;
+}
+
+aside>section {
+    width: 100%;
+    text-align: center;
+}
+aside>section>h2 {
+    margin: 5px auto;
+    width: 100%;
+    display: block;
+    text-align: center;
+    font-size: 18px;
+    border-bottom: 1px dotted black;
+}
+aside>section>a, aside .team {
+    display: block;
+    width: 90%;
+    margin: 11px auto;
+    text-align: center;
+    color: white;
+    padding: 5px 0px;
+    text-decoration: none;
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 10px;
+}
+aside .team a { color:white; text-decoration:none; }
+aside>section>h2>a {
+    color: black;
+    text-decoration: none;
+}
+aside .team>a:last-of-type {
+    width:95%;
+    padding: 5px 0;
+    margin:0 auto;
+    display: block;
+    text-align:right;
+}
+aside>section>.menu {
+    width: 97%;
+    margin: 10px auto;
+}
+aside>section>.menu>a {
+    display: inline-block;
+    width: 30%;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 5px 0px;
+    color: white;
+    text-decoration: none;
+    font-size: 12px;
+    border-radius: 3px;
+    height: 32px;
+    line-height: 32px;
+}
+
+div#C {
+    width: 100%;
+    padding: 10px 0px;
+    text-align: center;
+    background-color: #444;
+    display: none;
+}
+#M>footer {
+    display: none;
+}
+#A>.page {
+    width: 100%;
+    margin: 0 auto;
+}
+#A>.page>h1,div#A>.page>h2, div#A>.page>header {
+    width: 88%;
+    margin: 5px auto;
+    font-size: 16px;
+    padding: 5px 4%;
+    border-radius: 3px;
+    color: white;
+    border-bottom: 1px dotted white;
+    text-align: left;
+}
+#A>.page>article {
+    width: 99%;
+    margin: 10px auto;
+}
+#A>.page>article>sub {
+        width: 90%;
+        margin: 0 auto;
+        display: block;
+        padding: 10px;
+        background-color: #ddd;
+        border: 1px solid silver;
+        text-align: center;
+    }
+    .page.blog>article {
+    position: relative;
+    overflow: visible;
+    background: transparent;
+}
+
+.page.blog>article {
+    width: 80%;
+    position: relative;
+    margin: 20px auto;
+    background-color: white;
+    padding: 0px 2% 0px 2%;
+    box-shadow: 3px 5px 10px rgba(0, 0, 0, 0.49);
+    font-size: 16px;
+    font-family: 'Gloria Hallelujah';
+}
+.page.blog>article>section>header {
+    position:absolute;
+    top:5px;
+    left:0px;
+    width: 100%;
+    text-align: center;
+    font-size:10px;
+    font-family:arial;
+    color:silver;
+}
+.page.blog>article>section>footer {
+    width: 80%;
+    text-align: right;
+    margin: 40px 3%;
+    margin-bottom: 20px;
+}
+.page.blog>article>section>footer:before {
+    content:'Sincerely, ';
+}
+
+.monsterView .typePrimary {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+}
+.monsterView .typeSecondary {
+    position: absolute;
+    top: 5px;
+    right: 55px;
+}
+.monsterView .fav_icon {
+    position: absolute;
+    top: 30px;
+    right: 5px;
+    background-color:rgba(0,0,0,0.2);
+    border-radius:4px;
+    padding:4px;
+    font-size:10px;
+    width:90px;
+}
+.monsterView .fav_icon img {
+    width:16px;
+    vertical-align:middle;
+}
+a.searchitem {
+    width: 95%;
+    padding: 1%;
+    min-height: 16px;
+    margin: 20px auto;
+    display: block;
+    color: #666;
+    background-color: white;
+    text-decoration: none;
+    box-shadow: 0 0 3px silver;
+}
+a.searchitem>.name {
+    float: left;
+    margin: 0 10px;
+    font-weight: bold;
+}
+a.searchitem.monster>.description {
+    display: none;
+}
+a.searchitem:hover {
+    box-shadow: 0 0 3px rgb(255, 0, 163);
+}
+a.searchitem.monster {
+    overflow: hidden;
+    height: 56px !important;
+}
+a.searchitem.monster>img {
+    width: 22%;
+    max-width: 100px;
+    margin: -5px 15px;
+    margin-bottom: 0px;
+    display: block;
+    float: left;
+}
+
+ul.pageList {
+    width: 100%;
+    line-height: 32px;
+    padding: 1%;
+    margin: 0px;
+    list-style: none;
+    font-size: 16;
+}
+ul.pageList>li {
+    display: inline;
+    margin: 0px 0px;
+    background-color: silver;
+    padding: 0 3px;
+    height: 16px;
+    text-align: center;
+    border-radius: 2px;
+    color: #666;
+}
+ul.pageList>li>a {
+    color: #666;
+    text-decoration: none;
+    text-shadow: 1px 1px silver;
+}
+ul.pageList>li>a:hover {
+    color:blue;
+}
+ul.pageList>li.selected {
+    background-color: #f1f1f1;
+}
+
+table.user {
+    width: 98%;
+    height: 64px;
+    background-color: rgb(250, 250, 250);
+    border: 1px solid silver;
+    margin: 5px 1%;
+    float: left;
+}
+table.user>tbody>tr>td:first-of-type {
+    width: 1px;
+}
+table.user>tbody>tr>td:first-of-type>img {
+    width: 64px;
+    height: 64px;
+}
+table.user>tbody>tr>td:last-of-type {
+    width: 1px;
+}
+table.user>tbody>tr>td>.username {
+    font-size: 18px;
+    font-weight: bolder;
+    color: #666;
+    text-decoration: none;
+}
+table.user>tbody>tr>td>div.lastseen {
+    color: #999;
+    font-size: 12px;
+}
+table.user>tbody>tr>td>div.actions {
+    text-align: center;
+}
+table.user>tbody>tr>td>div.actions>button {
+    font-size: 10px;
+    margin: 4px 0px;
+}
+
+div#A>div.page>article>label {
+    display: block;
+    width: 95%;
+    margin: 4px auto;
+    padding: 5px;
+    background-color: white;
+}
+div#A>div.page>article>table.stats, .datatable {
+    display: block;
+    width: 95%;
+    margin: 4px auto;
+    padding: 5px;
+    background-color: white;
+}
+div#A>div.page>article>table.stats thead, .datatable thead {
+    font-size:12px
+}
+div#A>div.page>article>table.stats td, .datatable td {
+    background-color:#f1f1f1;
+    text-align:center;
+    color:#333;
+}
+div#A>div.page>article>table.stats td:first-of-type {
+    font-size:11px;
+}
+div#A>.page>h1 a {
+    font-size: 12px;
+    float: right;
+    margin: 0px 10px;
+    color: white;
+}
+
+section#C {
+    width: 99%;
+    height: 300px;
+    position: relative;
+    overflow:hidden;
+    text-align: left;
+}
+#C>ul {
+    position: absolute;
+    bottom: 22px;
+    width: 100%;
+    list-style: none;
+    margin: 0px;
+    padding: 0px;
+}
+#C>ul>li {
+    width: 95%;
+    display: block;
+    background-color: white;
+    border: 2px solid transparent;
+    margin: 3px auto;
+    padding: 1%;
+    border-radius: 5px;
+}
+#C>ul>li>b {
+    float: right;
+    margin: 2px;
+    border-radius: 3px;
+    font-size: 12px;
+    padding: 1px 6px;
+}
+#C>input {
+    position: absolute;  
+    bottom: 0px;  width: 100%;
+}
+#C>select {
+    position: absolute;  
+    top: 0px;  width: 100%;
+}
+
+div.page>article>div.location {
+    width: 100%;
+    height: 400px;
+    background-color: white;
+    overflow: hidden;
+    border: 4px solid silver;
+    border-left:none;
+    border-right:none;
+    margin: 10px auto;
+    position: relative;
+    margin-bottom: 60px;
+}
+div.page>article>div.location>.background {
+    position: absolute;
+    bottom: 0px;
+    left: 0px;
+    width: 100%;
+    min-height: 100%;
+}
+div.page>article>div.location>.character {
+    position: absolute;
+    top: 0px;
+    left: 25%;
+    width:60%;
+    max-width: 400px;
+    min-width:200px;
+    min-height: 100%;
+}
+div.page>article div.dialog {
+    width: 96%;
+    position: absolute;
+    background-color: white;
+    border: 4px double silver;
+    border-left:none;
+    border-right:none;
+    min-height: 20px;
+    padding: 30px 2%;
+    padding-top: 32px;
+    bottom: 120px;
+    left: 0px;
+    -ms-transform: scaleY(0); /* IE 9 */      
+    -webkit-transform: scaleY(0); /* Chrome, Safari, Opera */      
+    transform: scaleY(0);
+    transition: all 1s ease-in-out;
+}
+div.page>article div.dialog.showing {
+    -ms-transform: scale(1);  
+    -webkit-transform: scale(1);  
+    transform: scale(1);
+}
+div.page>article div.dialog>header {
+    position: absolute;
+    top: 0px;
+    font-size: 12px;
+    right: 0px;
+    background-color: silver;
+    color: #333;
+    font-weight: bold;
+    width: 25%;
+    text-align: right;
+    border-radius: 0 0 0 10px;
+    padding: 2px 1%;
+}
+div.page>article .dialog>article>label {
+    width: 80%;
+    margin: 4px auto;
+    display: block;
+    clear: both;
+    background-color: #ddd;
+    padding: 6px 5%;
+    border-radius: 10px;
+    border: 1px solid silver;
+}
+div.page>article .dialog>article>label>input {
+    float: right;
+}
+div.page.location>article {
+    background-color: #414141;
+}
+div.page>article div.dialog>footer {
+    position: absolute;
+    bottom: 0px;
+    left: 0px;
+    width: 100%;
+    text-align: center;
+}
+div.page>article div.dialog>footer>a {
+    margin: 0px 0px;
+    background-color: #DADADA;
+    border-radius: 4px;
+    padding: 2px 20px;
+    width: 100px;
+    color: rgb(114, 114, 114);
+}
+body>footer {
+    background-color: black;
+    display: none;
+}
+
+.styleSection {
+    background-color: white;
+    border-radius: 3px;
+    border: 1px solid silver;
+}
+#A>.page>article>section {
+    width: 100%;
+}
+#A>.page>article>section>section {
+    margin: 4px auto;
+    width: 100%;
+    display: inline-block;
+}
+table.stats {
+    width: 90%;
+    margin: 5px auto;
+    border-spacing: 0px 1px;
+    table-layout: fixed;
+}
+table.stats td:first-of-type {
+    background-color: #DDD;
+    border-radius: 6px 0px 0px 6px;
+}
+table.stats td:last-of-type {
+    background-color: #EEE;
+    border-radius: 0px 6px 6px 0px;
+}
+table.stats td {
+    padding: 4px 8px;
+}
+.userLookup>h1>img {
+    width: 75%;
+    margin: 0 auto;
+    display: block;
+}
+.userLookup>h1>.lastseen {
+    font-size: 12px;
+}
+.userLookup>aside {
+    width: 100%;
+    display: inline-block;
+    background-color: black;
+}
+.userLookup>article>a {
+    display: inline-block;
+    margin: 1%;
+    background-color: rgb(232, 230, 236);
+    padding: 2% 1%;
+    width: 28%;
+    text-decoration: none;
+}
+.userLookup>article>.localtime>img {
+    height: 18px;
+    float: left;
+    margin: 2px;
+    margin-left: 75px;
+    margin-right: -75px;
+}
+.userLookup>article>.localtime {
+    width: 80%;
+    background-color: #333;
+    border-radius: 10px;
+    margin: 0 auto;
+    color: white;
+    font-size: 18px;
+}
+
+
+.Drawnimal {
+    display: block;
+    width: 90%;
+    margin: 10px auto;
+    cursor: pointer;
+    border-radius: 3px;
+    background: #fff;
+    box-shadow: 0px 0px 2px black;
+}
+.Drawnimal .level {
+    position: absolute;
+    top: 20px;
+    right: 5px;
+    font-size: 10px;
+}
+.Drawnimal .image {
+    position: absolute;
+    height: 125%;
+    top: -16%;
+    left: -1%;
+}
+.Drawnimal .name {
+    position: absolute;
+    top: 2px;
+    right: 5px;
+    font-size: 14px;
+    font-weight: bolder;
+}
+.Drawnimal .name .itemicon {
+    width: 24px;
+    float: right;
+}
+.Drawnimal .name .level {
+    font-size: .8em;
+}
+.Drawnimal .stats {
+    position: absolute;
+    bottom: 3px;
+    right: 10px;
+    left: 120px;
+    line-height: 10px;
+}
+.Drawnimal .stats .hpguage {
+    text-align: center;
+    font-weight: bolder;
+    color: #000;
+    font-size: .8em;
+    position: absolute;
+    width: 100%;
+    bottom: 1px;
+}
+.Drawnimal .stats .hpguage>.hp {
+    float: right;
+    width: 100%;
+    margin: 0;
+}
+.Drawnimal .stats .hpguage>.max {
+    float: right;
+    height: 8px;
+    width: 100%;
+    border-radius: 10px;
+    box-shadow: 0 0 0 1px #fff,-1px -1px 2px 2px #000 inset;
+    overflow: hidden;
+    margin: 4px 6px;
+    background: #3d3d3d;
+}
+.Drawnimal .stats .hpguage>.max>.min {
+    position: absolute;
+    bottom: 1px;
+    left: 0;
+    height: 6px;
+    box-shadow: inset -1px -1px 5px rgba(0,0,0,.64);
+    border-radius: 10px;
+    background: #5dec5d;
+}
+.Drawnimal table {
+    width: 100%;
+    height: 100%;
+}
+.Drawnimal {
+    height: 64px;
+    color: #666;
+    width: 90%;
+    position: relative;
+    cursor: pointer;
+}
+.Drawnimal.painted {
+    background-color: rgb(246, 234, 168);
+}
+.Drawnimal.empty {
+    cursor: auto;
+    background-color:#CCC !important;
+}
+
+.Drawnimal:not(.empty):hover {
+    box-shadow: inset 0 0 0 2px rgb(92, 255, 0);
+}
+.Drawnimal>tbody>tr>td:last-of-type {
+    width: 99%;
+}
+.Drawnimal.fainted {
+    background-color: rgb(255, 147, 147) !important;
+}
+.Drawnimal.leader {
+    background-color: rgb(151, 255, 147) !important;
+}
+.Drawnimal.fainted, .Drawnimal.leader {
+    cursor:not-allowed;
+    box-shadow:none;
+}
+
+div#game {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    left: 0px;
+    top: 0px;
+}
+div#game>canvas {
+    width: 100%;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+}
+/**
+ * Battles
+ */
+#battledisplay {
+    width: 100%;
+    position: relative;
+    height: 500px;
+    overflow: hidden;
+    background-color: black;
+}
+#battledialog {
+    width: 96%;
+    height: 50px;
+    padding: 10px 2%;
+    font-size: 16px;
+    position: fixed;
+    z-index: 3;
+    bottom: 0px;
+}
+#battlecontrols {
+    position: fixed;
+    bottom: 0px;
+    left: 0;
+    width: 100%;
+    z-index: 3;
+    background-color: rgba(0, 0, 0, 1);
+    border-radius: 10px 20px;
+    text-align: center;
+}
+#battledisplay {
+    top: 0px;
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+    overflow: hidden;
+    background: url(http://PokeWorlds.com/img/battle/forest.png);
+    background-size: 100% 100%;
+}
+#battledisplay .playerContainer.me {
+    top: 50%;
+}
+#battledisplay .playerContainer>img {
+    position:absolute;
+    top: 15%; 
+    left: auto;
+    right: 10%;
+    width: 45%;
+    max-width: 150px;
+    margin-bottom:0%;
+    -webkit-transition: margin-bottom 1s ease 0s,
+        margin-left 1s ease 0s,
+        margin-right 1s ease 0s,
+        opacity 2s ease 0s,
+        -webkit-transform 1s ease 0.5s, 
+        transform 1s ease; 
+    transition: margin-bottom 1s ease 0s,
+                margin-left 1s ease 0s, 
+                margin-right 1s ease 0s,
+                transform 1s ease 0s,
+                opacity 2s ease 0s,
+                -webkit-transform 1s ease 0.5s; 
+}
+#battledisplay .playerContainer.me>img {
+    -moz-transform: scaleX(-1);  -o-transform: scaleX(-1);  
+    -webkit-transform: scaleX(-1);  transform: scaleX(-1);  
+    filter: FlipH;  -ms-filter: "FlipH";
+    -webkit-filter: brightness(0);
+    left: 0%;
+    right: auto;
+    max-width: 250px;
+    width: 75%;
+    top: auto;
+    bottom: 0px;
+}
+#battledisplay .playerContainer.hidden>img {
+    margin-right:-100%;
+}
+#battledisplay .playerContainer.trainer.hidden>img {
+    margin-bottom: 75%;
+    margin-right:-30%;
+    -moz-transform: scaleX(0.1) scaleY(0.1);  
+    -o-transform: scaleX(0.1) scaleY(0.1);  
+    -webkit-transform: scaleX(0.1) scaleY(0.1);  
+    transform: scaleX(0.1) scaleY(0.1);
+    -webkit-filter: contrast(0) brightness(10);
+}
+#battledisplay .playerContainer.me.hidden>img {
+    margin-bottom: -100%;
+    margin-left: -80%;
+    opacity:0;
+}
+#battledisplay .playerContainer .status {
+    position: absolute;
+    top: 10%;
+    left: 1%;
+    right: auto;
+    height: 64px;
+    width: 46%;
+    -webkit-transition: all 0.2s ease-in-out;  
+    transition: all 0.2s ease-in-out;
+    color: white;
+    background-color: rgba(0, 0, 0, 0.64);
+    border-radius: 10px 0px;
+    border: 2px solid rgba(176, 231, 91, 0.5);
+    transition: all 1s ease-in-out 0.2s;
+}
+#battledisplay .dialog {
+    position: absolute;
+    left: 0%;
+    right: 0%;
+    height: 20%;
+    bottom: 2%;
+    background-color: rgba(0, 0, 0, 0.62);
+    padding: 1% 1%;
+    font-family: retro;
+    font-size: 25px;
+    font-weight: bold;
+    /* border-radius: 4px; */  
+    color: white;
+    border-top: 3px solid black;
+    border-bottom: 3px solid black;
+}
+#battledisplay .commandInput {
+    position: absolute;
+    bottom: 3%;
+    right: 0%;
+    width: 50%;
+    background-color: rgba(255, 255, 255, 0.78);
+    /* height: 20%; */
+    padding: 1% 1%;
+    font-family: retro;
+    border-radius: 10px 0 0 10px;
+    font-size: 25px;  text-align: center;
+    color: white;
+    margin-bottom: 3px;
+    z-index: 1;
+}
+#battledisplay .commandInput a {
+    color: white;
+    float: left;
+    width: 48%;
+    height: 48px;
+    line-height: 48px;
+    margin: 1%;
+    background-color: rgb(190, 142, 54);
+    font-size: 25px;
+    text-decoration: none;
+    box-shadow: 0 0 10px black;
+    text-shadow: 1px 1px 2px black;
+}
+
+#battledisplay .playerContainer {
+position: absolute;
+top: 0px;
+right: 0px;
+width: 100%;
+height: 50%;
+}
+#battledisplay .playerContainer.me .status {    
+    right: 1%;    
+    left: auto;        
+}
+#battledisplay .playerContainer.hidden:not(.me) .status {
+    margin-left: -100%;
+}
+#battledisplay .playerContainer.me.hidden .status {
+    margin-right: -100%;
+}
+#battledisplay .playerContainer.me .status>.name {
+    left: 30px;
+    right: auto;
+}
+#battledisplay .playerContainer.me .status>.gender {
+    left: -2px;
+    right: auto;
+}
+#battledisplay .playerContainer.me .status>.level {
+    left: 32px;
+    right: auto;
+}
+#battledisplay .playerContainer.me .status>.hpguage {
+    left: 0px;
+    right: auto;
+}
+#battledisplay .playerContainer .status>.name {
+    position: absolute;
+    top: 8px;
+    right: 32px;
+    font-size: 16px;
+    font-weight: bolder;
+    z-index: 1;
+    text-shadow: 1px 1px 1px black;
+}
+#battledisplay .playerContainer .status>.gender {
+    position: absolute;
+    top: -2px;
+    right: -2px;
+    width: 32px;
+    z-index: 0;
+    opacity: 1;
+}
+#battledisplay .playerContainer .status>.level {
+    position: absolute;
+    top: 26px;
+    right: 32px;
+}
+#battledisplay .playerContainer .status>.hpguage {
+    position: absolute;
+    top: 38px;
+    right: 8px;
+}
+#battledisplay .playerContainer.me .status>.hpguage .hp {
+    display: block;
+}
+#battledisplay .playerContainer .status>.hpguage .hp {
+    display: none;
+}
+#battledisplay .playerContainer.me.fainted img {
+    -webkit-Transform: scaleY(0.1) scaleX(-1);
+    transform: scaleY(0.2) scaleX(-1);
+    opacity:0;
+}
+#battledisplay .playerContainer.fainted img {
+
+    
+    -webkit-transform: perspective(250px) rotateX(90deg);
+    -webkit-transform-origin: 50% 100%;
+    -moz-transform: perspective(250px) rotateX(90deg);
+    -moz-transform-origin: 50% 100%;
+    transform: perspective(250px) rotateX(90deg);
+    transform-origin: 50% 100%;
+    opacity: 0;
+}
+#battledisplay .playerContainer.fainted .status {
+    -webkit-Transform: scaleY(0.1) scaleX(-1);
+    transform: scaleY(0.2) scaleX(-1);
+    
+    -webkit-transform: perspective(300px) rotateX(90deg);
+    -webkit-transform-origin: 50% 100%;
+    -moz-transform: perspective(300px) rotateX(90deg);
+    -moz-transform-origin: 50% 100%;
+    transform: perspective(300px) rotateX(90deg);
+    transform-origin: 50% 100%;
+    opacity:0;
+}
+#battlecontrols>a {
+    display: inline-block;
+    width: 40%;
+    height: 30px;
+    text-decoration: none;
+    color: white;
+    background-color: rgba(46, 46, 46, 1);
+    border-radius: 10px;
+    margin: 7px 0px;
+    line-height: 30px;
+}
+
+.styleWindow {
+    background-color: black;
+    color: white;
+}
+
+.hpguage {
+    text-align: right;
+    font-weight: bolder;
+    font-size: 11px;
+    width: 98%;
+    margin: 0 auto;
+}
+.hpguage>.hp {
+    width: 100%;
+    font-size: 11px;
+    margin: 0;
+}
+.hpguage>.max {
+    height: 11px;
+    width: 90%;
+    border-radius: 10px;
+    box-shadow: 0 0 1px 3px silver,-1px -1px 2px 2px #000 inset;
+    overflow: hidden;
+    position: relative;
+    margin: 7px auto;
+    background: #666;
+}
+.hpguage>.max>.min {
+    position: absolute;
+    bottom: 1px;
+    left: 0;
+    height: 8px;
+    box-shadow: inset -1px -1px 5px rgba(0,0,0,.64);
+    border-radius: 10px;
+    background: #5dec5d;
+    -webkit-transition: width 500ms ease-out;      
+    -moz-transition: width 500ms ease-out;      
+    -o-transition: width 500ms ease-out;      
+    transition: width 500ms ease-out;
+}
+.expguage {
+    text-align: right;
+    font-weight: bolder;
+    font-size: 10px;
+    width: 98%;
+    margin: 0 auto;
+}
+.expguage>.max {
+    height: 7px;
+    width: 100%;
+    border-radius: 10px 0px;
+    box-shadow: 0 0 1px 3px silver,-1px -1px 2px 2px #000 inset;
+    overflow: hidden;
+    position: relative;
+    margin: 2px auto;
+    background: #666;
+}
+.expguage>.max>.min {
+    position: absolute;
+    bottom: 0px;
+    left: -4px;
+    height: 7px;
+    box-shadow: inset -1px -1px 5px rgba(0,0,0,.64);
+    border-radius: 10px;
+    background: #5851FF;
+    -webkit-transition: width 500ms ease-out;      
+    -moz-transition: width 500ms ease-out;      
+    -o-transition: width 500ms ease-out;      
+    transition: width 500ms ease-out;
+}
+div#ServerLog {
+    background-color: black;
+    color: white;
+    text-align: left;
+    padding: 10px;
+    max-height: 400px;
+    overflow-y: scroll;
+    border:2px inset silver;
+    border-radius:5px
+}
+div#ServerLog>header {
+    color: lime;
+}
+div#ServerLog>div:hover {
+    background-color: #222;
+}
+div#ServerLog>div>b {
+    color: #933;
+    width: 128px;
+    height: 15px;
+    display: inline-block;
+    overflow: hidden;
+    white-space: nowrap;
+    margin: 0px;
+    padding: 0px;
+}
+ul#NewsTicker {
+    width: 100%;
+    height: 20px;
+    background-color: black;
+    font-family: ticker;
+    padding: 5px 0px;
+    color: yellow;
+    position: relative;
+    list-style:none;
+    margin:0;
+    overflow:hidden;
+}
+ul#NewsTicker li {
+    position:absolute;
+    left:100%;
+    top:5px;
+    white-space:nowrap;
+    -webkit-transition: all 16s linear;
+    -moz-transition: all 16s linear;
+    -o-transition: all 16s linear;
+    transition: all 16s linear;
+}
+
+ul#NewsTicker header,ul#NewsTicker footer,ul#NewsTicker article,ul#NewsTicker a {
+    display:inline-block;
+    width:auto; height:auto; color:inherit; white-space:nowrap;
+}
+ul#NewsTicker header, ul#NewsTicker footer {display:none;}

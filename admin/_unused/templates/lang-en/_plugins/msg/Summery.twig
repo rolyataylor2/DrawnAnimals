@@ -1,0 +1,27 @@
+{# empty Twig template #}
+<div class='Letter {{ THEME }}'>
+    {% if ICON|length > 0 %}
+        {{ ICON|raw }}
+    {% endif %}
+    {% if ITEM > 0 %}
+        <img class='itemattached' {% if READABLE %}onclick='MENU.Messages.LetterView("id={{ ID }}");'{% endif %} src='http://img.drawnimals.com/icons/held-item.png'/>
+    {% endif %}
+    {% if SENDER|length > 0 %}
+        <div class='sender' onclick='MENU.Trainer.View("id={{ SENDERID }}");'>From: {{ SENDER|title }}</div>
+    {% endif %}
+    {% if SENDERAVATAR|length > 0 %}
+        {{ SENDERAVATAR|raw }}
+    {% endif %}
+    {% if REC_USERNAME|length > 0 %}
+        <div class='recipient'>Sent To:{{ REC_USERNAME|title }}</div>
+    {% endif %}
+    {% if REC_AVATAR|length > 0 %}
+        {{ REC_AVATAR|raw }}
+    {% endif %}
+    {% if TIMESTAMP|length > 0 %}
+        <div class='timestamp'>{{ TIMESTAMP }}</div>
+    {% endif %}
+    {% if SUBJECT|length > 0 %}
+        <div class='subject' {% if READABLE %}onclick='MENU.Messages.LetterView("id={{ ID }}");'{% endif %} >{{ SUBJECT }}</div>
+    {% endif %}
+</div>

@@ -1,0 +1,23 @@
+<div class="body">
+    Display content here.
+</div>
+<script>
+    var html = '<div class="button" class="back" onclick="MENU.Game.Play();">&lt; To Game</div><div class="title">Sketchbook</div><ul onclick="$(this).toggleClass(\'open\');">';
+    html +='<li class="title">Create Sketches Of:</li>';
+    html +='<li class="selected" onclick="MENU.Sketchbook.Drawnimals();">Drawnimals</li>';
+    html +='<li onclick="MENU.Sketchbook.Maps();">Maps/Areas</li>';
+    html +='<li onclick="MENU.Sketchbook.Objects();">Objects</li>';
+    html +='<li onclick="MENU.Sketchbook.Environments();">Environments</li>';
+    html +='<li onclick="MENU.Sketchbook.Pathways();">Pathways</li>';
+    html +='<li onclick="MENU.Sketchbook.Items();">Items</li>';
+    html +='<li onclick="MENU.Sketchbook.Moves();">Moves</li>';
+    html +='<li onclick="MENU.Sketchbook.Trainers();">Trainers</li>';
+    html +='<li onclick="MENU.Sketchbook.Quests();">Quests</li>';
+    html +='<li onclick="MENU.Sketchbook.Npc();">Characters</li>';
+    html +='<li onclick="MENU.Sketchbook.Abilities();">Abilities</li>';
+    html +='</ul>';
+    $('#settingsMenu').html(html);
+    $('li:not(.title)').attr('onclick',function() {
+        return $(this).attr('onclick')+" $(this).addClass('selected').siblings().removeClass('selected');";
+    });
+</script>

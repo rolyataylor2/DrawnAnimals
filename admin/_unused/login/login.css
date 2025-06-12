@@ -1,0 +1,18 @@
+/** For use with template Login/Login.html */
+#LoginLoginHtml { 
+    
+}
+#LoginLoginHtml .title {}
+#LoginLoginHtml .info {}
+#LoginLoginHtml .inputUsername {}
+#LoginLoginHtml .inputPassword {}
+#LoginLoginHtml .inputSubmit {}
+/** Mobile Version */
+.mobile #LoginLoginHtml {
+    
+}
+.mobile #LoginLoginHtml .title {}
+.mobile #LoginLoginHtml .info {}
+.mobile #LoginLoginHtml .inputUsername {}
+.mobile #LoginLoginHtml .inputPassword {}
+.mobile #LoginLoginHtml .inputSubmit {}

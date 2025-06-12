@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]>    <html class="no-js iem7"> <![endif]-->
+<!--[if (gt IEMobile 7)|!(IEMobile)]><!--> <html class="no-js"> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <title>Drawnimals&TRADE; - Create,Raise,Share Creatures!</title>
+        <meta name="description" content="">
+        <meta name="HandheldFriendly" content="True">
+        <meta name="MobileOptimized" content="800">
+        <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=0">
+        <meta http-equiv="cleartype" content="on">
+
+        <link rel="apple-touch-icon-precomposed" sizes="144x144" href="img/touch/apple-touch-icon-144x144-precomposed.png">
+        <link rel="apple-touch-icon-precomposed" sizes="114x114" href="img/touch/apple-touch-icon-114x114-precomposed.png">
+        <link rel="apple-touch-icon-precomposed" sizes="72x72" href="img/touch/apple-touch-icon-72x72-precomposed.png">
+        <link rel="apple-touch-icon-precomposed" href="img/touch/apple-touch-icon-57x57-precomposed.png">
+        <link rel="shortcut icon" href="img/touch/apple-touch-icon.png">
+
+        <!-- Tile icon for Win8 (144x144 + tile color) -->
+        <meta name="msapplication-TileImage" content="img/touch/apple-touch-icon-144x144-precomposed.png">
+        <meta name="msapplication-TileColor" content="#222222">
+
+        <link rel="stylesheet" href="css/normalize.css">
+        
+        <link rel="stylesheet" href="css/main.css">
+        <link rel="stylesheet" href="css/stylized.css">
+        <link rel="stylesheet" href="css/defaultColor.css">
+        <link rel="stylesheet" href="css/media.css">
+        <script src="js/vendor/pixi.min.js"></script>
+        <script src="js/main.js"></script>
+        
+        <script src="js/nav/main.js"></script>
+        <script src="js/nav/toolbar.js"></script>
+        
+        
+        <script src="js/game/main.js"></script>
+        <script src="js/game/node.js"></script>
+        
+        <script type="text/javascript" src="http://www.google.com/recaptcha/api/js/recaptcha_ajax.js"></script>
+        <script src="js/vendor/iscroll.js"></script>
+        <script src="js/vendor/modernizr-2.6.2.min.js"></script>
+        <script src="js/vendor/zepto.min.js"></script>
+        <script src="js/vendor/jquery.min.js"></script>
+        <script src="js/vendor/jquery.keypress.js"></script>
+        <script src="js/vendor/jquery.form.js"></script>
+        <script src="js/vendor/jquery.cookie.js"></script>
+        <script src="js/vendor/jquery.autocomplete.js"></script>
+        <script src="js/vendor/jquery.farbtastic.js"></script>
+        
+        <script src="js/vendor/socket.io.min.js"></script>
+        <script src="js/vendor/chart.js"></script>
+        
+        <script src="js/helper.js"></script>
+        <script>
+            $( document ).ready(function() {
+                TOOLBAR.Chat.Log = Array();
+                {% for chat in CHATLOG %}
+                    TOOLBAR.Chat.Log.push({'username':'{{ chat.username }}','text':'{{ chat.text }}'});
+                {% endfor %}
+                TOOLBAR.Init();
+                NODE = new NODECLASS('{{ NETWORK_KEY }}','{{ USERNAME }}');
+                GAME = new gameSystem();
+                GAME._eachFrame();
+                $(window).blur(function() { GAME.pause('pageHidden'); });
+                $(window).focus( function() { GAME.unPause('pageHidden'); });
+                $(document).blur(function() { GAME.pause('pageDocHidden'); });
+                $(document).focus( function() { GAME.unPause('pageDocHidden'); });
+                $('#ContainerMain')[0].addEventListener( 'webkitTransitionEnd', function( event ) { 
+                    if (GAME !== void 0)
+                        GAME.Camera.resizeToElement();
+                }, false );
+                $('#ContainerMain')[0].addEventListener( 'transitionend', function( event ) { 
+                    if (GAME !== void 0)
+                        GAME.Camera.resizeToElement();
+                }, false );
+                $('#ContainerMain')[0].addEventListener( 'oTransitionEnd', function( event ) { 
+                    if (GAME !== void 0)
+                        GAME.Camera.resizeToElement();
+                }, false );
+                $(window).resize(function() {
+                    if (GAME !== void 0)
+                        GAME.Camera.resizeToElement();
+                });
+            });
+        </script>
+    </head>
+    <body>
+        <div id="A">
+            <div id="NavTitle"><img src='http://img.drawnimals.com/icons/sitelogo.png'/></div>
+            <div id="ContainerToolbar"></div>
+            <nav>
+                Copyright 2011-2014 - Created by Rolyataylor2
+                <a target="_blank" href="http://report.drawnimals.com/" style="position: absolute; top: 0px; right: 16px; color: rgb(245, 122, 122);">
+                    Report Issue <img width="18" src='http://img.drawnimals.com/icons/new_window.gif'/>
+                </a>
+            </nav>
+            <div id="ContainerChat">
+                <div id="ChatToggleTab" onclick="$('#SiteWrapper').toggleClass('showChat');">Chat</div>
+                <div class='toggleSmall' onclick="$('#ContainerChat > .content').toggleClass('smallEntry');">Change Size</div>
+            </div>
+            <div id="ContainerOnline">
+                <div id="OnlineToggleTab" onclick="$('#SiteWrapper').removeClass('showMyInfo').toggleClass('showOnline');">Online <span id="OnlineNowCount"></span></div>
+                <ul id="OnlineNowList"></ul>
+            </div>
+            <div id="ContainerMyInfo">
+                <div id="MyInfoToggleTab" onclick="$('#SiteWrapper').removeClass('showOnline').toggleClass('showMyInfo');">QuickStats</div>
+                <ul id="MyInfo">
+                    Logged on as Rolyataylor2(logout)<br/>
+                    Coins: 0 / Cash: 0
+                </ul>
+            </div>
+            <div id="ContainerMain"></div>
+            <div id="ContainerPopups">
+                <div id="BG" onclick="MENU.popup.hide();"></div>
+                <div id="Popup"></div>
+            </div>
+        </div>
+    </body>
+</html>

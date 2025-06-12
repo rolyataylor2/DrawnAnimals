@@ -1,0 +1,45 @@
+<div class="DrnmExperianceSmall">
+    <canvas id="Drnm{{ ID }}ExperianceSmall" width="350" height="350" style="display: block;
+                                                                                position: absolute;
+                                                                                top: 50%;
+                                                                                margin-top: -53%;
+                                                                                margin-left: -54%;
+                                                                                left: 50%;
+                                                                                width: 110%;"></canvas>
+    <script>
+        var ctx = document.getElementById('Drnm{{ ID }}ExperianceSmall').getContext('2d');
+         var data = {
+                labels : ["Speed","Attack","Sp. Attack","Sp. Defense","Defense"],
+                datasets : [
+                        {
+                                fillColor : "rgba(220,220,90,1)",
+                                strokeColor : "rgba(0,0,0,0.5)",
+                                pointStrokeColor : "#ddd",
+                                data : [{{ SPEEDBASE }},{{ ATKBASE }},{{ SPATKBASE }},{{ SPDEFBASE }},{{ DEFBASE }}]
+                        },
+                        {
+                                fillColor : "rgba(151,187,205,0.75)",
+                                strokeColor : "rgba(0,0,0,0.25)",
+                                pointStrokeColor : "#ddd",
+                                data : [{{ SPEED }},{{ ATK }},{{ SPATK }},{{ SPDEF }},{{ DEF }}]
+                        }
+                ]
+        };
+        var chart = new Chart(ctx).Radar(data,{ 
+            scaleOverride : true,
+            scaleSteps : 10,
+            scaleStepWidth : 20,
+            scaleStartValue : 0,
+            scaleShowLabelBackdrop : true,
+            scaleFontStyle : "bold",
+            angleLineColor : "rgba(0,0,0,0.4)",
+            scaleFontColor : "rgba(0,0,0,1)",
+            scaleLineColor : "rgba(200,100,50,0.3)",
+            labelFontColor : "#FFF",
+            pointDot : false,
+            animation : true,
+            animationSteps : 60
+        });
+        $('#Drnm{{ ID }}ExperianceSmall').css('width','110%').css('height','auto');
+    </script>
+</div>

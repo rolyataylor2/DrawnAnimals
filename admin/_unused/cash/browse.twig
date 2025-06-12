@@ -1,0 +1,36 @@
+<div class="shop">
+    <div class="sign">Drawnimals {{ NAME }}</div>
+    <img class="keeper" src='img/shopkeepers/default.png'/>
+    <div class="dialog">
+        {{ GREETING }}
+    </div>
+    <div class='ItemList'>
+        <div class="tablist">
+            <div class="tab selected" onclick="$('.shop .ItemList .item').show(); $(this).addClass('selected').siblings().removeClass('selected');">All</div>
+            {% for catagory in CATAGORIES %}
+                <div class="tab" onclick="$('.shop .ItemList .item').hide(); $('.shop .ItemList .{{ catagory }}').show(); $(this).addClass('selected').siblings().removeClass('selected');">{{ catagory|title }}</div>
+            {% endfor %}
+        </div>
+        {% for item in ITEMS %}
+            <div class="item {{ item.catagory }}" onclick="MENU.Cash.View('sid={{ SID }}&id={{ item.id }}')">
+                <div class="title">
+                    {{ item.name|title }}
+                    <img src="img/items/{{ item.name }}.png"/>
+                </div>
+                <div class="price">{{ CURRENCY|raw }}{{ item.price }}</div>
+            </div>
+        {% endfor %}
+    </div>
+    
+    <div style="clear:both; height:100px; text-align:center; font-size:0.9em;">
+        Drawnimals Dollar items may not be exchanged for Drawnimals Dollars, Drawnimals Coins, or Drawnimals Coin Items.<br/>
+    Some Drawnimals Dollar items may be sold for a limited time only and/or be limited to a specific number of uses. <br/>
+    Please review the complete details of an item (by clicking on it) before purchasing it.<br/>
+    All Sales are final. There are absolutely no refunds. <br/>
+    You must have parental permission or be 18 or over to make a purchase.
+    </div>
+</div>
+<script>
+    TOOLBAR.HideAll(); 
+    MENU.background.load('','#000');
+</script>

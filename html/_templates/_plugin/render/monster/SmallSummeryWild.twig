@@ -1,0 +1,15 @@
+{# NAME,LEVEL,GENDER,CAUGHT,HPGUAGE|RAW #}
+<div class='PkmnSmallSummery'>
+    <div class='name'>
+        {{ NAME }}
+        <img src='res/img/icons/gender{{ GENDER }}.png'/>
+    </div>
+    <div class='level'>
+        Lv. {{ LEVEL }}
+    </div>
+    <div class='caught'>
+        <img src='res/img/icons/caught{{ CAUGHT }}.png'/>
+    </div>
+
+    {{ HPGUAGE | raw }}
+</div>

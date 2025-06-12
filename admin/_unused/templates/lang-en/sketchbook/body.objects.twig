@@ -1,0 +1,19 @@
+
+<table class="datatable">
+    <thead><tr><td>Object</td><td>Description</td></tr></thead>
+    <tbody>
+        {% for obj in OBJECTS %}
+            <tr>
+                <td>
+                    <a href="#" onclick="MENU.Sketchbook.ObjectsEdit('id={{ obj.id }}');">{{ obj.name }}</a>
+                </td>
+                <td>
+                    {{ obj.description }}
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+
+

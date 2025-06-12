@@ -1,0 +1,60 @@
+<table class="entitytable">
+    <thead>
+        <tr>
+            <td style="width:300px;">{{ OBJ.name }}</td>
+            <td>
+                Created By ________<br/><br/>
+                <div class="selected">Information</div>
+            </td>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+                <img width="150" style="display:block; margin:10px auto;" src="{{ OBJ.imageURL }}" onclick="$(this).next().click();"/>
+                <input type="file" name='imageFile' style="display:none;"/>
+                <sub>This image hasnt been approved yet.</sub>
+                <table class="datatable">
+                    <thead><tr><td>Map Icon</td></tr></thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <img width='30' src='{{ OBJ.iconURL }}'/>
+                                <input type='file' name='iconFile' style='float:right;'/>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <table class="datatable">
+                    <thead><tr><td>Description</td></tr></thead>
+                    <tbody><tr><td><textarea>{{ OBJ.description }}</textarea></td></tr></tbody>
+                </table>
+
+            </td>
+            <td>
+                <div class='container'>
+                    <sub>
+                        Objects are any non-interactive moving object in the game, This can include 
+                        trees, grass, buildings, etc. If you want to make the object interactive you
+                        should use the character creator.
+                    </sub>
+                    Options:<br/>
+                    Material<select>
+                        <option>None</option>
+                        <option>Solid</option>
+                        <option>Tall Grass</option>
+                        <option>Ice</option>
+                        <option>Jump Down</option>
+                        <option>Jump Left</option>
+                        <option>Jump Right</option>
+                        <option>Convayour Left</option>
+                        <option>Convayour Right</option>
+                        <option>Convayour Up</option>
+                        <option>Convayour Down</option>
+                    </select><br/>
+                    Has Warp<br/>
+                </div>
+            </td>
+        </tr>
+    </tbody>
+</table>

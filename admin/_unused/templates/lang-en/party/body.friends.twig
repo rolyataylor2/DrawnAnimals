@@ -1,0 +1,8 @@
+<sub>
+    Anyone you request to be your friend will be listed here. When someone is your friend you have access to information including
+    where they are right now and more. You will also recieve updates from them when they complete quests or catch new Drawnimals.
+</sub>
+{% for friend in FRIENDS %}
+    {{ friend|raw }}
+{% endfor %}
+<div style="clear:both; height:20px;"></div>

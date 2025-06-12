@@ -1,0 +1,34 @@
+{# empty Twig template #}
+<style>
+    #MainWindowPopups .popup form img {
+        float: left;
+        width: 44%;
+        margin: 0px 26%;
+    }
+    .error {width:90%; margin:0px 5%; background-color:rgba(200,100,100,0.3); border:1px solid red;}
+</style>
+<h1>Create New Drawnimal</h1>
+<sub>Submit a new drawnimal, All Drawnimals must undergo a approval process, please be patiant.</sub>
+{% if SCRIPT_OUTPUT|length > 0 %}
+    <center>
+        <img width="256" src="{{ IMGPATH|raw }}"/><br/>
+        {{ SCRIPT_OUTPUT }}
+    </center>
+{% else %}
+    <form onsubmit="return MENU._popupReloadFileForm($(this));">
+        {% if SCRIPT_ERROR|length > 0 %}
+            <div class='error'>{{ SCRIPT_ERROR|raw }}</div>
+        {% endif %}
+        <input type="hidden" name="id" value="-1"/>
+        <input type="hidden" name="token" value="{{ TOKEN }}"/>
+        <img src="img/drawnimals/egg.png"/>
+        <label>Image File <input name="image" type="file"/></label>
+        <label>Species Name <input name="species" type="text" value="{{ SPECIES }}"/></label>
+        <label>Form <input name="form" type="text" value="{{ FORM }}"/></label>
+        <label>Region <select name="region">{{ YOURREGIONLIST|raw }}</select></label>
+        <label>Short Description <input name="shortdescription" type="text" value="{{ SHORTDESCRIPTION }}"/></label>
+        <label>Description<textarea name="description">{{ DESCRIPTION }}</textarea></label>
+        <input type="submit" value="Create New"/>
+        <label><div class="progressbar"><div class="bar"></div><div class="percent"></div></div></label>
+    </form>
+{% endif %}

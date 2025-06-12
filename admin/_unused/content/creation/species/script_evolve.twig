@@ -1,0 +1,151 @@
+{# empty Twig template #}
+{% if SCRIPT_OUTPUT|length > 0 %}
+    <center>
+        <img width="256" src="{{ IMGPATH|raw }}"/><br/>
+        {{ SCRIPT_OUTPUT }}
+    </center>
+{% else %}
+    <style>
+        .CodeToolbar { width:90%; margin:0px 5%; background-color:lightgreen; box-shadow:3px 3px 3px black; height:32px;}
+        .CodeToolbar .CodeButton {float:left; padding:3px; margin:3px; border:1px solid green; height:16px;}
+        .CodeToolbar .CodeButton .code {display:none;}
+        .EvolveCodeForm {
+            width:90%;
+            margin:0px 5%;
+        }
+        .CodeContainer { 
+            position: relative;
+            font-size: 13px;
+            width: 98%;
+            min-height: 20px;
+            margin: 2px auto;
+            background-color: #FF9999;
+            border-bottom: 8px solid green;
+            border-left: 4px dotted green;
+            padding-bottom: 3px;
+        }
+        .CodeContainer.highlighted {border-color:lime;}
+        .CodeContainer .code { 
+            position: relative;
+            width: 100%;
+            background-color: white;
+            margin-left: 0px;
+            margin-bottom: 3px;
+            padding-left: 4px;
+            padding-top: 14px;
+            border: 1px solid rgb(187, 187, 187);
+        }
+        .CodeContainer .code.else {
+            margin-left: -5px;
+            box-shadow: 0px 0px 0px;
+            border-left: 0px;
+            padding: 5px;
+        }
+        .CodeContainer .code .close { position:absolute; top:3px; right:3px; cursor:pointer;}
+        .CodeContainer .code .up { position:absolute; top:3px; right:20px; cursor:pointer;}
+        .CodeContainer .code .down { position:absolute; top:3px; right:40px; cursor:pointer;}
+    </style>
+    <script>
+        var CodeSelectedDiv;
+        function CodeSelectDiv(container) {
+            CodeSelectedDiv = container;
+            $('.CodeContainer').removeClass('highlighted');
+            container.addClass("highlighted");
+        }
+        function CodeAddDiv(container) {
+            container.children('.code').clone()
+                    .appendTo(CodeSelectedDiv)
+                    .append('<div class="close" onclick="$(this).parent().remove();">X</div>')
+                    .append('<div class="up" onclick="$(this).parent().prev().before($(this).parent());">up</div>')
+                    .append('<div class="down" onclick="$(this).parent().next().after($(this).parent());">down</div>');
+            $('.CodeContainer').click(function(e) {
+                CodeSelectDiv($(this));
+                e.stopPropagation();
+            });
+        }
+        function CodeSubmit(element) {
+            element.find('input').each(function() {
+                $(this).attr('value',$(this).val());
+            });
+            element.find('select').each(function() {
+                $(this).children('option[value!="'+$(this).val()+'"]').removeAttr('selected');
+                $(this).children('option[value="'+$(this).val()+'"]').attr('selected',true);
+            });
+            MENU._popupReloadFileForm(element, {evolvecoderaw:encodeURI(element.children('.CodeContainer')
+                                                                                .html()
+                                                                                .replace(/  /g,''))
+            });
+            return false;
+        }
+    </script>
+    <h1>Evolve Code</h1>
+    <sub>Edit the evolution code of <b>{{ species }}</b></sub>
+    <div class="CodeToolbar">
+        <div class="CodeButton" onclick="CodeAddDiv($(this));">
+            If Item
+            <div class="code">
+                <input type="hidden" name="evolvecode[]" value="itemused"/>
+                If Item(<select name="evolvecode[]">{{ ITEMLIST }}</select>) is used
+                <div class="CodeContainer" ></div>
+                <input type="hidden" name="evolvecode[]" value="endif"/>
+            </div>
+        </div>
+        <div class="CodeButton" onclick="CodeAddDiv($(this));">
+            If Level
+            <div class="code">
+                <input type="hidden" name="evolvecode[]" value="iflevel"/>
+                If Level is 
+                <select name="evolvecode[]"><option value="0">&gt;=</option><option value="1">&lt;=</option><option value="2">==</option></select>
+                <input name="evolvecode[]" type="text" value="0"/><div class="CodeContainer" ></div><input type="hidden" name="evolvecode[]" value="endif"/>
+            </div>
+        </div>
+        <div class="CodeButton" onclick="CodeAddDiv($(this));">
+            If Hour
+            <div class="code">
+                <input type="hidden" name="evolvecode[]" value="ifhour"/>
+                If Hour is 
+                <select name="evolvecode[]"><option value="0">&gt;=</option><option value="1">&lt;=</option><option value="2">==</option></select>
+                <input name="evolvecode[]" type="text" value="0"/><div class="CodeContainer" ></div><input type="hidden" name="evolvecode[]" value="endif"/>
+            </div>
+        </div>
+        <div class="CodeButton" onclick="CodeAddDiv($(this));">
+            If Friendship
+            <div class="code"><input type="hidden" name="evolvecode[]" value="iffriendship"/>
+                If Friendship is 
+                <select name="evolvecode[]"><option value="0">&gt;=</option><option value="1">&lt;=</option><option value="2">==</option></select>
+                <input name="evolvecode[]" type="text" value="0"/><div class="CodeContainer" ></div><input type="hidden" name="evolvecode[]" value="endif"/>
+            </div>
+        </div>
+        <div class="CodeButton" onclick="CodeAddDiv($(this));">
+            Else
+            <div class="code else">
+                Otherwise<input type="hidden" name="evolvecode[]" value="else"/>
+            </div>
+        </div>
+        <div class="CodeButton" onclick="CodeAddDiv($(this));">
+            Evolve!
+            <div class="code">
+                <input type="hidden" name="evolvecode[]" value="return"/>
+                Evolve Into: <input type='text' name='evolvecode[]'/>
+            </div>
+        </div>
+    </div>
+
+    <form class="EvolveCodeForm" onsubmit="return CodeSubmit($(this));">
+        {% if SCRIPT_ERROR|length > 0 %}
+            <div class='error'>{{ SCRIPT_ERROR|raw }}</div>
+        {% endif %}
+        <input type="hidden" name="species" value="{{ SPECIES }}"/>
+        <input type="hidden" name="form" value="{{ FORM }}"/>
+        <input type="hidden" name="token" value="{{ TOKEN }}"/>
+        <div class="CodeContainer">{{ EVOLVECODERAW|raw }}</div>
+        <input type='submit' value='Save'/>
+    </form>
+    <script>
+        CodeSelectDiv($('.CodeContainer'));
+        $('.CodeContainer').click(function(e) {
+            CodeSelectDiv($(this));
+            e.stopPropagation();
+        });
+    </script>
+{% endif %}

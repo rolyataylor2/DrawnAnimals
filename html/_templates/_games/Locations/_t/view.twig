@@ -1,0 +1,18 @@
+<div class='page'>
+    <h1>
+        {{ MAP.name|title }} (Map)
+        {% if EDIT %}
+            <a href='?g=Locations&p=delete&id={{ MAP.id }}'>Delete</a>
+            <a href='?g=Locations&p=edit&id={{ MAP.id }}'>Edit</a>
+            <a href='?g=Locations&p=collision&id={{ MAP.id }}'>Collisions</a>
+        {% endif %}
+    </h1>
+    <article>
+        <label class="styleSection full">{{ MAP.description }}</label>
+        <label class="styleSection">
+            <img style="width:100%;" src="http://PokeWorlds.com/img/location/previews/{{ MAP.id }}.png"/>
+        </label>
+        <div style="clear:both;"></div>
+       
+    </article>
+</div>

@@ -1,0 +1,30 @@
+<!--{#
+    TWIG TEMPLATE
+    VARIABLES:
+        NAME: string Name of item being viewed
+        DESCRIPTION: string Description of item being viewed
+        IMAGE: string Image tag for item being viewed
+        SELECT_SCRIPT: string Selection options for the item
+        SCRIPT_OUTPUT: string Output from login attempt
+ 
+#}-->
+<!DOCTYPE HTML>
+
+<div id="MenuItemsView">
+    <div class="title">{{ NAME }}</div>
+    <div class="description">
+        {{ IMAGE }}
+        <div class="info">{{ DESCRIPTION }}</div>
+        <div style="clear:both"></div>
+    </div>
+    <div class="uses">
+        {% if SELECT_SCRIPT is defined %}
+            {{ SELECT_SCRIPT }}
+        {% else %}
+            This item cannot be used here.
+        {% endif %}
+        <div style="clear:both"></div>
+    </div>
+    <div style="clear:both"></div>
+</div>
+

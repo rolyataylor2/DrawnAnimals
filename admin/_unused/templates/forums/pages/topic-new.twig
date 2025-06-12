@@ -1,0 +1,18 @@
+
+{% if SCRIPT_OUTPUT|length > 0 %}
+    <center>
+        {{ SCRIPT_OUTPUT }}
+        <br/>
+        <a href='?p=t&id={{ TOPIC.id }}'>View Topic</a>
+    </center>
+{% else %}
+    <form action='?p=nt&pid={{ CATAGORY.id }}' method='post'>
+        <input type='hidden' name='token' value='{{ TOKEN }}'/>
+        <table class='table80'>
+            <tr><td>Topic Title</td><td><input name='title' type='text'/></td></tr>
+            <tr><td>Tagline</td><td><input name='tagline' type='text'/></td></tr>
+            <tr><td>Content</td><td><textarea name='content'></textarea></td></tr>
+            <tr><td></td><td><input type='submit' value='Create Post'/></td></tr>
+        </table>
+    </form>
+{% endif%}

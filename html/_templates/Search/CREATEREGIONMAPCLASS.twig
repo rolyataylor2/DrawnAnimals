@@ -1,0 +1,11 @@
+{# empty Twig template #}
+<a class="searchitem location" href="?g=Locations&p=view&id={{ data['id'] }}">
+    <div class="icon">
+        <img src="http://PokeWorlds.com/img/location/previews/{{ data['id'] }}.png"/>
+    </div>
+    <div class="name">{{ data['name'] }}</div>
+    <div class='description'>{{ data['description'] }}</div>
+    <div class="fav_icon{% if data.liked %} selected{% endif %}" data-catagory="createMap" data-item="{{ data.id }}">
+        <img src="http://PokeWorlds.com/img/fav_createMonster.png"/>
+    </div>
+</a>

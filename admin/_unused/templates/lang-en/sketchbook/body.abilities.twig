@@ -1,0 +1,18 @@
+
+<table class='datatable'>
+    <thead>
+        <tr><td>Rating</td><td>Name</td><td>Description</td><td>Creator</td><td>Likes</td></tr>
+    </thead>
+    <tbody>
+        {% for ability in ABILITIES %}
+        <tr>
+            <td>{{ ability.rating }}</td>
+            <td><a href="javascript:MENU.Sketchbook.AbilitiesEdit('id={{ ability.id }}');">{{ ability.name|title }}</a></td>
+            <td>{{ ability.description }}</td>
+            <td>{{ ability.creator }}</td>
+            <td>{{ ability.likes }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+

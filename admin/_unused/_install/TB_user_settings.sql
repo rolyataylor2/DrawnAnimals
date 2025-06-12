@@ -1,0 +1,17 @@
+CREATE TABLE IF NOT EXISTS user_settings (
+        uid BIGINT UNSIGNED PRIMARY KEY,
+        location_default BLOB,
+        location BLOB,
+        location_x INT UNSIGNED DEFAULT 0,
+        location_y INT UNSIGNED DEFAULT 0,
+        battle_id BLOB,
+        battle_wins INT UNSIGNED DEFAULT 0,
+        battle_loss INT UNSIGNED DEFAULT 0,
+        drawnimal_battle BIGINT UNSIGNED DEFAULT 0,
+        drawnimal_following BIGINT UNSIGNED DEFAULT 0,
+        avatar BLOB,
+        avatar_forums BLOB,
+        gender TINYINT UNSIGNED DEFAULT 2,
+        following BIGINT UNSIGNED DEFAULT 0,
+	profile_aboutme BLOB,
+        profile_theme BLOB)

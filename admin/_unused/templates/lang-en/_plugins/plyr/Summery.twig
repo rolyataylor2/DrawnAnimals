@@ -1,0 +1,55 @@
+{# NAME,LEVEL,GENDER,CAUGHT,HPGUAGE|RAW
+    create a div for each passed argument, if argument == '' then dont add the div.
+ #}
+<div class='Player {{ THEME }}' onclick='{{ ONCLICK|raw }}'>
+    <div class='username'>
+        {{ USERNAME|title }}
+        {% if GENDER|length > 0 %}
+            <img src='res/img/icons/gender{{ GENDER }}.png'/>
+        {% endif %}
+    </div>
+    {% if ONCLICK|length == 0 %}
+        <div class="shortcuts">
+            <a href="#">Profile</a> |
+            <a href="#">Add Friend</a> |
+            <a href="#">Send Message</a> |
+            <a href="#">Battle!</a>
+        </div>
+    {% endif %}
+    {% if LOCATION|length > 0 %}
+        <div class='location'>{{ LOCATION|title }}</div>
+    {% endif %}
+    {% if EXPCHART|length > 0 %}
+        <div class='expchart'>{{ EXPCHART|raw }}</div>
+    {% endif %}
+    {% if AVATAR|length > 0 %}
+        <img class='avatar' src="img/avatar/{{ AVATAR }}.png"/>
+    {% endif %}
+    {% if COUNTRY|length > 0 %}
+        <div class='country'>{{ COUNTRY }}</div>
+    {% endif %}
+    {% if CREATED|length > 0 %}
+        <div class='created'>Started on {{ CREATED }}</div>
+    {% endif %}
+    {% if LASTSEEN|length > 0 %}
+        <div class='lastseen'>Last Seen {{ LASTSEEN }}</div>
+    {% endif %}
+    {% if BIRTHDAY|length > 0 %}
+        <div class='birthday'>Bday: {{ LASTSEEN }}</div>
+    {% endif %}
+    {% if LEVEL|length > 0 %}
+        <div class='level'>Lv. {{ LEVEL }}</div>
+    {% endif %}
+    {% if AGE|length > 0 %}
+        <div class='age'>{{ AGE }}</div>
+    {% endif %}
+    {% if ALIGNMENT|length > 0 %}
+        {{ ALIGNMENT | raw }}
+    {% endif %}
+    {% if PARTY|length > 0 %}
+        {{ PARTY | raw }}
+    {% endif %}
+    {% if PARTYSIZE|length > 0 %}
+        {{ PARTYSIZE | raw }}
+    {% endif %}
+</div>

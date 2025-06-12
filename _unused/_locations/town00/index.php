@@ -1,0 +1,22 @@
+<?php
+
+/* 
+ * Copyright (c) 2014 User.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *    User - initial API and implementation and/or initial documentation
+ */
+
+include_once 'html/_php/class-regions.php';
+include_once 'html/_php/class-region-maps.php';
+$maps = CREATEREGIONMAPCLASS::byRegion(3,' ');
+$arguments['MAPCOUNT'] = count($maps);
+$arguments['MAPS'] = [];
+foreach($maps as $i) {
+    $i->_load();
+    $arguments['MAPS'][] = $i->data;
+}

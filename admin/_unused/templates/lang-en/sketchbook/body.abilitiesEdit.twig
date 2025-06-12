@@ -1,0 +1,29 @@
+<form>
+    <table class='entitytable'>
+        <thead>
+            <tr>
+                <td>{{ ABILITY.name|capitalize }}</td>
+                <td style='width:70%;'>
+                    Created By: {{ ABILITY.creator }}<br/><br/>
+                    <div class='selected'>Ability Code</div>
+                </td>
+            </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>
+                <table class='datatable'>
+                    <thead><tr><td>Description</td></tr></thead>
+                    <tbody>
+                        <tr><td><textarea style='height:130px;' name='description'>{{ ABILITY.description }}</textarea></td></tr>
+                    </tbody>
+                </table>
+                <input type='submit' value='Save' style='width:40%; margin:0 6%;'/><input type='submit' value='Delete' style='width:40%;'/>
+            </td>
+            <td>
+                <div class='container'>{{ codeTable|raw }}</div>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</form>

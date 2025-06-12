@@ -1,0 +1,9 @@
+<h1>Confirming account</h1>
+<sub>Once your account is confirmed you can play the game.</sub>
+{% if SCRIPT_OUTPUT == '' %}
+    Congratulations your account has been confirmed!
+{% else %}
+    An error has occurred.<br/>
+    <b style="color:red;">{{ SCRIPT_OUTPUT }}</b>
+{% endif %}
+

@@ -1,0 +1,23 @@
+{# empty Twig template #}
+<div class='page'>
+    <header>Inventory</header>
+    <article style="text-align:center;">
+        {% if ITEMS|length == 0 %}
+            <header style="margin:0px auto; width:80%;">You Have No Items</header>
+        {% else %}
+            {% for i in ITEMS%}
+                <div class='item' href='#'>
+                    <div class='name' onclick='inlinePopup("itemUse",{{ i.id }});'>{{ i.name }}</div>
+                    <div class='description'>...</div>
+                    <div class='amount'>{{ i.total }}</div>
+                    <div class="actions">
+                        <a href="#" onclick="inlinePopup('itemSend',{{ i.id }});">Send</a>
+                        <a href="#" onclick="inlinePopup('itemMove',{{ i.id }});">Move</a>
+                        <a href="#" onclick="inlinePopup('itemDiscard',{{ i.id }});">Discard</a>
+                    </div>
+                    
+                </div>
+            {% endfor %}
+        {% endif %}
+    </article>
+</div>

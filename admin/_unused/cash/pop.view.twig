@@ -1,0 +1,50 @@
+<div class="items">
+    <div class="name">{{ ITEM.name|title }}</div>
+    <img class="itemimage" src="img/items/{{ ITEM.name }}.png"/>
+    <div class="description">{{ DESCRIPTION|raw }}</div>
+    <div class="selection">
+        {% if SCRIPT_ERROR|length > 0 %}
+            <div class="error">{{ SCRIPT_ERROR|raw }}</div>
+        {% elseif SCRIPT_OUTPUT|length > 0 %}
+            This item has been added to your <a href="#" onclick="MENU.Backpack.Index(); MENU.popup.hide();">Inventory</a>!<br/>
+            Your recipt number is {{ SCRIPT_OUTPUT }}
+        {% else %}
+            {% if ITEM.price > PLYR.cash %}
+                You do not have enough Drawnimals Dollars to purchase this item.
+            {% else %}
+                <form onsubmit="return MENU.popup.reloadForm($(this));">
+                    <label style="text-align:center; font-weight:bold;">
+                        I Understand & Agree that I am spending Drawnimals Dollars on this item. 
+                        I understand that these items are non refundable and have no cash value. 
+                        I agree not to violate the site rules with regards to Drawnimal Dollar items.
+                    </label>
+                    <label>Your Current Balance:<b class="dollars" style="float:right; color:greenyellow;">{{ PLYR.cash }}</b></label>
+                    <label>
+                        Number of Items / Cost:
+                        <div style="float:right; color:pink; margin-left:10px;">
+                            / <img height="16" src="img/sit/dollar.png"> 
+                            <b class="totalprice">{{ ITEM.price*QUANTITY }}</b>
+                            <b style="display:none" class="price">{{ ITEM.price }}</b>
+                        </div>
+                        <input name="quantity" type="text" class="number" 
+                               value="{{ QUANTITY }}"
+                               onclick="$(this).select();"
+                               onkeyup="this.value = this.value.replace(/[^0-9]/g,'0');  
+                                        if (this.value === '') this.value = 1;
+                                        if (parseInt($(this).val())*parseInt($('b.price').html()) > parseInt($('b.dollars').html())) this.value = 0;
+                                        $('.totalprice').html(parseInt($(this).val())*parseInt($('b.price').html()));
+                                        $('.remaining').html(parseInt($('b.dollars').html())-parseInt($('b.totalprice').html()));
+                                    "/>
+
+                    </label>
+                    <label style="text-align:center;">After this transaction you will have <img height="16" src="img/sit/dollar.png"><b class="remaining">{{ PLYR.cash-(ITEM.price*QUANTITY) }}</b> Remaining.</label>
+                    <label>Check if you agree to the above <input name="agree" type="checkbox"/></label>
+                    <label>Enter Your PIN if you have one <input name="pin" type="password"/></label>
+                    <input type="hidden" name="token" value="{{ TOKEN }}"/>
+                    <label><input type="submit" value="Buy Item"/></label>
+                </form>
+            {% endif %}
+        {% endif %}
+    </div>
+    <div style="clear:both;"></div>
+</div>

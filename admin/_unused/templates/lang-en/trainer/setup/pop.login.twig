@@ -1,0 +1,12 @@
+
+{% if LOGIN_SUCCESS|length > 0 %}
+    <script>
+        NODE = new NODECLASS('{{ NETWORK_KEY }}','{{ USERNAME }}');
+        $('nav').show();
+    </script>
+    <center>{{ LOGIN_SUCCESS }}</center>
+{% else %}
+    {% if SCRIPT_OUTPUT|length > 0 %}
+        <div class='error'>{{ SCRIPT_OUTPUT|raw }}</div>
+    {% endif %}
+{% endif %}

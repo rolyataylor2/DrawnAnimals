@@ -1,0 +1,196 @@
+/* 
+    Document   : default
+    Created on : Sep 18, 2013, 2:25:11 PM
+    Author     : user
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+root { 
+    display: block;
+}
+
+body {overflow:hidden; background-color:#333;}
+#a {position:absolute; top:0px; left:0px; right:0px; bottom:0px; overflow:hidden;}
+#GUI-Logo {position:absolute; bottom:0px; left:50%; width:250px; margin-left:-125px; z-index:10;}
+.mobile #GUI-Logo {bottom:auto; top:0px; left:0px; margin:0; width:150px;}
+
+#GUI-TopBar {
+    position: absolute; top:0px; right:0px; left:0px;
+    height: 6%; background-color: rgb(243, 43, 43); z-index: 2;
+    border-radius: 0px 0px 50% 50% / 0px 0px 20px 20px;
+    border-bottom: 3px solid rgba(0, 0, 0, 0.59);
+    box-shadow: 0 0 3px 3px #000, inset 0 0 20px rgba(0,0,0,0.5);
+}
+#GUI-BottomBar {
+    position: absolute; bottom:0px; right:0px; left:0px; 
+    height:8%; background-color:rgb(255, 255, 255); z-index:2;
+    border-radius: 50% 50% 0px 0px / 20px 20px 0px 0px;
+    border-top: 3px solid rgba(0, 0, 0, 0.59);
+    box-shadow: 0 0 3px 3px #000, inset 0 0 20px rgba(0,0,0,0.5);
+}
+
+/*Gameplay area*/
+#GUI-GameArea {position: absolute; top:5%; left:10%; width:80%; height:90%; resize: both;
+               background-color:black; box-shadow:0px 0px 15px 2px black; z-index:0; }
+.mobile #GUI-GameArea {left:0%; width:100%;}
+#GUI-GameArea #GMW {position:absolute; top:0px; left:0px; right:0px; bottom:0px;}
+
+/*Players Team*/
+#GUI-Team { position:absolute; top:50%; left:10px; }
+.mobile #GUI-Team {display:none !important;}
+#GUI-Team .pet {float:left; cursor:pointer;}
+#GUI-Team .pet img {width:48px;}
+
+/*Player Information*/
+#GUI-Player {position:absolute; top:10px; left:0px; width:175px; height:64px;}
+.mobile #GUI-Player {left:auto !important; height:32px;  font-size:90%; width:150px; right:0px !important; z-index:30 !important; }
+#GUI-Player img {float:left; height:100%; margin-right:10px;}
+
+/*Users online*/
+#GUI-Online {position:absolute; left:42%; top:14px; height:32px; width:164px; text-align:center;}
+.mobile #GUI-Online {display:none !important;}
+#GUI-Online #UO {height:16px; width:130px;}
+#GUI-Online #UO-L {position: absolute; left:0px; top:32px; width:150px; min-height:10px; max-height:200px; overflow-x:hidden; display:none;}
+
+/*Chat menu*/
+#GUI-Chat  { position: absolute; bottom:0px; right:0px; width:225px; height:16px; }
+.mobile #GUI-Chat {bottom:0px !important; right:0px !important;}
+#GUI-Chat  input {position:absolute; bottom:4px; left:16px; right:6px; height:16px; border:0px;}
+#GUI-Chat  #C-LOG {position:absolute; bottom:32px; left:0px; right:0px; height:0px; }
+.mobile #GUI-Chat  #C-LOG {height:100px; overflow:hidden; opacity:0.4;
+                            transition: 250ms all ease-in-out 2s; 
+                            -webkit-transition:  250ms all ease-in-out 2s;}
+.mobile #GUI-Chat:hover  #C-LOG {height:300px; overflow:hidden; opacity:1;
+                            transition: 250ms all ease-in-out; 
+                            -webkit-transition:  250ms all ease-in-out;}
+#GUI-Chat  #C-LOG-C {position:absolute; bottom:0px; left:0px; right:0px; height:auto;
+          font-size:80%; }
+#GUI-Chat  #C-LOG-C .username {float:left; margin-right:4px; margin-top:0px; margin-left:0px; font-size:10px;}
+#GUI-Chat  .chat-entry {
+    float:left; margin:2px; padding:2px;background-color: rgba(231, 132, 132, 0.4);
+    border: 1px solid white; opacity:0.8;
+    text-shadow: 1px 1px 2px #999;
+    font-family: "Comic Sans MS", cursive, sans-serif; color: black;
+    box-shadow: 0 0 3px 2px #000, inset 0 0 20px rgba(0,0,0,0.5);
+}
+
+/*Menu DIV*/
+#GUI-MenuIcon { position: absolute; top:10px; left:30%; width:75px; z-index:10; cursor:pointer;}
+.mobile #GUI-MenuIcon {top:auto !important; bottom:0px !important; left:0px !important; }
+#GUI-MenuIcon img {width:100%;}
+
+/*General Style*/
+input {background-color:rgba(0,0,0,0.3); border-radius:4px; color:white;}
+.style-window {background-color: white; border-radius: 15px;
+               border: 4px solid white; color:black; padding:4px; 
+               box-shadow: 0 0 3px #000, inset 0 0 10px #000;}
+.style-dialog {padding: 10px 16px;
+               background-color: white; 
+               border-radius: 20px; border: 2px solid rgb(255, 255, 255);
+               font-weight: bold; text-shadow: 1px 1px 2px #999;
+               font-family: "Comic Sans MS", cursive, sans-serif; color: black;
+               box-shadow: 0 0 3px 3px #000, inset 0 0 20px rgba(0,0,0,0.5);}
+
+.draggable {position:absolute; z-index:15;}
+.draggable .handle {position:absolute; top:0px; left:0px; right:0px; bottom:0px; cursor:move;
+                    background-color:rgba(255,100,100,0.5); z-index:100; border-radius: 15px;
+                    display:none;}
+
+#GUI-Popups {
+    position:fixed; z-index:1; 
+    top:4%; left:0px;
+    width:100%; height:90%; display:none;
+    background:url('sit/a-bg.png');
+    opacity:0;
+    overflow:hidden;
+
+    -webkit-transition:opacity 0.5s ease-in-out;
+    -moz-transition:opacity 0.5s ease-in-out;
+    -o-transition:opacity 0.5s ease-in-out;
+    -ms-transition:opacity 0.5s ease-in-out;
+    transition:opacity 0.5s ease-in-out;
+}
+#GUI-Popups .popup {
+    position:absolute;
+    top:0px; left:0px; min-height:100%; height:100%; max-height:100%; width:100%; 
+    overflow-x:hidden; overflow-y:auto;
+    -webkit-transition:margin-left 0.75s ease-in-out;
+    -moz-transition:margin-left 0.75s ease-in-out;
+    -o-transition:margin-left 0.75s ease-in-out;
+    -ms-transition:margin-left 0.75s ease-in-out;
+    transition:margin-left 0.75s ease-in-out;
+}
+#GUI-Popups .closed { margin-left:200%;}
+#GUI-Popups .hidden { margin-left:-200%;}
+
+#GUI-Message {
+    position:fixed; z-index:100; 
+    top:0px; left:0px;
+    width:100%; height:100%; display:none;
+    
+    opacity:0;
+    overflow:hidden;
+
+    -webkit-transition:opacity 0.5s ease-in-out;
+    -moz-transition:opacity 0.5s ease-in-out;
+    -o-transition:opacity 0.5s ease-in-out;
+    -ms-transition:opacity 0.5s ease-in-out;
+    transition:opacity 0.5s ease-in-out;
+}
+#GUI-Message .BG {position:absolute; top:0px; left:0px; right:0px; bottom:0px; z-index:0; background:rgba(0,0,0,0.4);}
+#GUI-Message .popup {
+    position:absolute; top:100px; left:50%; margin-left:-350px; bottom:100px;
+    border:1px solid black; background-color:white; border-radius:50px 20px;
+    width:750px; 
+    overflow-x:hidden; overflow-y:auto;
+    -webkit-transition:margin-top 0.75s ease-in-out;
+    -moz-transition:margin-top 0.75s ease-in-out;
+    -o-transition:margin-top 0.75s ease-in-out;
+    -ms-transition:margin-top 0.75s ease-in-out;
+    transition:margin-top 0.75s ease-in-out;
+}
+.mobile #GUI-Message .popup { top:50px; left:10px; right:10px; bottom:50px; margin-left:0px; width:auto; height:auto;}
+#GUI-Message .closed { margin-top:200%;}
+#GUI-Message .hidden { margin-top:200%;}
+
+#GUI-Toolbar {
+    position:fixed; z-index:1; 
+    bottom:0px; left:0px; height:0px; width:100%; 
+    display:none; z-index:10;
+    opacity:0;
+
+    -webkit-transition:opacity 0.5s ease-in-out;
+    -moz-transition:opacity 0.5s ease-in-out;
+    -o-transition:opacity 0.5s ease-in-out;
+    -ms-transition:opacity 0.5s ease-in-out;
+    transition:opacity 0.5s ease-in-out;
+}
+#GUI-Toolbar .popup {
+    position:absolute;
+    height:0px; left:0px; right:0px; bottom:0px;
+    margin-bottom:15px;
+    -webkit-transition:margin-bottom 0.75s ease-in-out;
+    -moz-transition:margin-bottom 0.75s ease-in-out;
+    -o-transition:margin-bottom 0.75s ease-in-out;
+    -ms-transition:margin-bottom 0.75s ease-in-out;
+    transition:margin-bottom 0.75s ease-in-out;
+}
+#GUI-Toolbar .popup a {float:left; height:80px; width:68px; margin: 0px 10px; margin-top:-79px; text-align:center; color:black; font-size:110%; text-decoration:none;}
+.mobile #GUI-Toolbar .popup a { margin: -70px 5px; }
+#GUI-Toolbar .popup a img {height:60px; margin:0px 4px;}
+
+#GUI-Toolbar .popup .menu {float:right; position:relative; height:80px; width:68px;  margin: 0px 10px; margin-top:-79px; text-align:center; color:black; font-size:110%; text-decoration:none;}
+.mobile #GUI-Toolbar .popup .menu { margin: -70px 5px; }
+#GUI-Toolbar .popup .menu img {height:60px; margin:0px 4px;}
+
+#GUI-Toolbar .popup .menu .container {position:absolute; bottom:100%; right:0px; width:150px; height:0px; overflow:hidden;
+            transition:300ms all; -webkit-transition:300ms all; background-color:white; border-radius:10px; 
+            box-shadow:inset 0 0 0 5px white, inset 0 0 5px 5px black, 0 0 5px black;}
+#GUI-Toolbar .popup .menu.open .container {height:200px; padding:10px 5px;}
+#GUI-Toolbar .popup .menu .container a { height:auto; width:95%; font-size:90%; margin:2px 0; border-bottom:2px dashed #CCC;  }
+#GUI-Toolbar .popup .menu .container a:hover {  border-bottom:2px dashed black; }
+.mobile #GUI-Toolbar .popup .menu .container a {font-size:110%;}
+
+#GUI-Toolbar .closed { margin-bottom:-110%;}
+#GUI-Toolbar .hidden { margin-bottom:-110%;}

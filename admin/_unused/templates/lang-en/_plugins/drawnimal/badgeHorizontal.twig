@@ -1,0 +1,57 @@
+{# NAME,LEVEL,GENDER,CAUGHT,HPGUAGE|RAW
+    create a div for each passed argument, if argument == '' then dont add the div.
+ #}
+<table class='Drawnimal' {{ ONCLICK|raw }}>
+    <tr>
+        {% if IMAGEURL|length > 0 %}
+            <td><img class="image" src="{{ IMAGEURL }}"/></td>
+        {% endif %}
+            <td>
+                <table>
+                    <tr>
+                        <td class='name'>
+                            <span>{{ NAME }}</span>
+                            {% if LEVEL|length > 0 %}
+                                <span class='level'>Lv. {{ LEVEL }}</span>
+                            {% endif %}
+                            {% if GENDER|length > 0 %}
+                                <img class='gender' src='http://img.drawnimals.com/icons/gender{{ GENDER }}.png'/>
+                            {% endif %}
+                            {% if ITEMICON == true %}
+                                <img class='itemicon' src='http://img.drawnimals.com/icons/held-item.png'/>
+                            {% endif %}
+                            {% if CAUGHT|length > 0 %}
+                                <div class='caught'>{{ CAUGHT }}</div>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            {% if ITEM|length > 0 %}
+                                <div class='itemholding'>{{ ITEM|title }}</div>
+                            {% endif %}
+                            {% if BALL|length > 0 %}
+                                <div class='ball'>{{ BALL }}</div>
+                            {% endif %}
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class='stats'>
+                            {% if HPGUAGE|length > 0 %}
+                                {{ HPGUAGE | raw }}
+                            {% endif %}
+                            {% if EXPGUAGE|length > 0 %}
+                                {{ EXPGUAGE | raw }}
+                            {% endif %}
+                        </td>
+                    </tr>
+
+
+                    
+                </table>
+            </td>
+        
+
+    </tr>
+</table>

@@ -1,0 +1,16 @@
+
+{% if SCRIPT_OUTPUT|length > 0 %}
+    <center>
+        {{ SCRIPT_OUTPUT }}
+        <br/>
+        <a href='?p=t&id={{ TOPIC.id }}'>View Topic</a>
+    </center>
+{% else %}
+    <form action='?p=np&pid={{ TOPIC.id }}' method='post'>
+        <input type='hidden' name='token' value='{{ TOKEN }}'/>
+        <table class='table80'>
+            <tr><td>Content</td><td><textarea name='content'></textarea></td></tr>
+            <tr><td></td><td><input type='submit' value='Post Reply'/></td></tr>
+        </table>
+    </form>
+{% endif%}

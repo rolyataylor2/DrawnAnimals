@@ -1,0 +1,24 @@
+<div class="page">
+    <h1>{{ REGION.name|title }} REGION
+        {% if EDIT %}
+            <a href="#" onclick="inlinePopup('NA/monsterDelete',{{ REGION.id }});">Delete</a>
+            <a href="play.php?g=Regions&p=edit&id={{ REGION.id }}">Edit</a>
+        {% endif %}
+    </h1>
+    <article>
+        <label class="full styleSection"><b>Story</b><br/>{{ REGION.description }}</label><br/>
+        <label class="full styleSection">Share this dex with this url: <a target="_new" href="http://PokeWorlds.com/dex.php?id={{REGION.id}}">http://PokeWorlds.com/dex.php?id={{REGION.id}}</a></label>
+        <div style="clear:both"></div>
+    </article>
+    <h2>Starters</h2>
+    <article>
+        {% for i in STARTERS %} 
+            {{ i.species }}
+        {% endfor %}
+    </article>
+    
+    <h2>Badges</h2>
+    <article></article>
+    <h2>Trainers</h2>
+    <article></article>
+</div>

@@ -1,0 +1,19 @@
+{# empty Twig template #}
+<div class="page">
+    <div id="game" tabindex="0">
+
+    </div>
+    <article>
+
+    </article>
+</div>
+<script>
+    maps = [];
+    $(window).on('load',function() {
+        InitGameObjects();
+        {% for i in MAPS %}
+            maps.push(new mapObject({{ i.id }},{{ i.region_x }},{{ i.region_y }},{{ i.width }},{{ i.height }}));
+        {% endfor %}
+        $('#game').focus();
+    });
+</script>

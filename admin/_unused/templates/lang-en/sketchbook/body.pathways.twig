@@ -1,0 +1,19 @@
+
+<table class="datatable">
+    <thead><tr><td>Pathway</td><td>Color</td></tr></thead>
+    <tbody>
+        {% for path in PATHWAYS %}
+            <tr>
+                <td>
+                    <a href="#" onclick="MENU.Sketchbook.PathwaysEdit('id={{ path.id }}');">{{ path.name }}</a>
+                </td>
+                <td style="background-color:{{ path.color }};">
+                    {{ path.color }}
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+
+

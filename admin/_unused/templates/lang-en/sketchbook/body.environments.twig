@@ -1,0 +1,19 @@
+
+<table class="datatable">
+    <thead><tr><td>Environment</td><td>Color</td></tr></thead>
+    <tbody>
+        {% for environment in ENVIRONMENTS %}
+            <tr>
+                <td>
+                    <a href="#" onclick="MENU.Sketchbook.EnvironmentsEdit('id={{ environment.id }}');">{{ environment.name }}</a>
+                </td>
+                <td style="background-color:{{ environment.color }};">
+                    {{ environment.color }}
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+
+

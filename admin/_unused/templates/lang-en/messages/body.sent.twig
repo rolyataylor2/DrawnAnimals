@@ -1,0 +1,8 @@
+<sub>
+    Here are all the letters you sent off to others, you can see their status whether they have been read or not.
+    Dont take it personally if they dont respond.
+</sub>
+    {% for letter in LETTERS %}
+        {{ letter|raw }}
+    {% endfor %}
+    <div style='clear:both;'></div>

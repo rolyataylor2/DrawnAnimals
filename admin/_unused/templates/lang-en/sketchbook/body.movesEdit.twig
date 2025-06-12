@@ -1,0 +1,56 @@
+<table class='entitytable'>
+    <thead>
+        <tr>
+            <td style="width:300px;">{{ MOVE.name|title }}</td>
+            <td>
+                Created By ______<br/><br/>
+                <div class="selected" data-parent='.details'>Details</div>
+                
+            </td>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+                <table class='datatable'>
+                    <thead><tr><td>Description</td></tr></thead>
+                    <tbody>
+                        <tr><td><textarea style='height:130px;' name='description'>{{ MOVE.description }}</textarea></td></tr>
+                    </tbody>
+                </table>
+                <table class='datatable'>
+                    <thead><tr><td>Type</td></tr></thead>
+                    <tbody><tr><td>{{ TYPES|raw }}</td></tr></tbody>
+                </table>
+                <input type='submit' value='Save' style='width:40%; margin:0 6%;'/><input type='submit' value='Delete' style='width:40%;'/>
+            </td>
+            <td>
+                <div class='container details'>
+                    <table class='datatable'>
+                        <thead><tr><td>Power</td><td>PP</td><td>Speed</td><td>Accuracy</td></tr></thead>
+                        <tbody>
+                            <tr>
+                                <td><input type='text' value='{{ MOVE.power }}'/></td>
+                                <td><input type='text' value='{{ MOVE.pp }}'/></td>
+                                <td><input type='text' value='{{ MOVE.speed }}'/></td>
+                                <td><input type='text' value='{{ MOVE.accuracy }}'/></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <sub>
+                        This script below is Executed when the move is used in battle
+                    </sub>
+                    {{ scripttable|raw }}
+                </div>
+            </td>
+        </tr>
+    </tbody>
+</table>
+<script>
+        $('table.entitytable > thead > tr > td > div').click(function() {
+        $('table.entitytable > thead > tr > td > div').removeClass('selected');
+        $('table.entitytable > tbody > tr > td > .container').hide();
+        $($(this).data('parent')).show();
+        $(this).addClass('selected');
+    });
+</script>

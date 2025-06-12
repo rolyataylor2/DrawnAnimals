@@ -1,0 +1,8 @@
+<table class="datatable">
+    <thead><tr><td>Move</td></tr></thead>
+    <tbody>
+        {% for i in MOVES %}
+            <tr><td><a href="#" onclick="MENU.Sketchbook.MovesEdit('id={{ i.id }}');">{{ i.name|title }}</a></td></tr>
+        {% endfor %}
+    </tbody>
+</table>

@@ -1,0 +1,31 @@
+<table class='table100'>
+        {% for cat in CATAGORIES %}
+            <tr class="row-title">
+                <td>{{ cat.title }}</td>
+            </tr>
+            <tr>
+                <td>
+                    <table class="table100">
+                        <tr class="row-details">
+                            <td></td>
+                            <td>Forum</td>
+                            <td>Last Post</td>
+                            <td>Threads</td>
+                            <td>Posts</td>
+                        </tr>
+                        {% for subcat in SUBCATAGORIES %}
+                            {% if subcat.parent_id == cat.id %}
+                                <tr class="row-catagory">
+                                    <td><img src="http://img.drawnimals.com/forums/catagory{{ subcat.icon|raw }}.png"</td>
+                                    <td><a href='?p=c&id={{ subcat.id }}'>{{ subcat.title }}</a></td>
+                                    <td></td>
+                                    <td>{{ subcat.count_topics }}</td>
+                                    <td>{{ subcat.count_posts }}</td>
+                                </tr>
+                            {% endif %}
+                        {% endfor %}
+                    </table>
+                </td>
+            </tr>
+        {% endfor %}
+</table>

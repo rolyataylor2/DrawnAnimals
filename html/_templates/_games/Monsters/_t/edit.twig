@@ -1,0 +1,230 @@
+<form action='' method='post' enctype="multipart/form-data">
+    <input type='hidden' name='token' value='{{ TOKEN }}'/>
+    <input type='hidden' name='id' value='{{ MONSTER.id }}'/>
+    <div class="page monsterEdit">
+        <h1>Editing Monster <input style="float:right;" type="submit" value="Save"/></h1>
+        <article>
+            <label class="styleSection">Genus (Class)<input name="genus_class" type="text" value="{{ MONSTER.genus_class }}"/><sub>Type Examples would be "Animal" or "Flora" </sub></label>
+            <label class="styleSection">Genus (Order)<input name="genus_order" type="text" value="{{ MONSTER.genus_order }}"/><sub>Environment Examples would be "Aquatic" or "Arborial"</sub></label>
+            <label class="styleSection">Genus (Family)<input name="genus_family" type="text" value="{{ MONSTER.genus_family }}"/><sub>Evolutionary Group Examples would be "Charizod" or "Aquatoise"</sub></label>
+            <label class="styleSection">Genus (Species)<input name="species" type="text" value="{{ MONSTER.species }}"/><sub>This Species of the Monster</sub></label>
+            <label class="styleSection">Form<input name="form" type="text" value="{{ MONSTER.form }}"/><sub>Alternate forms Example would be "Mega"</sub></label>
+            <label class="styleSection">Region: <a href='javascript:' onclick='document.location.href = "?g=Regions&goto=view&id="+$("#region").val();'>Edit this region</a>
+                <select id='region' name='appearance_region'>
+                    <option value='0'>-</option>
+                    {% for i in REGIONS %}<option value='{{ i.id }}' {% if MONSTER.appearance_region==i.id%}selected{% endif %}>{{ i.name }}</option>{% endfor %}
+                </select>
+                <sub>
+                    Index: <input type="text" name="index" value="{{ MONSTER.number }}"/>
+                    Starter:<input type="checkbox" name="appearance_starter" {% if MONSTER.appearance_starter == 1 %}checked{% endif %} value="1"/>
+                </sub>
+            </label>
+            <label class="styleSection full">Description<textarea name="description">{{ MONSTER.description }}</textarea></label>
+            <div style="clear:both"></div>
+        </article>
+        <h2>Images</h2>
+        <article>
+            <sub>
+                Minimum image size should be 300x300, Larger is fine. The image will be autocropped to remove any borders and it will also be compressed to
+                save space.
+            </sub>
+            <table id="imageTable" class="datatable">
+                <thead>
+                    <tr><td>Image</td><td>OW</td><td>Gender</td><td>Paint Color</td><td>Delete</td></tr>
+                </thead>
+                <tbody>
+                    {% for url in DRAWNIMAL.IMAGES %}
+                        <tr>
+                    <input name="imageGender[]" value="{{ url.gender }}" type="hidden"/>
+                    <input name="imagePaint[]" value="{{ url.paint }}" type="hidden"/>
+                    <td>
+                        <img src="http://PokeWorlds.com/img/uploads/mon/{{ url.filename }}" height="128" onclick="$(this).next().click();"/>
+                        <input style="display:none;" name="image_g_{{ url.gender }}_p_{{ url.paint }}" type="file">
+                    </td>
+                    <td>
+                        <img src="http://PokeWorlds.com/img/uploads/mon/ow/{{ url.filename }}" height="128" onclick="$(this).next().click();"/>
+                        <input style="display:none;" name="ow_g_{{ url.gender }}_p_{{ url.paint }}" type="file">
+                        <br/>
+                        {% if url.approved == false %}
+                            (pending approval) <input type="checkbox" name="approve_g_{{ url.gender }}_p_{{ url.paint }}"/>
+                        {% else %}
+                            (approved)
+                        {% endif %}
+                    </td>
+                    {% set GENDERS = ['Male','Female','','All'] %}
+                    <td>{{ GENDERS[url.gender] }}</td>
+                    <td>{{ url.paint }}</td>
+                    <td>
+                        {% if url.gender == 3 and url.paint == '' %}
+                            Cannot Delete
+                        {% else %}
+                            <button type='button' onclick='$(this).parent().parent().remove();'>Remove</button>
+                        {% endif %}
+                    </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td>(Upload image by clicking it in the list)</td>
+                        <td></td>
+                        <td>
+                            <select id="ImageGender">
+                                <option value="3">All</option>
+                                <option value="0">Male</option>
+                                <option value="1">Female</option>
+                            </select>
+                        </td>
+                        <td>
+                            <select id="ImagePaint" >
+                                <option value="">No Paint</option>
+                                {% for p in PAINT %}
+                                    <option value="{{ p }}">{{ p|capitalize }}</option>
+                                {% endfor %}
+                            </select>
+                        </td>
+
+                        <td><button type='button' id="ImageAdd">Add Image</button></td>
+                    </tr>
+                </tfoot>
+            </table>
+
+            <script>
+                $('#imageTable > tfoot > tr > td > button').click(function() {
+                    var gender = $('#imageTable > tfoot > tr > td:nth-of-type(3) > select').val();
+                    var paint = $('#imageTable > tfoot > tr > td:nth-of-type(4) > select').val();
+
+                    var html = '<tr>';
+                    html += '<input type="hidden" name="imageGender[]" value="' + gender + '"/>';
+                    html += '<input type="hidden" name="imagePaint[]" value="' + paint + '"/>';
+                    html += '<td><img height="128" src="http://PokeWorlds.com/img/mon/blank.png" onclick="$(this).next().click();"/><input type="file" name="image_g_' + gender + '_p_' + paint + '" style="display:none;"/></td>';
+                    html += '<td><img height="128" src="http://PokeWorlds.com/img/mon/blank.png" onclick="$(this).next().click();"/><input type="file" name="ow_g_' + gender + '_p_' + paint + '" style="display:none;"/></td>';
+                    html += '<td>' + $('#imageTable > tfoot > tr > td:nth-of-type(3) > select > option:selected').text() + '</td>';
+                    html += '<td>' + paint + '</td>';
+                    html += '<td><button type="button" onclick="$(this).parent().parent().remove();">Remove</button></td>';
+                    html += '</tr>';
+                    $('#imageTable > tbody').append(html);
+                });
+            </script>
+
+        </article>
+        <h2>Types</h2>
+        <article style="text-align:center;">
+            Type Primary<br/>
+            <div>
+            {% for i in TYPES %}
+                <label {% if MONSTER.type_0 == loop.index0 %}class="selected"{% endif %} onclick="$(this).addClass('selected').siblings().removeClass('selected');">
+                    <input type="radio" style="display:none;" name="type_0" value="{{ loop.index0 }}" {% if MONSTER.type_0 == loop.index0 %}checked{% endif %}/>
+                    <img src="http://PokeWorlds.com/img/type{{ loop.index0 }}.png"/>
+                </label>
+            {% endfor %}
+            </div>
+            <div style="clear:both; height:10px;"></div>
+            Type Secondary<br/>
+            <div>
+                {% for i in TYPES %}
+                    <label {% if MONSTER.type_1 == loop.index0 %}class="selected"{% endif %} onclick="$(this).addClass('selected').siblings().removeClass('selected');">
+                        <input type="radio" style="display:none;" name="type_1" value="{{ loop.index0 }}" {% if MONSTER.type_1 == loop.index0 %}checked{% endif %}/>
+                        <img src="http://PokeWorlds.com/img/type{{ loop.index0 }}.png"/>
+                    </label>
+                {% endfor %}
+            </div>
+            <div style="clear:both"></div>
+        </article>
+        <h2>Stats<input style="float:right;" type="submit" value="Save"/></h2>
+        <article>
+            <sub>All Values are between 0-255</sub>
+            <table class="stats styleSection">
+                <thead>
+                    <tr>
+                        <td>stats</td>
+                        <td>Hp</td>
+                        <td>Atk</td>
+                        <td>Def</td>
+                        <td>Sp.Atk</td>
+                        <td>Sp.Def</td>
+                        <td>Speed</td>
+                        <td>Experiance</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>base</td>
+                        <td><input type="text" name="bs_hp" value="{{ MONSTER.bs_hp }}"/></td>
+                        <td><input type="text" name="bs_atk" value="{{ MONSTER.bs_atk }}"/></td>
+                        <td><input type="text" name="bs_def" value="{{ MONSTER.bs_def }}"/></td>
+                        <td><input type="text" name="bs_spatk" value="{{ MONSTER.bs_spatk }}"/></td>
+                        <td><input type="text" name="bs_spdef" value="{{ MONSTER.bs_spdef }}"/></td>
+                        <td><input type="text" name="bs_speed" value="{{ MONSTER.bs_speed }}"/></td>
+                        <td><input type="text" name="bs_exp" value="{{ MONSTER.bs_exp }}"/></td>
+                    </tr>
+                    <tr>
+                        <td>earn</td>
+                        <td><input type="text" name="ev_hp" value="{{ MONSTER.ev_hp }}"/></td>
+                        <td><input type="text" name="ev_atk" value="{{ MONSTER.ev_atk }}"/></td>
+                        <td><input type="text" name="ev_def" value="{{ MONSTER.ev_def }}"/></td>
+                        <td><input type="text" name="ev_spatk" value="{{ MONSTER.ev_spatk }}"/></td>
+                        <td><input type="text" name="ev_spdef" value="{{ MONSTER.ev_spdef }}"/></td>
+                        <td><input type="text" name="ev_speed" value="{{ MONSTER.ev_speed }}"/></td>
+                        <td><input type="text" name="ev_exp" value="{{ MONSTER.ev_exp }}"/></td>
+                    </tr>
+                </tbody>
+            </table>
+        </article>
+        <h2>Personality<input style="float:right;" type="submit" value="Save"/></h2>
+        <article>
+            <sub>All Values are between 0-255, Think of it as percentages 128 = 50%</sub>
+            <table class="stats styleSection">
+                <thead>
+                    <tr>
+                        <td>Trait</td>
+                        <td>Hunger</td>
+                        <td>Energy</td>
+                        <td>Affection</td>
+                        <td>Gender Rate</td>
+                        <td>Catch Rate</td>
+                        <td>Hatch Rate</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Amount</td>
+                        <td><input type="text" name="bs_hunger" value="{{ MONSTER.bs_hunger }}"/></td>
+                        <td><input type="text" name="bs_energy" value="{{ MONSTER.bs_energy }}"/></td>
+                        <td><input type="text" name="bs_friendship" value="{{ MONSTER.bs_friendship }}"/></td>
+                        <td><input type="text" name="rate_gender" value="{{ MONSTER.rate_gender }}"/></td>
+                        <td><input type="text" name="rate_catch" value="{{ MONSTER.rate_catch }}"/></td>
+                        <td><input type="text" name="rate_hatch" value="{{ MONSTER.rate_hatch }}"/></td>
+                    </tr>
+                </tbody>
+            </table>
+        </article>
+        <script>
+            $('.stats>thead>tr:first-of-type>td:not(:first-child)').each(function(index,element) {
+                $(element).css('color',$(element).html().toColor());
+            });
+        </script>
+        <h2>Moveset <input style="float:right;" type="submit" value="Save"/></h2>
+        <article>
+            {{ MOVESETTABLE|raw }}
+        </article>
+        <h2>ItemSet <input style="float:right;" type="submit" value="Save"/></h2>
+        <article>
+            {{ ITEMSETTABLE|raw }}
+        </article>
+        <h2>Abilities <input style="float:right;" type="submit" value="Save"/></h2>
+        <article>
+            {{ ABILITYSETTABLE|raw }}
+        </article>
+        <h2>Evolve Code <input style="float:right;" type="submit" value="Save"/></h2>
+        <article>
+            {{ EVOLVECODETABLE|raw }}
+        </article>
+        <h2>Appearance Code <input style="float:right;" type="submit" value="Save"/></h2>
+        <article>
+            {{ APPEARCODETABLE|raw }}
+        </article>
+    </div>
+</form>
+{% if OUTPUT %}<script>NotifyUser('Saved','{{ OUTPUT }}');</script>{% endif %}
+{% if ERROR %}<script>NotifyUser('Save Failed','{{ ERROR }}');</script>{% endif %}

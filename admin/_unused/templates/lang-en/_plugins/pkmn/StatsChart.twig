@@ -1,0 +1,38 @@
+<div class="DrnmExperianceSmall">
+    <canvas id="Drnm{{ ID }}ExperianceSmall" width="350" height="350" style="margin:-55px -30px -70px -20px"></canvas>
+    <script>
+        var ctx = document.getElementById('Drnm{{ ID }}ExperianceSmall').getContext('2d');
+         var data = {
+                labels : ["Speed","Attack","Sp. Attack","Sp. Defense","Defense"],
+                datasets : [
+                        {
+                                fillColor : "rgba(220,220,220,0.5)",
+                                strokeColor : "rgba(0,0,0,0)",
+                                pointStrokeColor : "#fff",
+                                data : [{{ SPEEDBASE }},{{ ATKBASE }},{{ SPATKBASE }},{{ SPDEFBASE }},{{ DEFBASE }}]
+                        },
+                        {
+                                fillColor : "rgba(151,187,205,0.75)",
+                                strokeColor : "rgba(151,187,205,1)",
+                                pointStrokeColor : "#fff",
+                                data : [{{ SPEED }},{{ ATK }},{{ SPATK }},{{ SPDEF }},{{ DEF }}]
+                        }
+                ]
+        };
+        var chart = new Chart(ctx).Radar(data,{ 
+            scaleOverride : true,
+            scaleSteps : 10,
+            scaleStepWidth : 20,
+            scaleStartValue : 0,
+            scaleShowLabelBackdrop : true,
+            scaleFontStyle : "bold",
+            angleLineColor : "rgba(255,255,255,0.5)",
+            scaleFontColor : "rgba(255,255,255,1)",
+            scaleLineColor : "rgba(255,255,255,0.5)",
+            labelFontColor : "#FFF",
+            pointDot : false,
+            animation : true,
+            animationSteps : 60
+        });
+    </script>
+</div>

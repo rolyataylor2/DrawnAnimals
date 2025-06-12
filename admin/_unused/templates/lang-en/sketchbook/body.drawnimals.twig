@@ -1,0 +1,12 @@
+
+<table class="datatable">
+    <thead><tr><td>Species Name</td></tr></thead>
+    <tbody>
+        {% for drawnimal in DRAWNIMALS %}
+            <tr><td><a href="#" onclick="MENU.Sketchbook.DrawnimalsEdit('id={{ drawnimal.id }}');">{{ drawnimal.name }}</a></td></tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+
+

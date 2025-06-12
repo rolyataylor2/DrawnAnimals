@@ -1,0 +1,24 @@
+{# empty Twig template #}
+<div class="page">
+    <h1>Drawnimals in your party<a href="javascript:inlinePopup('monsterSaveTeam');">Save To TrainerDex</a></h1>
+    <article style="text-align:center;">
+        {% for i in 0..5 %}
+            {% if TEAM[i] is defined %}
+                <div style="width:300px; display:inline-block;">{{ TEAM[i]|raw }}</div>
+            {% else %}
+                <div style="width:300px; display:inline-block;"><div class="Drawnimal empty"></div></div>
+            {% endif %}
+        {% endfor %}
+        <br/>
+        
+    </article>
+    <h2>Drawnimals in the PC</h2>
+    <article style="text-align:center;">
+        {% for i in MONSTERS %}
+            <div style="width:200px; display:inline-block;">{{ i|raw }}</div>
+        {% endfor %}
+        <br/>
+        {% if OFFSET > 0  %}<a href="?o={{ OFFSET-30 }}">Prev</a>{% endif %}
+        {% if MONSTERS|length == 30  %}<a href="?o={{ OFFSET+30 }}">Next</a>{% endif %}
+    </article>
+</div>

@@ -1,0 +1,20 @@
+
+<div class="body">
+    hello
+</div>
+<script>
+    var html = '<div class="button" onclick="MENU.Game.Play();">&lt; To Game</div><div class="title">Trainer Name</div><ul onclick="$(this).toggleClass(\'open\');">';
+        html +='<li class="title">Information</li>';
+        html +='<li class="selected">Profile</li>';
+        html +='<li>Friends</li>';
+        html +='<li>Awards</li>';
+        html +='<li class="title">Actions</li>';
+        html +='<li>Battle Request</li>';
+        html +='<li>Friend Request</li>';
+        html +='</ul>';
+        $('settingsMenu').html(html);
+        $('li:not(.title)').attr('onclick',function() {
+            return $(this).attr('onclick')+" $(this).addClass('selected').siblings().removeClass('selected');";
+        });
+
+</script>

@@ -1,0 +1,8 @@
+<table class="datatable">
+    <thead><tr><td>Quest</td></tr></thead>
+    <tbody>
+        {% for i in QUESTS %}
+            <tr><td><a href="#" onclick="MENU.Sketchbook.QuestsEdit('id={{ i.id }}');">{{ i.name|title }}</a></td></tr>
+        {% endfor %}
+    </tbody>
+</table>

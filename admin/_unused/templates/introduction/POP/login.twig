@@ -1,0 +1,28 @@
+<!--{#
+    TWIG TEMPLATE
+    VARIABLES:
+        LOGIN_SUCCESS string Used to output if the login has happened correctly
+        SCRIPT_OUTPUT string Output error from login attempt
+
+#}-->
+{% if LOGIN_SUCCESS|length > 0 %}
+    <script>
+        NODE = new NODECLASS('{{ NETWORK_KEY }}','{{ USERNAME }}');
+    </script>
+    <center>{{ LOGIN_SUCCESS }}</center>
+{% else %}
+    <style>
+        .error {width:90%; margin:5px 5%; background-color:rgba(200,100,100,0.3); border:1px solid red;}
+    </style>
+    <h1>Login</h1>
+    <sub>Login using your username and password. If you forgot your password click here.</sub>
+    {% if SCRIPT_OUTPUT|length > 0 %}
+        <div class='error'>{{ SCRIPT_OUTPUT|raw }}</div>
+    {% endif %}
+    <form id="LoginIndex" onsubmit="return MENU._popupReload($('#LoginIndex').serialize());">
+        <label>Username<input class="inputUsername" name="username" type='text' value="{{ USERNAME }}"/></label>
+        <label>Password<input class="inputPassword" name='password' type='password'/></label>
+        <input type="hidden" name="token" value="{{ TOKEN }}"/>
+        <input type="submit" value="Continue Game"/>
+    </form>
+{% endif %}

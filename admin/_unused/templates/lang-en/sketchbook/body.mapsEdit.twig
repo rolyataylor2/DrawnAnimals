@@ -1,0 +1,555 @@
+<form id="mapsubmit">
+    <table class='entitytable'>
+        <thead>
+            <tr>
+                <td style="width:300px;">{{ MAP.name }}</td>
+                <td>
+                    Created by ______<br/><br/>
+                    <div class='selected'>Details</div>
+                </td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    <table class='datatable'>
+                        <thead><tr><td>Difficulty</td></tr></thead>
+                        <tbody><tr><td><input type='text' value='{{ MAP.difficulty }}'/></td></tr></tbody>
+                    </table>
+                    <table class='datatable'>
+                        <thead><tr><td>Description</td></tr></thead>
+                        <tbody><tr><td><textarea>{{ MAP.description }}</textarea></td></tr></tbody>
+                    </table>
+                    <table class='datatable'>
+                        <thead><tr><td>Publish</td></tr></thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <select>
+                                        <option>Don't Publish</option>
+                                        <option>Publish to World Map</option>
+                                        <option>Publish but not to World Map</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                Assigned Coordinates ({{ MAP.xcoord }},{{ MAP.ycoord }})
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <sub>Be aware that once your map is published you will not be able to edit it anymore.</sub>
+
+                    <input type='submit' value='Save' style='width:40%; margin:0 6%;'/><input type='submit' value='Delete' style='width:40%;'/>
+                </td>
+                <td>
+                    <div class="container">
+                        <table class='datatable mapeditor'>
+                            <thead><tr><td style='width:640px;'>Map</td><td>Tools</td></tr></thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <canvas width='640' height='640' class='mapEnvironment' data-set='{{ MAP.canvas_tiles}}' data-colors='["#000"{% for i in ENV %},"{{ i.color }}"{% endfor %}]'></canvas>
+                                        <canvas width='640' height='640' class='mapWater' data-set='{{ MAP.canvas_water }}' data-colors='["#000","#33F","#009"]' style="opacity:0.8;"></canvas>
+                                        <canvas width='640' height='640' class='mapHeight' data-set='{{ MAP.canvas_height }}' data-colors='["#000","#222","#444","#666","#888","#AAA","#BBB","#CCC","#DDD","#EEE","#FFF"]' style="opacity:0.6;"></canvas>
+                                        <canvas width='640' height='640' class='mapPath' data-set='{{ MAP.canvas_path }}' data-colors='["#000"{% for i in PATHS %},"{{ i.color }}"{% endfor %}]'></canvas>
+                                        <canvas width='640' height='640' class='mapObject' data-set='{{ MAP.canvas_objects }}'></canvas>
+                                        <img src="http://img.drawnimals.com/icons/pencil-cursor.png"/>
+                                        <canvas width='640' height='640' class='mapOverlay' data-tool-option="0" data-tool-selected="addDataset"></canvas>
+                                    </td>
+                                    <td>
+                                        <div>
+                                            <button type="button" data-tool="addDataset" class="selected">Pencil</button>
+                                            <button type="button" data-tool="eraseDataset">Eraser</button>
+                                            <button type="button" data-tool="setDataset">Erase->Pencil</button>
+                                            <button type="button" data-tool="fillDataset">Fill</button>
+                                            <button type="button" data-tool="lineDataset">Line</button>
+                                            <button type="button" data-tool="rectDataset">Rectangle</button>
+                                        </div>
+                                        <div>
+                                            <div data-map=".mapEnvironment">
+                                                Tileset
+                                                <div>
+                                                    {% for i in ENV %}
+                                                    <div data-tool-option="{{ i.id }}" style="background-color:{{ i.color }};">{{ i.name }}</div>
+                                                    {% endfor %}
+                                                    <div></div>
+                                                </div>
+                                            </div>
+                                            <div data-map=".mapHeight">
+                                                HeightMap
+                                                <div>
+                                                    <div data-tool-option="0" class="selected">Level 0</div>
+                                                    <div data-tool-option="1">Level 1</div>
+                                                    <div data-tool-option="2">Level 2</div>
+                                                    <div data-tool-option="3">Level 3</div>
+                                                    <div data-tool-option="4">Level 4</div>
+                                                    <div data-tool-option="5">Level 5</div>
+                                                    <div data-tool-option="6">Level 6</div>
+                                                    <div data-tool-option="7">Level 7</div>
+                                                    <div data-tool-option="8">Level 8</div>
+                                                    <div data-tool-option="9">Level 9</div>
+                                                    <div data-tool-option="10">Level 10</div>
+                                                    <div></div>
+                                                </div>
+                                            </div>
+
+                                            <div data-map=".mapWater">
+                                                Water
+                                                <div>
+                                                    <div data-tool="eraseDataset" data-tool-option="0" class="selected">No Water</div>
+                                                    <div data-tool="addDataset" data-tool-option="1">Shallow Water</div>
+                                                    <div data-tool="addDataset" data-tool-option="2">Deep Water</div>
+                                                    <div></div>
+                                                </div>
+                                            </div>
+                                            <div data-map=".mapPath">
+                                                Pathways
+                                                <div>
+                                                    {% for i in PATHS %}
+                                                    <div data-tool-option="{{ i.id }}" style="background-color:{{ i.color }};">{{ i.name }}</div>
+                                                    {% endfor %}
+                                                    <div></div>
+                                                </div>
+                                            </div>
+                                            <div data-map=".mapObject" class='selected'>
+                                                Objects
+                                                <div>
+                                                    <div data-tool-option='0'>NONE</div>
+                                                    {% for i in OBJS %}
+                                                    <div data-tool-option="{{ i.id }}" 
+                                                         data-tool-width='{{ i.width }}'
+                                                         data-tool-height='{{ i.height }}'>
+                                                        {{ i.name }}
+                                                        <img src='{{ i.image }}' data-id='{{ i.id }}' width='{{ i.width*10 }}' height='{{ i.height*10 }}'/>
+                                                    </div>
+                                                    {% endfor %}
+                                                    <div></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</form>
+
+<style>
+    .mapeditor > tbody > tr > td:nth-of-type(1) { position:relative; width:640px; height:640px; }
+    .mapeditor > tbody > tr > td:nth-of-type(1) > canvas:nth-of-type(1) { background-color:black; }
+    .mapeditor > tbody > tr > td:nth-of-type(1) > canvas {
+        position:absolute; top:4px; left:4px;
+        cursor:none;
+        -moz-user-select:-moz-none;
+        -moz-user-select:none;
+        -o-user-select:none;
+        -khtml-user-select:none; /* you could also put this in a class */
+        -webkit-user-select:none;/* and add the CSS class here instead */
+        -ms-user-select:none;
+        user-select:none;
+    }
+    .mapeditor > tbody > tr > td:nth-of-type(1) > img {
+        position: absolute;
+        top: 4px;
+        left: 4px;
+        width: 32px;
+        height: 32px;
+        margin-left: 5px;
+        margin-top: -22px;
+    }
+    .mapeditor > tbody > tr > td:nth-of-type(2) > div > div { 
+        cursor:pointer; 
+        width:94%; margin:5px auto;
+        padding:5px 3%; color:white;
+        background-color:rgba(0,0,0,0.4);
+        border-radius:10px;
+    }
+    .mapeditor > tbody > tr > td:nth-of-type(2) > div > div > div {
+        display:none;
+        width:90%; margin:0px auto;
+    }
+    .mapeditor > tbody > tr > td:nth-of-type(2) > div > div > div > div:not(:last-of-type) {
+        float:left; height:16px; border:1px solid grey;
+        background-color:beige; margin:4px; color:black; opacity:0.6;
+    }
+    .mapeditor > tbody > tr > td:nth-of-type(2) > div > div > div > div.selected:not(:last-of-type) {
+        float:left; height:16px; border:1px solid red;
+        background-color:beige; margin:4px; opacity:1;
+    }
+    .mapeditor > tbody > tr > td:nth-of-type(2) > div > div > div > div:last-of-type {
+        clear:both;
+    }
+    .mapeditor > tbody > tr > td:nth-of-type(2) > div > div.selected { 
+        font-weight:bolder; 
+    }
+    .mapeditor > tbody > tr > td:nth-of-type(2) > div > div.selected > div {display:block;}
+    
+</style>
+<script>
+    $('#mapsubmit').submit(function() {
+        var mapdata = {
+            'canvas_tiles':JSON.stringify($('.mapEnvironment').data('set')),
+            'canvas_height':JSON.stringify($('.mapHeight').data('set')),
+            'canvas_water':JSON.stringify($('.mapWater').data('set')),
+            'canvas_path':JSON.stringify($('.mapPath').data('set')),
+            'canvas_objects':JSON.stringify($('.mapObject').data('set'))
+        };
+        MENU.body.reloadForm($(this),mapdata); 
+        return false;
+    });
+    //TOOLBAR
+    var toggle = $('<a href="#">Visible</a>').click(function() {}).appendTo
+    $('.mapeditor > tbody > tr > td:nth-of-type(2) > div:nth-of-type(2) > div').click(function() {
+        $(this).addClass('selected').siblings().removeClass('selected');
+    }).append('<a href="#" onclick="$(this).html($($(this).parent().data(\'map\')).toggle().css(\'display\'));">Visible</a>');
+    $('.mapeditor > tbody > tr > td:nth-of-type(2) > div:nth-of-type(1) > button').click(function() {
+         $(this).addClass('selected').siblings().removeClass('selected');
+    });
+    $('.mapeditor > tbody > tr > td:nth-of-type(2) > div:nth-of-type(2) > div > div > div').click(function() {
+        $(this).addClass('selected').siblings().removeClass('selected');
+        $('.mapeditor > tbody > tr > td:nth-of-type(1) > canvas:last-of-type').data('tool-selected',$(this).data('tool'));
+    });
+    //CANVAS
+    var i=0, ii=0, datasetdefault = new Array();
+    while(i<64) {
+        datasetdefault[i] = new Array(); ii=0;
+        while(ii<64) { datasetdefault[i][ii] = 0; ii++; } i++; 
+    }
+    
+    $('.mapeditor > tbody > tr > td:nth-of-type(1) > canvas:not(:last-of-type):not(.mapObject)')
+            .each(function(i,elm) {
+                if ($(elm).data('set').length < 10)
+                    $(elm).data('set',$.extend(true, [], datasetdefault));
+            })
+            .on('addDataset',function(e,x,y,option) {
+                if ($(this).data('lastx') === x && $(this).data('lasty') === y) return;
+                var dataset = $(this).data('set');
+                if (dataset !== void 0) 
+                    if(dataset[x][y] === 0)
+                        dataset[x][y] = option;
+        
+                $(this).data('set',dataset).data('lastx',x).data('lasty',y);
+                $(this).trigger('renderDataset');
+            })
+            .on('eraseDataset',function(e,x,y,option) {
+                if ($(this).data('lastx') === x && $(this).data('lasty') === y) return;
+                var dataset = $(this).data('set');
+                if (dataset !== void 0) 
+                    dataset[x][y] = 0;
+        
+                $(this).data('set',dataset).data('lastx',x).data('lasty',y);
+                $(this).trigger('renderDataset');
+            })
+            .on('setDataset',function(e,x,y,option) {
+                if ($(this).data('lastx') === x && $(this).data('lasty') === y) return;
+                var dataset = $(this).data('set');
+                if (dataset !== void 0)
+                    dataset[x][y] = option;
+        
+                $(this).data('set',dataset).data('lastx',x).data('lasty',y);
+                $(this).trigger('renderDataset');
+            })
+            .on('rectDatasetStart',function(e,x,y,option) {
+                $(this).data('xstart',x).data('ystart',y);
+            })
+            .on('rectDataset',function(e,x,y,option) {
+                var xs = $(this).data('xstart');
+                var ys = $(this).data('ystart');
+                var context = $('.mapeditor > tbody > tr > td:nth-of-type(1) > canvas:last-of-type')[0].getContext('2d');
+                context.clearRect(0,0,640,640);
+                context.strokeStyle='#F33';
+                context.strokeRect(xs*10,ys*10,(x-xs)*10,(y-ys)*10);
+            })
+            .on('rectDatasetEnd',function(e,x,y,option) {
+                var dataset = $(this).data('set');
+                var xs = $(this).data('xstart'), ys = $(this).data('ystart');
+                var xst = xs, yst = ys;
+                if (xs > x) {xs = x; x = xst;}
+                if (ys > y) {ys = y; y = yst;}
+                for(var i=xs;i<x;i++) {
+                    for(var ii=ys;ii<y;ii++) {
+                        dataset[i][ii] = option;
+                    }
+                }
+                $(this).data('set',dataset);
+                $(this).trigger('renderDataset');
+            })
+            .on('lineDatasetStart',function(e,x,y,option) {
+                $(this).data('xstart',x).data('ystart',y);
+        
+            })
+            .on('lineDataset',function(e,x,y,option) {
+                var xs = $(this).data('xstart');
+                var ys = $(this).data('ystart');
+                var context = $('.mapeditor > tbody > tr > td:nth-of-type(1) > canvas:last-of-type')[0].getContext('2d');
+                context.clearRect(0,0,640,640);
+                context.strokeStyle='#F33';
+                context.beginPath();
+                context.moveTo((xs*10)+5, (ys*10)+5);
+                context.lineTo((x*10)+5, (y*10)+5);
+                context.stroke();
+            })
+            .on('lineDatasetEnd',function(e,x,y,option) {
+                var dataset = $(this).data('set');
+                var xs = $(this).data('xstart');
+                var ys = $(this).data('ystart');
+                var xd = xs-x;
+                var yd = ys-y;
+                for(var i=0;i<100;i++) {
+                    x = ~~(xs-(xd*(i/100)));
+                    y = ~~(ys-(yd*(i/100)));
+                    dataset[x][y] = option;
+                }
+                $(this).data('set',dataset);
+                $(this).trigger('renderDataset');
+            })
+            .on('fillDatasetStart',function(e,x,y,option) {
+                var nodes = $.extend(true, [],$(this).data('set')); 
+                var dataset = $(this).data('set');
+                var starting = dataset[x][y];
+                dataset[x][y] = option;
+                var Q = [];
+                Q.push({ x:x, y:y });
+                while(Q.length) {
+                    var i = Q.pop();
+                    nodes[i.x][i.y] = false;
+                    if (dataset[i.x+1] !== void 0 && nodes[i.x+1][i.y] !== false && dataset[i.x+1][i.y] === starting) {
+                        dataset[i.x+1][i.y] = option;
+                        nodes[i.x+1][i.y] = false;
+                        Q.push({ x:i.x+1, y:i.y });
+                    }
+                    if (dataset[i.x-1] !== void 0 && nodes[i.x-1][i.y] !== false && dataset[i.x-1][i.y] === starting) {
+                        dataset[i.x-1][i.y] = option;
+                        nodes[i.x-1][i.y] = false;
+                        Q.push({ x:i.x-1, y:i.y });
+                    }
+                    if (dataset[i.x][i.y+1] !== void 0 && nodes[i.x][i.y+1] !== false && dataset[i.x][i.y+1] === starting) {
+                        dataset[i.x][i.y+1] = option;
+                        nodes[i.x][i.y+1] = false;
+                        Q.push({ x:i.x, y:i.y+1 });
+                    }
+                    if (dataset[i.x][i.y-1] !== void 0 && nodes[i.x][i.y-1] !== false && dataset[i.x][i.y-1] === starting) {
+                        dataset[i.x][i.y-1] = option;
+                        nodes[i.x][i.y-1] = false;
+                        Q.push({ x:i.x, y:i.y-1 });
+                    }
+                    
+                }
+                $(this).data('set',dataset);
+                $(this).trigger('renderDataset');
+                
+            })
+            .on('renderDataset',function() {
+                var context = $('.mapeditor > tbody > tr > td:nth-of-type(1) > canvas:last-of-type')[0].getContext('2d');
+                context.clearRect(0,0,640,640);
+                var context = $(this)[0].getContext('2d');
+                var dataset = $(this).data('set');
+                var colors = $(this).data('colors');
+                context.clearRect(0,0,640,640);
+                
+                var xx = 64, yy = 64;
+                while(xx--) {
+                    while(yy--) {
+                        if (dataset[xx][yy] !== 0) {
+                            context.fillStyle = colors[dataset[xx][yy]];
+                            context.fillRect(xx*10,yy*10,10,10);
+                        }
+                    }
+                    yy=64;
+                }
+            }).data('lastx',0).data('lasty',0).trigger('renderDataset');
+    $('.mapeditor > tbody > tr > td:nth-of-type(1) > canvas.mapObject')
+            .each(function(i,elm) {
+                if ($(elm).data('set').length < 10)
+                    $(elm).data('set',$.extend(true, [], datasetdefault));
+            })
+            .on('addDatasetStart',function(e,x,y,option) {
+                var dataset = $(this).data('set');
+                if (dataset !== void 0) 
+                    if(dataset[x][y] === 0)
+                        dataset[x][y] = option;
+        
+                $(this).data('set',dataset);
+                $(this).trigger('renderDataset');
+            })
+            .on('addDataset',function(e,x,y,option) {
+                if ($(this).data('lastx') === x && $(this).data('lasty') === y) return;
+                var dataset = $(this).data('set');
+                if (dataset !== void 0) 
+                    if(dataset[x][y] === 0)
+                        dataset[x][y] = option;
+        
+                $(this).data('set',dataset).data('lastx',x).data('lasty',y);
+                $(this).trigger('renderDataset');
+            })
+            .on('eraseDataset',function(e,x,y,option) {
+                if ($(this).data('lastx') === x && $(this).data('lasty') === y) return;
+                var dataset = $(this).data('set');
+                if (dataset !== void 0)
+                        dataset[x][y] = 0;
+        
+                $(this).data('set',dataset).data('lastx',x).data('lasty',y);
+                $(this).trigger('renderDataset');
+            })
+            .on('setDataset',function(e,x,y,option) {
+                if ($(this).data('lastx') === x && $(this).data('lasty') === y) return;
+                var dataset = $(this).data('set');
+                if (dataset !== void 0)
+                dataset[x][y] = option;
+        
+                $(this).data('set',dataset).data('lastx',x).data('lasty',y);
+                $(this).trigger('renderDataset');
+            })
+            .on('rectDatasetStart',function(e,x,y,option) {
+                $(this).data('xstart',x).data('ystart',y);
+            })
+            .on('rectDataset',function(e,x,y,option) {
+                var xs = $(this).data('xstart');
+                var ys = $(this).data('ystart');
+                var context = $('.mapeditor > tbody > tr > td:nth-of-type(1) > canvas:last-of-type')[0].getContext('2d');
+                context.clearRect(0,0,640,640);
+                context.strokeStyle='#F33';
+                context.strokeRect(xs*10,ys*10,(x-xs)*10,(y-ys)*10);
+            })
+            .on('rectDatasetEnd',function(e,x,y,option) {
+                var dataset = $(this).data('set');
+                var xs = $(this).data('xstart'), ys = $(this).data('ystart');
+                var xst = xs, yst = ys;
+                if (xs > x) {xs = x; x = xst;}
+                if (ys > y) {ys = y; y = yst;}
+                for(var i=xs;i<x;i++) {
+                    for(var ii=ys;ii<y;ii++) {
+                        dataset[i][ii] = option;
+                    }
+                }
+                $(this).data('set',dataset);
+                $(this).trigger('renderDataset');
+            })
+            .on('lineDatasetStart',function(e,x,y,option) {
+                $(this).data('xstart',x).data('ystart',y);
+        
+            })
+            .on('lineDataset',function(e,x,y,option) {
+                var xs = $(this).data('xstart');
+                var ys = $(this).data('ystart');
+                var context = $('.mapeditor > tbody > tr > td:nth-of-type(1) > canvas:last-of-type')[0].getContext('2d');
+                context.clearRect(0,0,640,640);
+                context.strokeStyle='#F33';
+                context.beginPath();
+                context.moveTo((xs*10)+5, (ys*10)+5);
+                context.lineTo((x*10)+5, (y*10)+5);
+                context.stroke();
+            })
+            .on('lineDatasetEnd',function(e,x,y,option) {
+                var dataset = $(this).data('set');
+                var xs = $(this).data('xstart');
+                var ys = $(this).data('ystart');
+                var xd = xs-x;
+                var yd = ys-y;
+                for(var i=0;i<100;i++) {
+                    x = ~~(xs-(xd*(i/100)));
+                    y = ~~(ys-(yd*(i/100)));
+                    dataset[x][y] = option;
+                }
+                $(this).data('set',dataset);
+                $(this).trigger('renderDataset');
+            })
+            .on('fillDatasetStart',function(e,x,y,option) {
+                var nodes = $.extend(true, [],$(this).data('set')); 
+                var dataset = $(this).data('set');
+                var starting = dataset[x][y];
+                dataset[x][y] = option;
+                var Q = [];
+                Q.push({ x:x, y:y });
+                while(Q.length) {
+                    var i = Q.pop();
+                    nodes[i.x][i.y] = false;
+                    if (dataset[i.x+1] !== void 0 && nodes[i.x+1][i.y] !== false && dataset[i.x+1][i.y] === starting) {
+                        dataset[i.x+1][i.y] = option;
+                        nodes[i.x+1][i.y] = false;
+                        Q.push({ x:i.x+1, y:i.y });
+                    }
+                    if (dataset[i.x-1] !== void 0 && nodes[i.x-1][i.y] !== false && dataset[i.x-1][i.y] === starting) {
+                        dataset[i.x-1][i.y] = option;
+                        nodes[i.x-1][i.y] = false;
+                        Q.push({ x:i.x-1, y:i.y });
+                    }
+                    if (dataset[i.x][i.y+1] !== void 0 && nodes[i.x][i.y+1] !== false && dataset[i.x][i.y+1] === starting) {
+                        dataset[i.x][i.y+1] = option;
+                        nodes[i.x][i.y+1] = false;
+                        Q.push({ x:i.x, y:i.y+1 });
+                    }
+                    if (dataset[i.x][i.y-1] !== void 0 && nodes[i.x][i.y-1] !== false && dataset[i.x][i.y-1] === starting) {
+                        dataset[i.x][i.y-1] = option;
+                        nodes[i.x][i.y-1] = false;
+                        Q.push({ x:i.x, y:i.y-1 });
+                    }
+                    
+                }
+                $(this).data('set',dataset);
+                $(this).trigger('renderDataset');
+                
+            })
+            .on('renderDataset',function() {
+                var context = $('.mapeditor > tbody > tr > td:nth-of-type(1) > canvas:last-of-type')[0].getContext('2d');
+                context.clearRect(0,0,640,640);
+                context = $('.mapeditor > tbody > tr > td:nth-of-type(1) > canvas.mapObject')[0].getContext('2d');
+                var dataset = $(this).data('set');
+                var images = $('.mapeditor > tbody > tr > td:nth-of-type(2) > div:nth-of-type(2) > div.selected > div > div > img');
+                images.sort(function (a, b) {
+                    var contentA =parseInt( $(a).attr('data-id'));
+                    var contentB =parseInt( $(b).attr('data-id'));
+                    return (contentA < contentB) ? -1 : (contentA > contentB) ? 1 : 0;
+                 });
+                var img = 0;
+                context.clearRect(0,0,640,640);
+                var xx = 64, yy = 64;
+                while(xx--) {
+                    while(yy--) {
+                        if (dataset[xx][yy] !== 0) {
+                            if (dataset[xx][yy] !== false) {
+                                img = images.get(dataset[xx][yy]-1);
+                                context.drawImage(img, xx*10,yy*10,img.width,img.height);
+                            }
+                        }
+                    }
+                    yy=64;
+                }
+                $(this).data('set',dataset);
+            }).data('lastx',0).data('lasty',0).trigger('renderDataset');
+            
+            
+            
+    $('.mapeditor > tbody > tr > td:nth-of-type(1) > canvas:last-of-type').mousedown(function(e) {
+        $(this).data('mousedown',true);
+        var x = ~~((e.pageX - $(this).offset().left)/10);
+        var y = ~~((e.pageY - $(this).offset().top)/10);
+        var option = $('.mapeditor > tbody > tr > td:nth-of-type(2) > div:nth-of-type(2) > div.selected > div > div.selected').data('tool-option');
+        $($('.mapeditor > tbody > tr > td:nth-of-type(2) > div:nth-of-type(2) > div.selected').data('map'))
+                .trigger($('.mapeditor > tbody > tr > td:nth-of-type(2) > div:first-of-type > button.selected').data('tool')+'Start',[x,y,option]);
+    }).mousemove(function(e) {
+        var x = ~~((e.pageX - $(this).offset().left)/10);
+        var y = ~~((e.pageY - $(this).offset().top)/10);
+        var option = $('.mapeditor > tbody > tr > td:nth-of-type(2) > div:nth-of-type(2) > div.selected > div > div.selected').data('tool-option');
+        $('.mapeditor > tbody > tr > td:nth-of-type(1) > img').css('left',(x*10)+'px').css('top',(y*10)+'px');
+        if ($(this).data('mousedown') !== true) return;
+        $($('.mapeditor > tbody > tr > td:nth-of-type(2) > div:nth-of-type(2) > div.selected').data('map'))
+                .trigger($('.mapeditor > tbody > tr > td:nth-of-type(2) > div:first-of-type > button.selected').data('tool'),[x,y,option]);
+    }).mouseup(function(e) {
+        $(this).data('mousedown',false);
+        var x = ~~((e.pageX - $(this).offset().left)/10);
+        var y = ~~((e.pageY - $(this).offset().top)/10);
+        var option = $('.mapeditor > tbody > tr > td:nth-of-type(2) > div:nth-of-type(2) > div.selected > div > div.selected').data('tool-option');
+        $($('.mapeditor > tbody > tr > td:nth-of-type(2) > div:nth-of-type(2) > div.selected').data('map'))
+                .trigger($('.mapeditor > tbody > tr > td:nth-of-type(2) > div:first-of-type > button.selected').data('tool')+'End',[x,y,option]);
+    });
+    $(document).mouseup(function(){
+        $('.mapeditor > tbody > tr > td:nth-of-type(1) > canvas.mapOverlay').data('mousedown',false);
+    });
+</script>

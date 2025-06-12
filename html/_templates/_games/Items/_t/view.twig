@@ -1,0 +1,12 @@
+<div class='page'>
+    <h1>
+        {{ ITEM.name|title }} (Item)
+        {% if EDIT %}
+            <a style='float:right;' href='?g=Items&p=delete&id={{ ITEM.id }}'>Delete</a>
+            <a style='float:right;' href='?g=Items&p=edit&id={{ ITEM.id }}'>Edit</a>
+        {% endif %}
+    </h1>
+    <article>
+        <label class="styleSection full">{{ ITEM.description }}</label>
+    </article>
+</div>

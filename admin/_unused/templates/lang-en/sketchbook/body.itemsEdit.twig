@@ -1,0 +1,61 @@
+<table class='entitytable'>
+    <thead>
+        <tr>
+            <td style="width:300px;">{{ ITEM.name|title }}</td>
+            <td>
+                Created By ______<br/><br/>
+                <div data-parent='.scriptBattle'>Battle Script</div>
+                <div class='selected' data-parent='.scriptOverworld'>Overworld Script</div>
+                
+            </td>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+                <img width="150" style="display:block; margin:5px auto;" src="http://img.drawnimals.com/d/blank.png"/>
+                <table class='datatable'>
+                    <thead><tr><td>Description</td></tr></thead>
+                    <tbody>
+                        <tr><td><textarea style='height:130px;' name='description'>{{ ITEM.description }}</textarea></td></tr>
+                    </tbody>
+                </table>
+                <table class='datatable'>
+                    <thead><tr><td>Catagory</td></tr></thead>
+                    <tbody><tr><td>{{ CATAGORIES|raw }}</td></tr></tbody>
+                </table>
+                <input type='submit' value='Save' style='width:40%; margin:0 6%;'/><input type='submit' value='Delete' style='width:40%;'/>
+            </td>
+            <td>
+                <div class="container scriptOverworld">
+                    {{ OWSCRIPTSELECT|raw }}
+                    <sub>
+                        The above script is for choosing a target of the item on the <b>Overworld</b>.
+                    </sub>
+                    {{ OWSCRIPTEXE|raw }}
+                    <sub>
+                        The above script is for scripting the affect on the Target on the <b>Overworld</b>.
+                    </sub>
+                </div>
+                <div class="container scriptBattle">
+                    {{ BATTLESCRIPTSELECT|raw }}
+                    <sub>
+                        The above script is for choosing a target of the item in a <b>battle</b>.
+                    </sub>
+                    {{ BATTLESCRIPTEXE|raw }}
+                    <sub>
+                        The above script is for scripting the affect on the Target in a <b>battle</b>.
+                    </sub>
+                </div>
+            </td>
+        </tr>
+    </tbody>
+</table>
+<script>
+        $('table.entitytable > thead > tr > td > div').click(function() {
+        $('table.entitytable > thead > tr > td > div').removeClass('selected');
+        $('table.entitytable > tbody > tr > td > .container').hide();
+        $($(this).data('parent')).show();
+        $(this).addClass('selected');
+    });
+</script>

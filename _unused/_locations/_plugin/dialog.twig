@@ -1,0 +1,84 @@
+<div style="position:relative;">
+<div class='location'>
+    <img class='background' src='http://www.drawnimals.com/img/_locations/backgrounds/{{ LOCATION.background }}'/>
+    <img class='character' src='http://www.drawnimals.com/img/_locations/characters/{{ LOCATION.character }}.png'/>
+</div>
+{% if LOCATION.isform %}<form method='post'><input type="hidden" name='token' value='{{ TOKEN }}'/>{% endif %}
+{% for i in LOCATION.dialog %}
+    <div class='styleWindow dialog {% if loop.index == 1 %}showing{% endif %}' data-pagenext='{{ i.pagenext|raw }}' data-pageprev='{{ i.pageprev|raw }}'>
+        <header>{{ i.name|raw }}</header>
+        <article>
+            {{ i.text|raw }}
+        </article>
+        <footer>
+            {% if loop.index != 1 %}<a href="javascript:" onclick="prevDialog($(this));" style="float:left;">Previous</a>{% endif %}
+            {% if loop.index < LOCATION.dialog|length %}<a href="javascript:" onclick="nextDialog($(this));" style="float:right;">Next</a>{% endif %}
+            {% if loop.index == LOCATION.dialog|length and LOCATION.isform %}<input style='float:right;' type='submit' value='Submit Answers'>{% endif %}
+        </footer>
+    </div>
+{% endfor %}
+{% if LOCATION.isform %}</form>{% endif %} 
+</div>
+<script>
+    function nextDialog(element) {
+        if ($('.location>.character').length > 1) return;
+        eval(element.parent().parent().removeClass('showing').next().delay(1000).addClass('showing').data('pagenext'));
+    };
+    function prevDialog(element) {
+        if ($('.location>.character').length > 1) return;
+        eval(element.parent().parent().removeClass('showing').prev().delay(1000).addClass('showing').data('pageprev'));
+    };
+    function changeCharacter(url,newposition,transOut,transIn) {
+        if (url.indexOf('http://') === -1)
+            url = 'http://www.drawnimals.com/img/_locations/characters/'+url+'.png';
+        
+        var element = $('.location>.character');
+        if (element[0] !== void 0 && url !== element[0].src) {
+            switch(transOut) {
+                case 'crossfade':
+                    element.fadeOut(100,function(){ $(this).remove(); }.bind(element));
+                    break;
+                case 'outToRight':
+                    element.animate({'left':'100%'},1500,function(){ $(this).remove(); }.bind(element));
+                    break;
+                case 'outToLeft':
+                    element.animate({'left':'-100%'},1500,function(){ $(this).remove(); }.bind(element));
+                    break;
+                case 'outToBottom':
+                    element.animate({'top':'100%'},1000,function(){ $(this).remove(); }.bind(element));
+                    break;
+                case 'outToZoom':
+                    element.animate({'width':'0%','top':'25%','margin-left':'25%'},1000,function(){ $(this).remove(); }.bind(element));
+                    break;
+            }
+        }
+        if (url === 'http://www.drawnimals.com/img/_locations/characters/.png') return;
+        switch(transIn) {
+            case 'crossfade':
+                var newelement = $('<img class="character" src="'+url+'" style="display:none;"/>').css('left',element.css('left'));
+                newelement.appendTo($('article>div>.location'));
+                newelement.fadeIn(100);
+                break;
+            case 'inFromRight':
+                var newelement = $('<img class="character" src="'+url+'"/>').css('left','100%');
+                newelement.appendTo($('article>div>.location'));
+                newelement.animate({'left':newposition+'%'},1500);
+                break;
+            case 'inFromLeft':
+                var newelement = $('<img class="character" src="'+url+'"/>').css('left','-100%');
+                newelement.appendTo($('article>div>.location'));
+                newelement.animate({'left':newposition+'%'},1500);
+                break;
+            case 'inFromBottom':
+                var newelement = $('<img class="character" src="'+url+'"/>').css('left',newposition+'%').css('top','100%');
+                newelement.appendTo($('article>div>.location'));
+                newelement.animate({'top':'0%'},1500);
+                break;
+            case 'inFromZoom':
+                var newelement = $('<img class="character" src="'+url+'"/>').css('left','-100%');
+                newelement.appendTo($('article>div>.location'));
+                newelement.animate({'left':newposition+'%'},1500);
+                break;
+        }
+    }
+</script>

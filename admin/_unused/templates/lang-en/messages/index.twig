@@ -1,0 +1,27 @@
+<div class="body">
+    <sub>
+        All the letters you have recieved from others. You can read messages by clicking them, you can discard messages by clicking and holding
+        then selecting discard.
+    </sub>
+    {% for letter in LETTERS %}
+        {{ letter|raw }}
+    {% endfor %}
+    <div style='clear:both;'></div>
+</div>
+
+<script>
+    var html = '<div class="button" class="back" onclick="MENU.Game.Play();">&lt; To Game</div><div class="title">Messages</div><ul onclick="$(this).toggleClass(\'open\');">';
+    html +='<li class="title">Letters</li>';
+    html +='<li onclick="MENU.Messages.LetterCompose();">Compose</li>';
+    html +='<li onclick="MENU.Messages.Inbox();" class="selected">Inbox</li>';
+    html +='<li onclick="MENU.Messages.Sent();">Sent</li>';
+    html +='<li class="title">Requests</li>';
+    html +='<li onclick="MENU.Messages.Battle();">Battle</li>';
+    html +='<li onclick="MENU.Messages.Friend();">Friend</li>';
+    html +='<li onclick="MENU.Messages.Trades();">Trades</li>';
+    html +='</ul>';
+    $('#settingsMenu').html(html);
+    $('li:not(.title)').attr('onclick',function() {
+        return $(this).attr('onclick')+" $(this).addClass('selected').siblings().removeClass('selected');";
+    });
+</script>
