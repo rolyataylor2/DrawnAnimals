@@ -1,0 +1,46 @@
+<form action='' method='post'>
+    <input type='hidden' name='token' value='{{ TOKEN }}'/>
+    <input type='hidden' name='id' value='{{ TRAINER.id }}'/>
+    <div class="page">
+        <h1>Trainer Editor: {{ TRAINER.name|title }} <input style='float:right;' type='submit' value='Save'/> </h1>
+        <article>
+            <label class="styleSection">
+                <b>Class</b>
+                <select name="classes">
+                    {% for i in CLASSES %}
+                        <option value="{{ loop.index }}" {% if TRAINER.class == loop.index %}selected{% endif %}>{{i}}</option>
+                    {% endfor %}
+                </select>
+            </label>
+                
+            <label class="styleSection"><b>Name</b><input name="name" type="text" value="{{ TRAINER.name }}"/></label>
+            <label class="styleSection" style="width:95%; text-align:center;"><button type="button">Randomize Name/Class</button></label>
+            <label class="styleSection"><b>Difficulty</b><input name="difficulty" type="text" value="{{ TRAINER.difficulty }}"/></label>
+            <label class="styleSection">
+                <b>Region</b>
+                <select name="region">
+                    <option value="0">---</option>
+                    {% for i in REGIONS %}
+                        <option value="{{ loop.index }}" {% if TRAINER.region == loop.index %}selected{% endif %}>{{i}}</option>
+                    {% endfor %}
+                </select>
+            </label>
+            <div style="clear:both"></div>
+        </article>
+        <h2>Team</h2>
+        <article>
+            <sub>
+                Just a heads up any more then 6 pokemon per team the extras will not be saved. When specifying a trainer on your map 
+                you will pick by trainerid and by teamnumber, this allows for trainers to be challanged again at different points in the game.
+            </sub>
+            {{ TEAMTABLE|raw }}
+        </article>
+        <h2>Reward Code</h2>
+        <article>
+            <sub>
+                Award badges or Give items out after battle, or give departing dialog. Set switches to for prolonging storyline outside of battle.
+            </sub>
+            {{ REWARDTABLE|raw }}
+        </article>
+    </div>
+</form>

@@ -1,0 +1,12 @@
+{# empty Twig template #}
+<a class="searchitem trainer" href="?g=Trainers&p=view&id={{ data['id'] }}">
+    <div class="name">
+        <small>{{ data.classname }}</small> {{ data['name'] }}<br/>
+        <small>from {{ data.region }}</small>
+    </div>
+    <div class="team">
+        {% for i in data.TEAM %}
+            <img src="http://PokeWorlds.com/img/mon/{{ i }}.g_3.c_.png"/>
+        {% endfor %}
+    </div>
+</a>

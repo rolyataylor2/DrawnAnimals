@@ -1,0 +1,21 @@
+<form action='' method='post' enctype="multipart/form-data">
+    <input type='hidden' name='token' value='{{ TOKEN }}'/>
+    <input type='hidden' name='id' value='{{ LOCATION.id }}'/>
+    <div class="page monsterEdit">
+        <h1>Bulk Create<input style='float:right;' type='submit' value='Save'/></h1>
+        <article>
+            <sub>Uplaod A New TileMap</sub>
+            <label class="styleSection full">
+                Tiled .JSON files
+                <input type="file" name="jsonfile[]"/>
+                <sub><a href="javascript:" onclick="$('<input type=\'file\' name=\'jsonfile[]\'/>').insertBefore($(this).parent());">Add Another</a></sub>
+            </label>
+            <label class="styleSection full">
+                <b>Tilesets</b>
+                <input type="file" name="tilesets[]"/>
+                <sub><a href="javascript:" onclick="$('<input type=\'file\' name=\'tilesets[]\'/>').insertBefore($(this).parent());">Add Another</a></sub>
+            </label>
+            <div style="clear:both"></div>
+        </article>
+    </div>
+</form>

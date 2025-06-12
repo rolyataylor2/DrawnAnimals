@@ -1,0 +1,66 @@
+<div class="page {{ SUBJECT }}">
+    <h1>{{ SUBJECT|title }} <a href="http://PokeWorlds.com/play.php?g={{ SUBJECT}}&p=edit&id=-1">+New</a></h1>
+    <article>
+        <sub>
+            <form id="search" action="http://PokeWorlds.com/play.php">
+                <input type="hidden" name="g" value="{{ SUBJECT }}"/>
+                <input type="text" name="by" value="{{ SEARCH }}"  style="width: 200px;
+                                                                            margin: 0px;
+                                                                            padding: 4px;
+                                                                            display: block;
+                                                                            float: right;
+                                                                            height: 24px;
+                                                                            border: 0px;"/>
+                <input type="submit" value="Search" style="float: right;
+                                                            margin: 0px;
+                                                            height: 24px;
+                                                            width: 100px;
+                                                            border: none;"/>
+            </form>
+                                                                         
+            Showing {{ SUBJECT }} that {{ SEARCHDESCRIPTION|raw }}
+            <div style="clear:both"></div>
+            {% if OFFSET != 0 %}<a href='{{ PREVPAGEURL }}' style="float:left;">Previous Page</a>{% endif %}
+            {% if RESULTS|length == 30 %}<a href='{{ NEXTPAGEURL }}' style='float:right;'>Next Page</a>{% endif %}<br/>
+        </sub>
+        {% for i in RESULTS %}{{ i|raw }}{% endfor %}
+        <sub>
+            {% if OFFSET != 0 %}<a href='{{ PREVPAGEURL }}' style="float:left;">Previous Page</a>{% endif %}
+            {% if RESULTS|length == 30 %}<a href='{{ NEXTPAGEURL }}' style='float:right;'>Next Page</a>{% endif %}<br/>
+            Add Some Filters:
+            <ul class="pageList">
+                <li>Goto Page</li>
+                {% for i in 0..20 %}
+                    <li><a href="javascript:SearchItems('{{ i }}','page');">{{ i }}</a></li>
+                {% endfor %}
+            </ul>
+            <ul class="pageList">
+                <li>Starts With</li>
+                {% for i in 'a'..'z' %}
+                    <li><a href="javascript:SearchItems('{{ i }}','starts_with');">{{ i }}</a></li>
+                {% endfor %}
+                <li><a href="javascript:SearchItems('','starts_with');">clear</a></li>
+            </ul>
+        </sub>
+        <div style="clear:both;"></div>
+    </article>
+</div>
+<script>
+    $(window).on('load',function(){
+        $('.searchitem').addClass('showing');
+    });
+    function SearchItems(search,searchfunction) {
+        var regex = new RegExp(searchfunction+":[^ ]*", "gi");
+        if ($('input[name="by"]').val().match(regex) === null) {
+            if (search === '') {
+                $('#search').submit();
+                return;
+            }
+            $('input[name="by"]').val(searchfunction+':'+search+' '+$('input[name="by"]').val());
+        } else {
+            if (search === '') $('input[name="by"]').val(($('input[name="by"]').val().replace(regex, '')));
+            else $('input[name="by"]').val(($('input[name="by"]').val().replace(regex, searchfunction+":"+search)));
+        }
+        $('#search').submit();
+    }
+</script>

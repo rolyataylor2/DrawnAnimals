@@ -1,0 +1,96 @@
+<div class='page'>
+    <h1>Game Portfolio</h1>
+    <img src='img/screenshots/drawnimals.game.001.jpg'/>
+    <article>
+        <h2>How it started</h2>
+        Games are how I got started with computers. I programmed using a, then new, program called GameMaker. With that I came to understand
+        the complex world of Game Design and Game Programming. This basic drag and drop game development helps usher me into scripting with
+        its built in scripting language called GML. From that my curiosity came out to figure out how the program itself works. I went on to
+        learn C++ my first program involved using OpenGl to render a sprite and then, using the skills I already obtained from GameMaker, I
+        created a basic mario platformer. I soon learned CollisionDetection algorithms and how to manage memory. From that I went on to look into
+        homebrew development on the WII. Creating a custom launcher for games as well as a animation class to help animate the menu. Soon I was
+        looking into what it would take to develop games for a living, I learned how to use the XDA development kit for the Xbox360 learning C# along the way.
+        After that I decided the future was going to be in mobile and web development. 2 years ago I started to learn HTML, Javascript, PHP, MYSQL, Node.js and
+        various other languages/libraries which helped launch me onto creating this site. And I am STILL learning how to improve this site. Check
+        out the history of this site by following the Code link at the bottom of the site.
+    </article>
+    <article class='slideshow'>
+        
+        <div class='slider' data-left="50">
+            <img src='img/screenshots/drawnimals.game.001.jpg'/>
+            <img src='img/screenshots/drawnimals.game.002.png'/>
+            <img src='img/screenshots/drawnimals.game.001.jpg'/>
+            <img src='img/screenshots/drawnimals.game.002.png'/>
+            <img src='img/screenshots/drawnimals.game.001.jpg'/>
+            <img src='img/screenshots/drawnimals.game.002.png'/>
+        </div>
+        <div class="next" onclick="SlideShowNext();">&LT;</div>
+        <div class="prev" onclick="SlideShowPrev();">&GT;</div>
+    </article>
+    <script>
+        function SlideShowNext() {
+            var elm = $('.slider');
+            if (elm.data('left') > 0) return;
+            elm.data('left',elm.data('left')+480);
+            elm.css('left',elm.data('left')+'px');
+        };
+        function SlideShowPrev() {
+            var elm = $('.slider');
+            if (elm.data('left') < -1000) return;
+            elm.data('left',elm.data('left')-480);
+            elm.css('left',elm.data('left')+'px');
+        };
+    </script>
+</div>
+<style>
+    .slideshow {
+    position:relative;
+    background-color: #333 !important;
+    min-height: 120px !important;
+    height: 120px !important;
+    margin-bottom: 100px !important;
+    overflow:hidden;
+}
+.slideshow>.next {
+    position:absolute;
+    top: 50%; 
+    margin-top: -20px;
+    left:0px;
+    padding:10px;
+    font-size:2em;
+    z-index: 0;
+    background-color: #f1f1f1;
+    border: 1px solid silver;
+    cursor: pointer;
+}
+.slideshow>.prev {
+    position:absolute;
+    top: 50%; 
+    margin-top: -20px;
+    right: 0px;
+    padding:10px;
+    font-size:2em;
+    z-index: 0;
+    background-color: #f1f1f1;
+    border: 1px solid silver;
+    cursor: pointer;
+}
+.slideshow>.slider>img:hover {
+    opacity: 1;
+}
+.slideshow>.slider>img {
+    height: 120px;
+    margin: 4px;
+    border: 1px solid black;
+    opacity: 0.7;
+    transition: all 0.3s linear;
+    cursor: pointer;
+}
+.slideshow>.slider {
+    position:absolute; 
+    left: 50px;
+    height: 120px; 
+    width: 4000px;
+    transition: all 0.5s ease-in-out;
+}
+</style>

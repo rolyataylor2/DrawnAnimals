@@ -1,0 +1,57 @@
+{# empty Twig template #}
+<div class='page userLookup'>
+    {% if ADMIN %}
+        <h1 style='background-color:#000; color:white; margin-bottom:10px;'>
+            Admin Tools:
+            <a href='javascript:' onclick="inlinePopup('adminAddMonster',{{ USER.id }});">Modify User</a>
+            <a href='javascript:' onclick="inlinePopup('adminAddMonster',{{ USER.id }});">Give Monster/Egg</a>
+            <a href='javascript:' onclick="inlinePopup('adminAddMonster',{{ USER.id }});">Give Item</a>
+            <a href='javascript:' onclick="inlinePopup('adminRemoveFromBattle',{{ USER.id }});">Close Battle</a>
+        </h1>
+    {% endif %}
+    <h1 style="background-color:{{ USER.color }};">
+        <img class="{{ USER.edit|raw }}" name="Avatar" src='img/profile_images/{{ USER.avatar }}.png'/>
+        <div class="{{ USER.edit|raw }}" name="RpgOw" style="position:relative; overflow:hidden; width:64px; height:64px; float:left;">
+            <img style="position:absolute; top:-64px; left:0px;" src='img/a/{{ USER.avatar_ow }}.png'/>
+        </div>
+        {{ USER.username }}
+        {% if USERNAME == USER.username %}<a href="javascript:" name="Color" class="edit">Color</a>{% endif %}
+        <div class='lastseen'>LastSeen: {{ USER.lastseen }}</div>
+    </h1>
+    <aside>
+        <div class="localtime">{{ USER.time|raw }}</div>
+        <a href="user.php?id={{ USER.id }}" class="{{ SUMMERYPAGE }}">Summery</a>
+        <a href="user.php?id={{ USER.id }}&journel" class="{{ JOURNELPAGE }}">Journel</a>
+        <a href="user.php?id={{ USER.id }}&friends" class="{{ FRIENDSPAGE }}">Friends</a>
+        <a href="user.php?id={{ USER.id }}&rival" class="{{ RIVALPAGE }}">Rivals</a>
+        <a href="user.php?id={{ USER.id }}&awards" class="{{ AWARDSPAGE }}">Awards</a>
+        <a href="user.php?id={{ USER.id }}&stats" class="{{ STATSPAGE }}">Stats</a>
+        <a href="user.php?id={{ USER.id }}&about" class="{{ ABOUTPAGE }}">About</a>
+        <br/>
+        {% for i in TEAM %}{{i|raw}}{% endfor %}
+        <div style="clear:both;"></div>
+        {% if USERNAME != USER.username %}
+            {% if USERNAME|length > 0 %}
+                {% if USER.following == 0 %}
+                    <button type="button" onclick="$(this).attr('onclick','').unbind('click').attr('disabled','true'); inlineLoad(function() {$(this).html('Following');}.bind($(this)),'followUser','{{ USER.username }}',true);">Follow</button>
+                {% else %}
+                    <button type="button" onclick="$(this).attr('onclick','').unbind('click').attr('disabled','true'); inlineLoad(function() {$(this).html('Not Following');}.bind($(this)),'followUser','{{ USER.username }}',false);">Unfollow</button>
+                {% endif %}
+                <button onclick="inlinePopup('messageSend','{{ USER.username }}');">Message</button>
+                <button onclick="inlinePopup('messageBattleRequest','{{ USER.username }}');">Battle</button>
+                <button onclick="inlinePopup('messageSendGift','{{ USER.username }}');">Gift</button>
+            {% else %}
+                <a href="http://PokeWorlds.com/register.php">Create an account to contact this user!</a>
+            {% endif %}
+        {% endif %}
+        <div style="clear:both;"></div>
+    </aside>
+    {{ USERBODY|raw }}
+</div>
+<script>
+    $(document).ready(function() {
+        $('.edit').click(function() {
+            inlinePopup('editProfile'+$(this).attr('name'));
+        });
+    });
+</script>

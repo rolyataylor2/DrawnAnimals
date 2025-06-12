@@ -1,0 +1,40 @@
+<div class='page'>
+    <h1>Registered Users</h1>
+    <article>
+        <ul class="pageList">
+            <li>Page</li>
+            {% for i in 1..((PLAYERSCOUNT/30)+1) %}
+                <li {% if PLAYERSOFFSET == ((i-1)*30) %}class="selected"{% endif %}><a href="?o={{ (i-1)*30 }}">{{ i }}</a></li>
+            {% endfor %}
+        </ul>
+        {% for i in PLAYERS %}
+        <table class='user' href='#'>
+            <tr>
+                <td><img src='img/profile_images/{{ i.avatar }}.png'/></td>
+                <td>
+                    <a href='/user.php?id={{ i.username }}' class='username'>{{ i.username }}</a>
+                    <div class='lastseen'>LastSeen: {{ i.lastseen }}</div>
+                    <div class='status'>{{ i.lastupdate }}</div>
+                </td>
+                <td>
+                    <div class='actions'>
+                        {% if i.following == 0 %}
+                            <button type="button" onclick="$(this).attr('onclick','').unbind('click').attr('disabled','true'); inlineLoad(function() {$(this).html('Following'); }.bind($(this)),'followUser','{{ i.username }}',true);">Follow</button>
+                        {% else %}
+                            <button type="button" onclick="$(this).attr('onclick','').unbind('click').attr('disabled','true'); inlineLoad(function() {$(this).html('Not Following');}.bind($(this)),'followUser','{{ i.username }}',false);">Unfollow</button>
+                        {% endif %}
+                        <button onclick="inlinePopup('sendMessage','{{ i.username }}');">Send Message</button>
+                    </div>
+                </td>
+            </tr>
+        </table>
+        {% endfor %}
+        <div style='clear:both;'></div>
+        <ul class="pageList">
+            <li>Page</li>
+            {% for i in 1..((PLAYERSCOUNT/30)+1) %}
+                <li {% if PLAYERSOFFSET == ((i-1)*30) %}class="selected"{% endif %}><a href="?o={{ (i-1)*30 }}">{{ i }}</a></li>
+            {% endfor %}
+        </ul>
+    </article>
+</div>

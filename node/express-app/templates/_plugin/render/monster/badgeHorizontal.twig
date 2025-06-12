@@ -1,0 +1,35 @@
+{# NAME,LEVEL,GENDER,CAUGHT,HPGUAGE|RAW
+    create a div for each passed argument, if argument == '' then dont add the div.
+ #}
+<a class='Drawnimal {{ CLASS }} {% if PAINT|length > 0 %}painted{% endif %}' {{ ONCLICK|raw }}>
+        {% if IMAGEURL|length > 0 %}
+            <img class="image" src="{{ IMAGEURL }}"/>
+        {% endif %}
+        <div class='name'>{{ NAME|title }}</div>
+        {% if LEVEL|length > 0 %}
+            <div class='level'>Lv. {{ LEVEL }}</div>
+        {% endif %}
+        {% if GENDER|length > 0 %}
+            <img class='gender' src='http://PokeWorlds.com/img/gender{{ GENDER }}.png'/>
+        {% endif %}
+        {% if ITEMICON == true %}
+            <img class='itemicon' src='http://PokeWorlds.com/img/held-item.png'/>
+        {% endif %}
+        {% if CAUGHT|length > 0 %}
+            <div class='caught'>{{ CAUGHT }}</div>
+        {% endif %}
+        {% if ITEM|length > 0 %}
+            <div class='itemholding'>{{ ITEM|title }}</div>
+        {% endif %}
+        {% if BALL|length > 0 %}
+            <div class='ball'>{{ BALL }}</div>
+        {% endif %}
+        <div class='stats'>
+            {% if HPGUAGE|length > 0 %}
+                {{ HPGUAGE | raw }}
+            {% endif %}
+            {% if EXPGUAGE|length > 0 %}
+                {{ EXPGUAGE | raw }}
+            {% endif %}
+        </div>
+</a>

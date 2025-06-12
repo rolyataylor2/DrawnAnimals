@@ -1,0 +1,17 @@
+<div class="page blog">
+    {% for i in POSTS %}
+        <article>
+            <section style='position:relative; z-index:1; padding:40px 0px;'>
+                <header>Pokemon League Staff - Official News Department, Suite#25, Celedon City</header>
+                <img src="http://PokeWorlds.com/img/blog.header.png"
+                style="position:absolute; top:0px; right:0px; width:256px; opacity:0.1; z-index:-1;"/>
+                <h3>{{ i.subject }}</h3>
+                {{ i.content|raw }}
+                <footer><br/>
+                    <img width='50' src="http://PokeWorlds.com/img/profile_images/{{i.avatar}}.png" style='vertical-align:top;'/>
+                    <a href="http://PokeWorlds.com/user.php?id={{ i.username }}">{{ i.username|title }}</a>
+                </footer>
+            </section>
+        </article>
+    {% endfor %}
+</div>

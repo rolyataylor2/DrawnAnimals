@@ -1,0 +1,27 @@
+<article style="text-align:center;">
+    <label class="styleSection {{ USER.edit|raw }} full"  name="AboutMe">
+        <header>About Me</header>
+            {{ USER.aboutme }}
+    </label>
+    <label class="styleSection {{ USER.edit|raw }}" name="Country">
+        <header>Country</header>
+            {{ USER.country }}
+    </label>
+    <label class="styleSection {{ USER.edit|raw }}" name="Gender">
+        <header>Gender</header>
+            {{ USER.gender }}
+    </label>
+    <label class="styleSection {{ USER.edit|raw }}" name="Timezone">
+        <header>Timezone</header>
+            {{ USER.timezone }}
+    </label>
+    <label class="styleSection {{ USER.edit|raw }}">
+        <header>Account created:</header>
+            {{ USER.created }}
+    </label>
+    <label class="styleSection {{ USER.edit|raw }}" name="Birthday">
+        <header>Birthday</header>
+            {{ USER.birthday }}
+    </label>
+    <div style="clear:both;"></div>
+</article>

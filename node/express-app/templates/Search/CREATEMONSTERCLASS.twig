@@ -1,0 +1,15 @@
+{# empty Twig template #}
+<a class="searchitem monster {% if data.caught %}caught{% endif %} {% if data.visible==false %}hidden{% endif %}" href="http://PokeWorlds.com/play.php?g=Monsters&p=view&id={{ data['id'] }}">
+    <div class='name'>#{{ data['number'] }}</div>
+    <img src="{{ data['imageUrl'] }}"/>
+    <div class="name">
+        {% if data.form != 'Basic' %}{{ data.form}} {% endif %}{{ data['species']|title }}<br/>
+        <img src="http://PokeWorlds.com/img/type{{ data.type_0 }}.png"/>
+        <img src="http://PokeWorlds.com/img/type{{ data.type_1 }}.png"/>
+    </div>
+    {% if data.visible %}
+        <div class="fav_icon{% if data.liked %} selected{% endif %}" data-catagory="createMonster" data-item="{{ data.id }}">
+            <img src="http://PokeWorlds.com/img/fav_createMonster.png"/>
+        </div>
+    {% endif %}
+</a>

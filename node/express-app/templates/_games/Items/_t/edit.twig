@@ -1,0 +1,18 @@
+<form action= method=post>
+    <input type=hidden name=token value={{ TOKEN }}/>
+    <input type=hidden name=id value={{ ITEM.id }}/>
+    <div class="page monsterEdit">
+        <h1>Item Editor: {{ ITEM.name }} <input style=float:right; type=submit value=Save/> </h1>
+        <article>
+            <label class="styleSection">Name<input name="name" type="text" value="{{ ITEM.name }}"/></label>
+            <label class="styleSection">Description<textarea name="description">{{ ITEM.description }}</textarea></label>
+            <label class="styleSection">Use In Battle: <select><option>Not Usable</option><option>On Active Monster</option></select></label>
+            <label class="styleSection">Use Out Of Battle: <select><option>Not Usable</option><option>On Party Member</option></select></label>
+            <div style=clear:both;></div>
+        </article>
+        <h2>Code Editor</h2>
+        <article>
+            {{ CODETABLE|raw }}
+        </article>
+    </div>
+</form>
