@@ -1,0 +1,69 @@
+{# empty Twig template #}
+<div class="page">
+    <div id="game" tabindex="0">
+        <div>
+            <a id="upButton">Up</a>
+            <a id="leftButton">Left</a>
+            <a id="rightButton">right</a>
+            <a id="downButton">down</a>
+        </div>
+    </div>
+    <style>
+        div#game>div {
+    position: absolute;
+    bottom: 0px;
+    left: 0px;
+    z-index: 1;
+}
+        a#upButton {
+    display: block;
+    width: 50px;
+    height: 50px;
+    background-color: white;
+    border-radius: 50px;
+    line-height: 50px;
+    margin: 0 auto;
+}
+a#downButton {
+    display: block;
+    width: 50px;
+    height: 50px;
+    background-color: white;
+    border-radius: 50px;
+    line-height: 50px;
+    margin: 0 auto;
+}
+a#leftButton {
+    display: inline-block;
+    width: 50px;
+    height: 50px;
+    background-color: white;
+    border-radius: 50px;
+    line-height: 50px;
+    margin: 0px 20px;
+}
+a#rightButton {
+    display: inline-block;
+    width: 50px;
+    height: 50px;
+    background-color: white;
+    border-radius: 50px;
+    line-height: 50px;
+    margin: 0px 20px;
+}
+    </style>
+</div>
+<script>
+    maps = [];
+    $(window).on('load',function() {
+        InitGameObjects();
+        {% for i in MAPS %}
+            maps.push(new mapObject({{ i.id }},{{ i.region_x }},{{ i.region_y }},{{ i.width }},{{ i.height }}));
+        {% endfor %}
+        $('#game').focus();
+        $('#upButton').on('touchstart',function() { keydown['up'] = true; }).on('touchend',function() { keydown['up'] = false; }).disableSelection();;
+        $('#leftButton').on('touchstart',function() { keydown['left'] = true; }).on('touchend',function() { keydown['left'] = false; }).disableSelection();;
+        $('#rightButton').on('touchstart',function() { keydown['right'] = true; }).on('touchend',function() { keydown['right'] = false; }).disableSelection();;
+        $('#downButton').on('touchstart',function() { keydown['down'] = true; }).on('touchend',function() { keydown['down'] = false; }).disableSelection();;
+    });
+</script>

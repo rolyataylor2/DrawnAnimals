@@ -1,0 +1,138 @@
+<form id="regionEdit" action='' method='post'  enctype="multipart/form-data">
+    <input type='hidden' name='token' value='{{ TOKEN }}'/>
+    <input type='hidden' name='id' value='{{ REGION.id }}'/>
+    <div class="page">
+        <h1>Region Editor: {{ REGION.name|title }} <input style='float:right;' type='submit' value='Save'/> </h1>
+        <article>
+            <label class="styleSection full">Name<input name="name" type="text" value="{{ REGION.name }}"/></label>
+            <label class="styleSection full">Story<textarea name="description">{{ REGION.description }}</textarea></label>
+            <div style="clear:both"></div>
+            
+        </article>
+        <h2>Display Map</h2>
+        <article>
+            <label id="minimapLabel" class="styleSection full"><b>Route Selected:</b><div></div></label>
+            <div class="miniMapEditor">
+                {% for i in MAPS %}
+                <img id="minimap{{ i.id }}" 
+                     data-id="{{ i.id }}" 
+                     data-icon="{{ i.minimap_icon }}" 
+                     data-name="{{ i.name }}" 
+                     style="left:{{ i.minimap_x }}px; top:{{ i.minimap_y }}px;" 
+                     src="img/location/icon/{{ i.minimap_icon }}.png"/>
+                {% endfor %}
+            </div>
+        </article>
+        <h2>Gamplay Map ({{ MAPCOUNT }})</h2>
+        <article>
+            <div class="mapEditor">
+                <div style="width:5000px; height:5000px;"></div>
+                {% for i in MAPS %}
+                <img id="map{{ i.id }}" data-id="{{ i.id }}" style="width:{{ i.width/6 }}px; left:{{ i.region_x/6 }}px; top:{{ i.region_y/6 }}px;" src="img/location/previews/{{ i.id }}.png"/>
+                {% endfor %}
+            </div>
+            <label class="styleSection full">
+                <sub>Jump to...</sub>
+                {% for i in MAPS %}
+                    <a href="javascript:" onclick='
+                        var posleft = parseInt($("#map{{ i.id }}").css("left").replace("px",""))-300; 
+                        var postop = parseInt($("#map{{ i.id }}").css("top").replace("px",""))-300; 
+                        $(".mapEditor").scrollLeft(posleft).scrollTop(postop);'>{{ i.name }}</a>
+                {% endfor %}
+            </label>
+            <div style='clear:both;'></div>
+        </article>
+        <style>
+            .mapEditor, .minimapEditor {
+                position:relative; width:90%; margin:0px auto; height:700px; overflow:auto; background-color:#333;
+            }
+            .minimapEditor { height: 320px; width:320px; overflow:hidden; }
+            .mapEditor img, .minimapEditor img {
+                position:absolute; top:0px; left:0px;
+            }
+        </style>
+        <script>
+            $('.mapEditor img, .minimapEditor img').each(function(index,element) {$(element).drags();});
+            $('.minimapEditor img').click(function() {$(this).css('z-index','1').siblings().css('z-index','0');}).mouseup(function() {
+                var pos = $(this).position();
+                var left = Math.max(0,Math.round(pos.left/16)*16);
+                var top = Math.max(0,Math.round(pos.top/16)*16);
+                $(this).css({'left':left+'px','top':top+'px'});
+                if (pos.left === left && pos.top === top && $('#minimapLabel div').html()===$(this).data('name')) {
+                    var icon = $(this).data('icon');
+                    icon += 1;
+                    icon %= 7;
+                    $(this).data('icon',icon);
+                    $(this)[0].src = 'http://PokeWorlds.com/img/location/icon/'+icon+'.png';
+                }
+                $('#minimapLabel div').html($(this).data('name'));
+            });
+            $('.mapEditor img').click(function() {$(this).css('z-index','1').siblings().css('z-index','0');}).mouseup(function() {
+                var pos = $(this).position();
+                pos.left *= 6;
+                pos.top *= 6;
+                pos.left = Math.max(0,Math.round((pos.left+($(this).parent().scrollLeft()*6))/32)*32);
+                pos.top = Math.max(0,Math.round((pos.top+($(this).parent().scrollTop()*6))/32)*32);
+                pos.left/=6;
+                pos.top/=6;
+                $(this).css({'left':pos.left+'px','top':pos.top+'px'});
+            });
+            $('#regionEdit').submit(function(){
+                $('.mapEditor img').each(function(index,element) {
+                    var id = $(element).data('id');
+                    var pos = $(element).position();
+                    pos.top = pos.top*6;
+                    pos.left = pos.left*6;
+                    pos.left = Math.max(0,Math.round((pos.left+($(this).parent().scrollLeft()*6))/32)*32);
+                    pos.top = Math.max(0,Math.round((pos.top+($(this).parent().scrollTop()*6))/32)*32);
+                    $('#regionEdit').append('<input type="hidden" name="mapId[]" value="'+id+'"/>');
+                    $('#regionEdit').append("<input type='hidden' name='mapPos[]' value='"+JSON.stringify(pos)+"'/>");
+                });
+                $('.minimapEditor img').each(function(index,element) {
+                    var id = $(element).data('id');
+                    var icon = $(element).data('icon');
+                    var pos = $(element).position();
+                    pos.left = Math.max(0,Math.round(pos.left/16)*16);
+                    pos.top = Math.max(0,Math.round(pos.top/16)*16);
+                    $('#regionEdit').append('<input type="hidden" name="minimapId[]" value="'+id+'"/>');
+                    $('#regionEdit').append('<input type="hidden" name="minimapIcon[]" value="'+icon+'"/>');
+                    $('#regionEdit').append("<input type='hidden' name='minimapPos[]' value='"+JSON.stringify(pos)+"'/>");
+                });
+            });
+        </script>
+        <h2>Propaganda</h2>
+        <article>
+            <label class="styleSection full">
+                <b>Permissions</b>
+                 <input type="text" name="permissions"/>
+                <sub>Type something like [rolyataylor2][pokewonders][thisisjext]. If you put [all] then everyone can see it.</sub>
+            </label>
+            <label class="styleSection full">
+                <b>Wide Horizontal Banner</b>
+                <input type="file" name="leaderboard"/>
+                <sub>This is for forum posts and sometimes randomly at the top of the site. Size should be 728x90, Any other size will be resized.</sub>
+            </label>
+            <label class="styleSection">
+                <b>Small Horizontal Banner</b>
+                <input type="file" name="smallbanner"/>
+                <sub>This will appear on the lookups of people involved and sometimes on the sidebar of the website. Size should be 300x100, Any other size will be resized.</sub>
+            </label>
+            <label class="styleSection">
+                <b>Site Logo</b>
+                <input type="file" name="sitelogo"/>
+                <sub>When people are in your region the site logo will change to this image. Size should be 300x100.</sub>
+            </label>
+            <label class="styleSection">
+                <b>Primary Color</b>
+                
+                <sub>Sidebar color</sub>
+            </label>
+            <label class="styleSection">
+                <b>Secondary Color</b>
+                
+                <sub>Title color</sub>
+            </label>
+            <div style="clear:both;"></div>
+        </article>
+    </div>
+</form>

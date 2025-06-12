@@ -1,0 +1,37 @@
+{# empty Twig template #}
+<div class="page">
+    <h1>Request a Quote for Web Development</h1>
+    <img src="img/guarantee.png" alt="guaranteed" style="box-shadow:none; border:none;"/>
+    <article>
+        <h2>Now taking requests for Web Development, 2d WebGL Development, HTML, CSS, PHP;</h2>
+        <form onsubmit="inlineSubmit(function(data) { $('#response').html(data); if (data.indexOf('Error') !== -1) $('#response').next().removeAttr('disabled'); }, $(this),'messageJobRequest'); $('#response').next().attr('disabled','true'); return false;">
+            <input type="hidden" name="token" value='{{ TOKEN }}'/>
+            <label>Name:<input name='name' type="text"/></label>
+            <label>Email:<input name='email' type="text"/></label>
+            <label>Project Url:<input name='projecturl' type="text"/></label>
+            <label>Description of Project:<br/><textarea name="description"></textarea></label>
+            <label>
+                Level of expertise YOU have
+                <select name="expertise">
+                    <option>Novice (alone)</option>
+                    <option>Novice (with team)</option>
+                    <option>Intermediate (alone)</option>
+                    <option>Intermediate (with team)</option>
+                    <option>Business (Contract work)</option>
+                </select>
+            </label>
+            <label id="captcha"></label>
+            <script>
+                Recaptcha.create("6LeivdYSAAAAAHIjcZkI13aMBEbymITdnJ4cjNvF",
+                        $("#captcha")[0],
+                        {
+                            theme: "red",
+                            callback: Recaptcha.focus_response_field
+                        }
+                );
+                $('#captcha').removeAttr('id');
+            </script>
+            <label><div id='response' style='float:left;'></div><input type='submit' value='Send Request'/></label>
+        </form>
+    </article>
+</div>

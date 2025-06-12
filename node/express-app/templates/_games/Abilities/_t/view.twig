@@ -1,0 +1,12 @@
+<div class='page'>
+    <h1>
+        {{ ABILITY.name|title }} (Ability)
+        {% if EDIT %}
+            <a style='float:right;' href='?g=Abilities&p=delete&id={{ ABILITY.id }}'>Delete</a>
+            <a style='float:right;' href='?g=Abilities&p=edit&id={{ ABILITY.id }}'>Edit</a>
+        {% endif %}
+    </h1>
+    <article>
+        {{ ABILITY.description }}
+    </article>
+</div>

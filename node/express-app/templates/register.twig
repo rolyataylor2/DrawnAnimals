@@ -1,0 +1,38 @@
+<div class='page'>
+    <header>Register a New Player</header>
+    <article>
+        {% if SCRIPT_OUTPUT|length > 0 %}
+            <sub>{{ SCRIPT_OUTPUT }}</sub>
+        {% else %}
+            {% if SCRIPT_ERROR|length > 0 %}
+                <div class='error'>{{ SCRIPT_ERROR }}</div>
+            {% endif %}
+            <sub>
+                If you do not already have an account create a new one here, 
+                you are allowed 3 accounts per email, 
+                please read the terms and conditions by clicking here.
+            </sub>
+            <form id="RegisterIndex" method="post">
+                <label>Username: <input name="username" type="text" value="{{ FORMUSERNAME }}" /></label>
+                <label>Password<input name="password" type="text" /></label>
+                <label>Confirm Password<input name="passwordconfirm" type="text" /></label>
+                <label>Email<input name="email" type="text" value="{{ EMAIL }}"/></label>
+                <label>Confirm Email<input name="emailconfirm" type="text" value="{{ EMAIL }}"/></label>
+                <label id="captcha"></label>
+                <script>
+                    Recaptcha.create("6LeivdYSAAAAAHIjcZkI13aMBEbymITdnJ4cjNvF",
+                            $("#captcha")[0],
+                            {
+                                theme: "red",
+                                callback: Recaptcha.focus_response_field
+                            }
+                    );
+                    $('#captcha').removeAttr('id');
+                </script>
+                <label>I agree to the site rules <input name="agree" type="checkbox"/></label>
+                <input name="token" type="hidden" value="{{ TOKEN }}"/>
+                <input type="submit" value="Create New Player"/>
+            </form>
+        {% endif %}
+    </article>
+</div>

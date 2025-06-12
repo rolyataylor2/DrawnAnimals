@@ -1,0 +1,94 @@
+{# empty Twig template #}
+<div class="page">
+    {#<h1 style='background-color:#000; color:white; margin-bottom:10px;'>
+        Admin Tools:
+        <a href='javascript:' onclick="inlinePopup('adminAddMonster',{{ MONSTER.id }});">Get Info</a>
+        <a href='javascript:' onclick="inlinePopup('adminAddMonster',{{ MONSTER.id }});">Change Species</a>
+        <a href='javascript:' onclick="inlinePopup('adminAddMonster',{{ MONSTER.id }});">Reset Pokes</a>
+    </h1>#}
+    <article class="MonsterLookup" style="background: repeating-linear-gradient(45deg,
+                                                                                #606dbc,
+                                                                                #606dbc 10px,
+                                                                                #465298 10px,
+                                                                                #465298 20px
+                                                                              );">
+        <section>
+            <section class="">
+                <img class='gender' src='http://PokeWorlds.com/img/gender2.png'/>
+                <div class="owner"><a href="http://PokeWorlds.com/user.php?id={{ MONSTER.uid }}">{{ MONSTER.username|title }}'s</a></div>
+                <b class="nickname">Egg</b>
+                <div class="species">It's an Egg!</div>
+                <img class="image" src="{{ MONSTER.imageurl }}"/>
+            </section>
+        </section>
+        <section>
+            <section class="">
+                <table class='stats colorful'>
+                    {% if INPARTY %}
+                        <tr>
+                            <td>In Party</td>
+                            <td name='FollowMe' class='{{ EDIT }}'>{% if FOLLOWING %}Following Trainer{% else %}In Backpack{% endif %}</td>
+                        </tr>
+                    {% endif %}
+                    <tr><td>Original Trainer</td><td><a href="http://PokeWorlds.com/user.php?id={{ MONSTER.username }}">{{ MONSTER.username|title }}</a></td></tr>
+                    <tr><td>BirthDay</td><td>TBD</td></tr>
+                    <tr><td>Evolved From</td><td>N/A</td></tr>
+                    <tr><td>Pokes</td><td>{{ MONSTER.st_exp-1 }}</td></tr>
+                </table>
+                
+                {% if USERNAME|length > 0 %}
+                    {% if MONSTER.ready %}
+                        {% if EDIT=='edit' %}
+                            <div name="Hatch" class='hatchbutton {{ EDIT }}'>Hatch Egg!!!!</div>
+                        {% else %}
+                            <div class='hatchbutton' style='cursor:default;'>You can hear sounds from inside!</div>
+                        {% endif %}
+                    {% else %}
+                        {% if MONSTER.warmed == false %}
+                            <div class='fav_icon hatchbutton' data-catagory='eggHatch' data-item='{{ MONSTER.id }}'>Poke Egg...</div>
+                            <div class='hatchbutton' style='display:none; background-color:#333; cursor:default;'>You can hear something inside... But nothing happens... You can poke this egg once an hour!</div>
+                        {% endif %}
+                        {% if MONSTER.warmed %}
+                            <div class='hatchbutton' style='background-color:#333; cursor:default;'>You already poked this egg, You can come back next hour and poke it again tho.</div>
+                        {% endif %}
+                    {% endif %}
+                {% endif %}
+                <div style="background-color:rgba(0,0,0,0.3); width:100%; border-radius:10px; font-size:10px; text-align:center; margin-top:10px;">
+                    Share this link so other trainers can help!
+                    <input type="text" style="width:100%;" value="http://PokeWorlds.com/mon.php?id={{ MONSTER.id }}"/>
+                </div>
+                
+            </section>
+        </section>
+        <div class="expguage">
+            <div class='max'><div class="min" style='width:{{ ((MONSTER.st_exp/MONSTER.rate_hatch)*100) }}%'></div></div>
+        </div>
+        <div style="clear:both;"></div>
+    </article>
+</div>
+<style>
+    .hatchbutton {
+        width: 80%;
+        margin: 0 auto;
+        background-color: orange;
+        border-radius: 10px;
+        padding: 3%;
+        text-align: center;
+        text-shadow: 1px 1px black;
+        box-shadow: inset -1px -2px 10px black;
+        border: 2px double darkorange;
+        cursor: pointer;
+    }
+    .hatchbutton.selected {
+        display:none;
+    }
+</style>
+
+<script>
+    $(document).ready(function() {
+        $('.fav_icon.hatchbutton').click(function() {$('.hatchbutton').next().delay(100).fadeIn(100);});
+        $('.edit').click(function() {
+            inlinePopup('editMon'+$(this).attr('name'),{{ MONSTER.id }});
+        });
+    });
+</script>

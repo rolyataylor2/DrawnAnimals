@@ -1,0 +1,16 @@
+<form action='' method='post'>
+    <input type='hidden' name='token' value='{{ TOKEN }}'/>
+    <input type='hidden' name='id' value='{{ ABILITY.id }}'/>
+    <div class="page monsterEdit">
+        <h1>Ability Editor: {{ ABILITY.name }} <input style='float:right;' type='submit' value='Save'/> </h1>
+        <article>
+            <label class="styleSection">Name<input name="name" type="text" value="{{ ABILITY.name }}"/></label>
+            <label class="styleSection">Description<textarea name="description">{{ ABILITY.description }}</textarea></label>
+            <div style='clear:both;'></div>
+        </article>
+        <h2>Code Editor</h2>
+        <article>
+            {{ CODETABLE|raw }}
+        </article>
+    </div>
+</form>

@@ -1,0 +1,33 @@
+<div class="page">
+    <h1>{{ TRAINER.label }} {{ TRAINER.name|title }}
+        {% if EDIT %}
+            <a href="#" onclick="inlinePopup('NA/monsterDelete',{{ TRAINER.id }});">Delete</a>
+            <a href="play.php?g=Trainers&p=edit&id={{ TRAINER.id }}">Edit</a>
+        {% endif %}
+    </h1>
+    <article>
+        <label class="styleSection">{{ TRAINER.region }}</label>
+        <label class="styleSection">{{ TRAINER.difficulty }}</label>
+        <div style="clear:both"></div>
+    </article>
+    {% if TEAMS|length > 0 %}
+        <h2>Teams</h2>
+        {% for i in TEAMS%}
+            <article>
+                {% if TEAMSWIN[loop.index0] %}
+                    <img height="64" src="http://PokeWorlds.com/img/progress-done.png"/>
+                {% else %}
+                    <img height="64" src="http://PokeWorlds.com/img/progress-next.png"/>
+                {% endif %}
+                {% for iii in 0..5 %}
+                        {% if i[iii] is defined %}
+                            <img height="64" src="http://PokeWorlds.com/img/mon/{{ i[iii].id }}.g_3.c_.png"/>
+                        {% else %}
+                            <img height="64" src="http://PokeWorlds.com/img/monster-empty-icon.png"/>
+                        {% endif %}
+                    {% endfor %}
+                
+            </article>
+        {% endfor %}
+    {% endif %}
+</div>

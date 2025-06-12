@@ -1,0 +1,47 @@
+<article style="text-align:center;">
+    {% for i in FRIENDS %}
+        <div class="friend {% if USER.me == false %} following{% endif %}"  href='/user.php?id={{ i.username }}'>
+            <a  href='/user.php?id={{ i.username }}'>
+                <img src='img/profile_images/{{ i.avatar }}.png'/>
+                {{ i.username }}
+            </a>
+            {% if USER.me == true %}
+                <div class="actions">
+                    <button type="button" onclick="$(this).attr('onclick','').unbind('click').attr('disabled','true'); inlineLoad(function() {$(this).parent().parent().fadeOut(500);}.bind($(this)),'followUser','{{ i.username }}',false);">Unfollow</button>
+                    <button onclick="inlinePopup('messageSend','{{ i.username }}');">Message</button>
+                    <button onclick="inlinePopup('battleRequest','{{ i.username }}');">Battle</button>
+                    <button onclick="inlinePopup('giftSend','{{ i.username }}');">Gift</button>
+                </div>
+            {% endif %}
+        </div>
+    {% endfor %}
+    <h2>Followers</h2>
+    {% for i in FOLLOWERS %}
+        <div class="friend following"  href='/user.php?id={{ i.username }}'>
+            <a  href='/user.php?id={{ i.username }}'>
+                <img src='img/profile_images/{{ i.avatar }}.png'/>
+                {{ i.username }}
+            </a>
+            {% if USER.me == true %}
+                <div class="actions">
+                    <button type="button" onclick="$(this).attr('onclick','').unbind('click').attr('disabled','true'); inlineLoad(function() {$(this).html('Following'); }.bind($(this)),'followUser','{{ i.username }}',true);">Follow</button>
+                </div>
+            {% endif %}
+        </div>
+    {% endfor %}
+
+    <h2>Following</h2>
+    {% for i in FOLLOWING %}
+        <div class="friend following"  href='/user.php?id={{ i.username }}'>
+            <a  href='/user.php?id={{ i.username }}'>
+                <img src='img/profile_images/{{ i.avatar }}.png'/>
+                {{ i.username }}
+            </a>
+            {% if USER.me == true %}
+                <div class="actions">
+                    <button type="button" onclick="$(this).attr('onclick','').unbind('click').attr('disabled','true'); inlineLoad(function() {$(this).parent().parent().fadeOut(500);}.bind($(this)),'followUser','{{ i.username }}',false);">Unfollow</button>
+                </div>
+            {% endif %}
+        </div>
+    {% endfor %}
+<div style="clear:both"></div></article>

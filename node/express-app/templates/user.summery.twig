@@ -1,0 +1,21 @@
+<article style="text-align:center;">
+    <label class="styleSection" style="text-align:center;height:245px;">
+        <b>Experience</b><br/>
+        <canvas id="playerStatChart" width="200" height="200"></canvas>
+    </label>
+    <label class="styleSection" style="height:245px;">Last post on timeline...</label>
+    <label class="styleSection" style="text-align:center;">
+        <b>Team</b><br/>
+        {% for i in TEAM %}{{i|raw}}{% endfor %}
+    </label>
+    <label class="styleSection">Last few battles</label>
+    <div style="clear:both;"></div>
+</article>
+<script>
+    var ctx = $('#playerStatChart')[0].getContext('2d');
+    var values = [];
+    {% for i in EXPERIENCE %}
+        values.push({ value : {{i}}, color: '{{ EXPERIENCECOLORS[loop.index0] }}', label:'{{ EXPERIENCELABELS[loop.index0] }}' });
+    {% endfor %}
+    new Chart(ctx).Doughnut(values, { animateRotate : false, animateScale : false});
+</script>

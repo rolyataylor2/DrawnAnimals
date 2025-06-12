@@ -1,0 +1,80 @@
+<div class='page messages'>
+    <h1>Message Center</h1>
+    <article>
+        <sub>Your battle requests, Recent Followers, and Personal Messages appear here.</sub>
+        <label class="full styleSection">
+            <h3>Battle Requests</h3>
+            <label>
+                Sent
+                {% for i in BATTLESENTREQUESTS%}
+                    <div class='message'>
+                        <div class='timerMinutes' style="border:0px; color:red;">{{ i.timeleft }}</div>
+                        <div class="from"><a href="http://PokeWorlds.com/user.php?id={{ i.from }}">{{ i.from }}</a></div>
+                        <div class="subject"></div>
+                        <div class='actions' onclick="inlinePopup('messageBattleRequest','{{ i.from }}');">Cancel</div>
+                        <section style="clear:both;"></section>
+                    </div>
+                {% endfor %}
+                {% for i in BATTLESENTREQUESTSEXPIRED %}
+                    <div class='message'>
+                        <div style="border:0px; color:red;">Expired!</div>
+                        <div class="from"><a href="http://PokeWorlds.com/user.php?id={{ i.from }}">{{ i.from }}</a></div>
+                        <div class='actions'onclick="inlinePopup('messageBattleRequest','{{ i.from }}');">Request Again</div>
+                        <section style="clear:both;"></section>
+                    </div>
+                {% endfor %}
+            </label>
+            <label>
+                Recieved
+                {% for i in BATTLEREQUESTS%}
+                    <div class='message'>
+                        <div class="from"><a href="http://PokeWorlds.com/user.php?id={{ i.from }}">{{ i.from }}</a></div>
+                        <div class="subject"></div>
+                        <div class='actions timerMinutes' style="border:0px; color:red;">{{ i.timeleft }}</div>
+                        <div class='actions' onclick="inlinePopup('messageBattleRequest','{{ i.from }}');">Respond</div>
+                        <section style="clear:both;"></section>
+                    </div>
+                {% endfor %}
+                {% for i in BATTLEREQUESTSEXPIRED %}
+                    <div class='message'>
+                        <div class="from"><a href="http://PokeWorlds.com/user.php?id={{ i.from }}">{{ i.from }}</a></div>
+                        <div class='actions' style="border:0px; color:red;">Expired!</div>
+                        <div class='actions' onclick="inlinePopup('messageBattleRequest','{{ i.from }}');">Request</div>
+                        <section style="clear:both;"></section>
+                    </div>
+                {% endfor %}
+            </label>
+        </label>
+        <label class="styleSection">
+            Messages:
+            {% for i in MESSAGES %}
+                <div class='message'>
+                    <div class='from'><a href="http://PokeWorlds.com/user.php?id={{ i.from }}">{{ i.from }}</a></div>
+                    <div class='date'>{{ i.time }}</div>
+                    {% if i.item > 0 %}<img src='img/itemAttached.png'/>{% endif%}
+                    <div class='subject'  onclick="inlinePopup('messageView',{{ i.id }});">{{ i.message }}</div>
+                    <div class='actions' onclick='deleteMessage({{ i.id }},$(this).parent());'>delete</div>
+                    <section style="clear:both;"></section>
+                </div>
+            {% endfor %}
+        </label>
+        
+    </article>
+</div>
+<script>
+    $(window).load(function() {
+        setInterval(function() {
+            $('.timerMinutes').each(function(index) {
+                if (parseInt($(this).html())-1 > 0) $(this).html(parseInt($(this).html())-1);
+                else $(this).removeClass('timerMinutes').html('Expired!');
+            });
+        },1000);
+    })
+    function deleteMessage(id,element) {
+        if (confirm("Are you sure?")) 
+            inlineLoad(function(data) {
+                $(element).fadeOut(100);
+                console.log(data);
+            },"deleteMessage",id,'{{ TOKEN }}');
+    };
+</script>

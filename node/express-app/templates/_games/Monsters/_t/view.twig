@@ -1,0 +1,196 @@
+<div class="page monsterEdit monsterView {% if MONSTER.hidden == true %}hidden{% endif %}">
+    <h1>
+        {% if MONSTER.number != 0 %}#{{ MONSTER.number}} {% endif %}
+        {% if MONSTER.form != 'Basic' %}{{ MONSTER.form}} {% endif %} {{ MONSTER.species|title }}
+        {% if EDIT %}
+            <a href="#" onclick="inlinePopup('Monster%20Dex/monsterDelete',{{ MONSTER.id }});">Delete</a>
+            <a href="play.php?g=Monsters&p=edit&id={{ MONSTER.id }}">Edit</a>
+        {% endif %}
+    </h1>
+    <article>
+        <label class="full styleSection"><b>Region:</b>{{ REGION }}</label>
+        <label class="styleSection" style="position:relative;">
+            <img src="{{ MONSTER['imageUrl'] }}" style='display:block; width:80%; max-width:300px; margin:0 auto;'/>
+            <canvas id="statChart" width='200' height='150'>NO CANVAS</canvas>
+            <img class="typePrimary" src="http://PokeWorlds.com/img/type{{ MONSTER.type_0 }}.png"/>
+            <img class="typeSecondary" src="http://PokeWorlds.com/img/type{{ MONSTER.type_1 }}.png"/>
+            <div class="fav_icon{% if MONSTER.liked %} selected{% endif %}" data-catagory="createMonster" data-item="{{ MONSTER.id }}">
+                <img src="http://PokeWorlds.com/img/fav_createMonster.png"/>
+                <span>{{ MONSTER.likes|raw }}</span>
+            </div>
+        </label>
+        
+        <label class="styleSection"><b>Class:</b>{{ MONSTER.genus_class }}</label>
+        <label class="styleSection"><b>Order:</b>{{ MONSTER.genus_order }}</label>
+        <label class="styleSection"><b>Family:</b>{{ MONSTER.genus_family }}</label>
+        <label class="styleSection"><b>Species:</b>{{ MONSTER.species|title }}</label>
+        <label class="styleSection"><b>Form:</b>{{ MONSTER.form }}</label>
+        <label class="full styleSection"><b>Description:</b>{{ MONSTER.description }}</label>
+        
+        <div style="clear:both;"></div>
+
+        <table class="stats styleSection">
+            <thead>
+                <tr>
+                    <td style="width:32px;">stats</td>
+                    <td>Hp</td>
+                    <td>Atk</td>
+                    <td>Def</td>
+                    <td>Sp.Atk</td>
+                    <td>Sp.Def</td>
+                    <td>Speed</td>
+                    <td>Exp.</td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>base</td>
+                    <td>{{ MONSTER.bs_hp }}</td>
+                    <td>{{ MONSTER.bs_atk }}</td>
+                    <td>{{ MONSTER.bs_def }}</td>
+                    <td>{{ MONSTER.bs_spatk }}</td>
+                    <td>{{ MONSTER.bs_spdef }}</td>
+                    <td>{{ MONSTER.bs_speed }}</td>
+                    <td>{{ MONSTER.bs_exp }}</td>
+                </tr>
+                <tr>
+                    <td>earn</td>
+                    <td>+{{ MONSTER.ev_hp }}</td>
+                    <td>+{{ MONSTER.ev_atk }}</td>
+                    <td>+{{ MONSTER.ev_def }}</td>
+                    <td>+{{ MONSTER.ev_spatk }}</td>
+                    <td>+{{ MONSTER.ev_spdef }}</td>
+                    <td>+{{ MONSTER.ev_speed }}</td>
+                    <td>+{{ MONSTER.ev_exp }}</td>
+                </tr>
+            </tbody>
+        </table>
+        {% if MONSTER.hidden == false %}
+            <table class="stats styleSection">
+                <thead>
+                    <tr>
+                        <td style="width:32px;">Trait</td>
+                        <td>Hunger</td>
+                        <td>Energy</td>
+                        <td>Affection</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Amount</td>
+                        <td><div style="float:left; width:{{ ((MONSTER.bs_hunger/256)*100)|floor }}%; height:19px; background-color:pink;"></div></td>
+                        <td><div style="float:left; width:{{ (100-((MONSTER.bs_energy/256)*100))|floor }}%; height:19px; background-color:pink;"></div></td>
+                        <td><div style="float:left; width:{{ ((MONSTER.bs_friendship/256)*100)|floor }}%; height:19px; background-color:pink;"></div></td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="stats styleSection">
+                <thead>
+                    <tr>
+                        <td style="width:32px;">Trait</td>
+                        <td>Gender Rate</td>
+                        <td>Catch Rate</td>
+                        <td>Hatch Rate</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Amount</td>
+                        <td>
+                            {% if MONSTER.rate_gender == 255 %}
+                                Genderless
+                            {% else %}
+                                {{ ((MONSTER.rate_gender/256)*100)|floor }}%
+                            {% endif %}
+
+                        </td>
+                        <td>{{ ((MONSTER.rate_catch/256)*10)|round(0,'ceil') }}x</td>
+                        <td>{{ MONSTER.rate_hatch }} Steps</td>
+                    </tr>
+                </tbody>
+            </table>
+            <label class="styleSection full" style='text-align:center;'>
+                <img onclick="FB.ui({
+                                method: 'share',
+                                href: window.document.location.href,
+                              }, function(response){ console.log(response); });" src='http://PokeWorlds.com/img/ads/320rect.png'/>
+            </label>
+        {% endif %}
+        <div style="clear:both;"></div>
+        <script>
+            var ctx = $('#statChart')[0].getContext('2d');
+            new Chart(ctx).PolarArea([
+                    { value : {{ MONSTER.bs_hp }}, color: 'Hp'.toColor(), label:'Hp' },
+                    { value : {{ MONSTER.bs_atk }}, color: 'Atk'.toColor(), label:'Attack' },
+                    { value : {{ MONSTER.bs_def }}, color: 'Def'.toColor(), label:'Defense' },
+                    { value : {{ MONSTER.bs_spatk }}, color: 'Sp.Atk'.toColor(), label:'Sp. Attack' },
+                    { value : {{ MONSTER.bs_spdef }}, color: 'Sp.Def'.toColor(), label:'Sp. Defense' },
+                    { value : {{ MONSTER.bs_speed }}, color: 'Speed'.toColor(), label:'Speed' },
+                    { value : {{ MONSTER.bs_exp }}, color: 'Exp.'.toColor(), label:'Experiance' }
+            ],{ scaleShowLabels : false,scaleOverride : true,scaleSteps : 3,scaleStepWidth : 50,scaleStartValue : 20});
+            
+            $('.stats>thead>tr:first-of-type>td:not(:first-child)').each(function(index,element) {
+                $(element).css('color',$(element).html().toColor());
+            });
+        </script>
+
+    </article>
+    {% if MONSTER.hidden == false %}
+        {% if MONSTER.show_artwork != 0 %}
+            <h2>Images</h2>
+            <article>
+                {% for url in DRAWNIMAL.IMAGES %}
+                    <img src="http://PokeWorlds.com/img/mon/{{ url.filename }}" height="128"/>
+                {% endfor %}
+            </article>
+        {% endif %}
+
+        {% if MOVES|length > 0 %}
+            <h2>Learnset</h2>
+            <article>
+                <table class="datatable listtable learntable">
+                    <thead><tr><td>Level</td><td>Name</td><td>Type</td></tr></thead>
+                    <tbody>
+                        {% for i in MOVES %}
+                            <tr>
+                                <td>{{ i.level }}</td>
+                                <td><a href='?g=Moves&goto=view&id={{ i.MOVE.id }}'>{{ i.MOVE.name }}</a></td>
+                                <td><img src="http://PokeWorlds.com/img/type{{ i.MOVE.type }}.png"/></td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </article>
+        {% endif %}
+        {% if ITEMS|length > 0 %}
+            <h2>Sometimes drops</h2>
+            <article>
+                <table class="datatable listtable learntable">
+                    <thead><tr><td>Item</td></tr></thead>
+                    <tbody>
+                        {% for i in ITEMS %}
+                            <tr>
+                                <td>{{ i.name }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </article>
+        {% endif %}
+        {% if ABILITIES|length > 0 %}
+            <h2>Abilities </h2>
+            <article>
+                <table class="datatable listtable learntable">
+                    <thead><tr><td>Ability</td></tr></thead>
+                    <tbody>
+                        {% for i in ABILITIES %}
+                            <tr>
+                                <td>{{ i.name }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </article>
+        {% endif %}
+    {% endif %}
+</div>

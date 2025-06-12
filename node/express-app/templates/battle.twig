@@ -1,0 +1,11 @@
+{# empty Twig template #}
+<section style="position:relative;">
+    <section id='battledisplay'></section>
+    <section id='battledialog' class="styleWindow"><center>Loading Battle...</center></section>
+    <section id='battlecontrols' class="styleWindow" style='display:none;'></section>
+</section>
+<script>
+    BTTL = new gameBattle();
+    BTTL.myDivLabel = '{{ MYDIVLABEL }}';
+    setTimeout(function() {BTTL.nextQueue();},500);
+</script>
